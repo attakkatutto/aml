@@ -29,11 +29,14 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(String name) {
         switch (name.toLowerCase()) {
             case "person":
-                return 1000 * random.nextDouble() + 30;
+                return Config.getInstance().getPersonMean() * random.nextDouble() 
+                        + Config.getInstance().getPersonStdDev();
             case "company":
-                return 5000 * random.nextDouble() + 20;
+                return Config.getInstance().getCompanyMean() * random.nextDouble() 
+                        + Config.getInstance().getCompanyStdDev();
             default:
-                return 1000 * random.nextDouble() + 30;
+                return Config.getInstance().getPersonMean() * random.nextDouble() 
+                        + Config.getInstance().getPersonStdDev();
         }
     }
 
