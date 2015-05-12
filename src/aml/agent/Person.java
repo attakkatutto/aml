@@ -6,8 +6,7 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import static aml.global.Constant.MAX_NUMBER_PARENTS;
-import static aml.global.Constant.MAX_NUMBER_PARTNERS;
+import aml.global.Config;
 import java.util.ArrayList;
 
 /**
@@ -26,8 +25,8 @@ public final class Person extends AgentBase {
     public Person(){
         super();      
         this.dummy = random.nextBoolean();
-        this.partners = new ArrayList<>(random.nextInt(MAX_NUMBER_PARTNERS));
-        this.parents = new ArrayList<>(random.nextInt(MAX_NUMBER_PARENTS));
+        this.partners = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberPartners()));
+        this.parents = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberParents()));
         initPartners();
         initParents();
     }

@@ -5,7 +5,7 @@
  */
 package aml.test;
 
-import static aml.global.Constant.*;
+import aml.global.Config;
 import aml.graph.Network;
 import org.graphstream.graph.*;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
@@ -17,19 +17,19 @@ import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
  */
 public class Test {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {                
         Graph graph = new Network("AML Test");
 
         graph.addAttribute("ui.stylesheet",
                 "node {fill-color: red; size-mode: dyn-size;} edge {fill-color:lightgrey;}");
         graph.display(true);
 
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(MAX_TRANSACTIONS_PER_ENTITIES, false);
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxTransactionsPerEntity(), false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();       
 
-        while (graph.getNodeCount() < MAX_NUMBER_ENTITIES) {
+        while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
             b.nextEvents();    
             for (Node node : graph) {
                 node.addAttribute("ui.label", String.format("%s", node.getId()));  

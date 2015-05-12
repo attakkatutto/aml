@@ -6,8 +6,7 @@
 package aml.graph.base;
 
 import aml.agent.base.AgentBase;
-import static aml.global.Constant.MAX_NUMBER_PARENTS;
-import static aml.global.Constant.MAX_NUMBER_PARTNERS;
+import aml.global.Config;
 import aml.global.VertexType;
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,8 +35,8 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         super(graph, id);
         this.type = type;
         this.random = new Random();
-        this.partners = new ArrayList<>(MAX_NUMBER_PARTNERS);
-        this.parents = new ArrayList<>(MAX_NUMBER_PARENTS);
+        this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
+        this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
         initVertexRelationship();
     }       
 

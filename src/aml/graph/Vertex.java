@@ -6,8 +6,7 @@
 package aml.graph;
 
 import aml.agent.base.AgentBase;
-import static aml.global.Constant.MAX_NUMBER_PARENTS;
-import static aml.global.Constant.MAX_NUMBER_PARTNERS;
+import aml.global.Config;
 import aml.global.VertexType;
 import aml.graph.base.VertexBase;
 import org.graphstream.graph.implementations.*;
@@ -49,7 +48,7 @@ public final class Vertex extends VertexBase {
 
     public void initPartners() {
         int count = 0;
-        while (count < MAX_NUMBER_PARTNERS) {
+        while (count < Config.getInstance().getMaxNumberPartners()) {
             String _id = String.valueOf(random.nextInt(graph.getNodeCount()));
             partners.add(_id);
             count++;
@@ -58,7 +57,7 @@ public final class Vertex extends VertexBase {
 
     public void initParents() {
         int count = 0;
-        while (count < MAX_NUMBER_PARENTS) {
+        while (count < Config.getInstance().getMaxNumberParents()) {
             Vertex v = graph.getNode(random.nextInt(graph.getNodeCount()));
             if (v.type == VertexType.PERSON) {
                 parents.add(v.getId());

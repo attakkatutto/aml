@@ -6,8 +6,8 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
+import aml.global.Config;
 import static aml.global.Constant.MONTHS;
-import static aml.global.Constant.MAX_NUMBER_AGENT_MESSAGES;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -64,7 +64,7 @@ public class Sender extends SimpleBehaviour {
 
     @Override
     public boolean done() {
-        return count == MAX_NUMBER_AGENT_MESSAGES;
+        return count == Config.getInstance().getMaxAgentMessage();
     }
 
 }

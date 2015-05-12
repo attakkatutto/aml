@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<config>
+    <maxAgentMessage>20</maxAgentMessage>
+    <maxNumberOfEntity>30</maxNumberOfEntity>
+    <maxTransactionsPerEntity>3</maxTransactionsPerEntity>
+    <maxNumberPartners>10</maxNumberPartners>
+    <maxNumberParents>15</maxNumberParents>
+    <personMean>1000</personMean>
+    <personStdDev>10</personStdDev>
+    <companyMean>2000</companyMean>
+    <companyStdDev>50</companyStdDev>
+</config>

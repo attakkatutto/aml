@@ -6,7 +6,7 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import static aml.global.Constant.MAX_NUMBER_PARTNERS;
+import aml.global.Config;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +24,7 @@ public final class Company extends AgentBase {
     public Company(String idOwner) {
         super();
         this.idOwner = idOwner;
-        this.partners = new ArrayList<>(random.nextInt(MAX_NUMBER_PARTNERS));
+        this.partners = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberPartners()));
         initPartners();
     }
 

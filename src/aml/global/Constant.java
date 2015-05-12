@@ -12,29 +12,7 @@ package aml.global;
  */
 public final class Constant {    
     
-    public static final int MONTHS = 12;
-    
-    public static final int MAX_NUMBER_AGENT_MESSAGES = 20;
-    
-    /**
-     * Max number of EntityBase in the network
-     */
-    public static final int MAX_NUMBER_ENTITIES = 30;
-
-    /**
-     * Max number of transactions for an EntityBase
-     */
-    public static final int MAX_TRANSACTIONS_PER_ENTITIES = 3;
-    
-    /**
-     * Max parents of Person
-     */
-    public static final int MAX_NUMBER_PARENTS = 10;
-
-    /**
-     * Max partners of EntityBase (Company/Person)
-     */
-    public static final int MAX_NUMBER_PARTNERS = 10;
+    public static final int MONTHS = 12;   
 
     /**
      * Default damping factor
