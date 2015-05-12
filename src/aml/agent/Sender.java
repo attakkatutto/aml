@@ -51,8 +51,8 @@ public class Sender extends SimpleBehaviour {
                     base.setCosts(_amount,_time);
                     System.out.println(" - "
                             + myAgent.getLocalName()
-                            + " send to " + base.getNeighbour(i) + " -> "
-                            + _amount);                    
+                            + " send to " + base.getNeighbour(i) + " ->  month " + _time
+                            + " amount " + _amount);                    
                 } catch (IOException ex) {
                     Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
                 }

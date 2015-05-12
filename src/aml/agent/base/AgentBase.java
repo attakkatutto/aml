@@ -24,36 +24,36 @@ public abstract class AgentBase extends Agent implements IAgentBase {
 
     public AgentBase() {
         super();
-        this.deficitScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        this.fraudScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        this.suspectedScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        this.revenues = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        this.costs = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};        
+        this.deficitScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        this.fraudScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        this.suspectedScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.neighbour = new ArrayList<>();
     }
 
     public void addNeighbour(String id) {
-        this.neighbour.add(id);        
+        this.neighbour.add(id);
     }
-    
+
     public String getNeighbour(int index) {
-        return this.neighbour.get(index);        
+        return this.neighbour.get(index);
     }
-    
+
     public int sizeNeighbour() {
-        return this.neighbour.size();        
+        return this.neighbour.size();
     }
-    
+
     public boolean isEmptyNeighbour() {
-        return this.neighbour.isEmpty();        
+        return this.neighbour.isEmpty();
     }
 
     @Override
-    public void setup() {            
+    public void setup() {
         addBehaviour(new Sender());
         addBehaviour(new Receiver());
-    }        
-    
+    }
+
     /**
      * Get revenues of the EntityBase
      *
@@ -72,7 +72,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      * @param month
      */
     @Override
-    public void setRevenues(double revenue,int month) {
+    public void setRevenues(double revenue, int month) {
         revenues[month] += revenue;
     }
 
@@ -83,7 +83,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      * @param month
      */
     @Override
-    public void setCosts(double cost,int month) {
+    public void setCosts(double cost, int month) {
         costs[month] += cost;
     }
 
@@ -130,7 +130,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
     public double getSuspectedScore(int month) {
         return suspectedScore[month];
     }
-    
+
     /**
      * Are you honest?
      *
@@ -145,5 +145,19 @@ public abstract class AgentBase extends Agent implements IAgentBase {
 
     @Override
     public abstract void initPartners();
+
+    @Override
+    public double getGlobalCosts() {
+        double _global = 0;
+        for(double d: costs) {_global+=d;}
+        return _global;
+    }
+    
+    @Override
+    public double getGlobalRevenues() {
+        double _global = 0;
+        for(double d: revenues) {_global+=d;}
+        return _global;
+    }
 
 }

@@ -28,7 +28,7 @@ public class Receiver extends CyclicBehaviour {
                 base.setRevenues(t.getAmount(),t.getMonth());
                 System.out.println(" - "
                         + myAgent.getLocalName() + " receive  -> "            
-                        + t.getAmount() + " costs: " + base.getCosts(t.getMonth()) + " revenues: " + base.getRevenues(t.getMonth()));                
+                        + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + base.getCosts(t.getMonth()) + " revenues: " + base.getRevenues(t.getMonth()));                
             } catch (UnreadableException ex) {
                 Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
             }

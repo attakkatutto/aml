@@ -14,9 +14,9 @@ public interface IAgentBase {
 
     double getRevenues(int month);
 
-    void setRevenues(double revenue,int month);
+    void setRevenues(double revenue, int month);
 
-    void setCosts(double cost,int month);
+    void setCosts(double cost, int month);
 
     double getCosts(int month);
 
@@ -28,6 +28,10 @@ public interface IAgentBase {
 
     double getSuspectedScore(int month);
 
+    double getGlobalCosts();
+
+    double getGlobalRevenues();
+
     void initPartners();
-    
+
 }
