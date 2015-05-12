@@ -141,10 +141,10 @@ public abstract class AgentBase extends Agent implements IAgentBase {
     }
 
     @Override
-    public abstract double getDeficitScore(int month);
+    public double getDeficitScore(int month) {
+        return deficitScore[month];
+    }
 
-    @Override
-    public abstract void initPartners();
 
     @Override
     public double getGlobalCosts() {
