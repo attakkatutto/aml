@@ -38,14 +38,18 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         this.random = new Random();
         this.partners = new ArrayList<>(MAX_NUMBER_PARTNERS);
         this.parents = new ArrayList<>(MAX_NUMBER_PARENTS);
+        initVertexRelationship();
+    }       
+
+    private void initVertexRelationship(){
         if (this.graph.getNodeCount() > 0) {
             initPartners();
             if (type == VertexType.PERSON) {
                 initParents();
             }
         }
-    }       
-
+    }
+    
     @Override
     public void setIndex(int index) {
         super.setIndex(index);
