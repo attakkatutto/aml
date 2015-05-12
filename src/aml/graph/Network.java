@@ -9,7 +9,7 @@ import aml.agent.Company;
 import aml.agent.Person;
 import aml.agent.base.AgentBase;
 import static aml.global.Constant.*;
-import aml.global.VertexType;
+import aml.global.Enums.*;
 import aml.graph.base.VertexBase;
 import jade.core.Runtime;
 import jade.core.Profile;
@@ -118,7 +118,8 @@ public final class Network extends AbstractGraph {
             }
         });
 
-        setEdgeFactory((String id1, Node src, Node dst, boolean directed) -> new Connection(id1, (VertexBase) src, (VertexBase) dst));
+        setEdgeFactory((String id1, Node src, Node dst, boolean directed) -> 
+                new Connection(id1, (VertexBase) src, (VertexBase) dst));
     }    
 
      private void addAgent(VertexBase node) {

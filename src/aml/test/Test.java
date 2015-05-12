@@ -24,7 +24,8 @@ public class Test {
                 "node {fill-color: red; size-mode: dyn-size;} edge {fill-color:lightgrey;}");
         graph.display(true);
 
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxTransactionsPerEntity(), false);
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxTransactionsPerEntity(),
+                false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();       

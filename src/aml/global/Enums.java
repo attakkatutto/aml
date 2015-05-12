@@ -5,12 +5,27 @@
  */
 package aml.global;
 
+import javax.xml.bind.annotation.XmlEnumValue;
+
+
+public class Enums{
 /**
  *
  * @author ddefalco
  */
 public enum VertexType {
-
     PERSON,
     COMPANY
 };
+
+
+public enum WindowType {
+    @XmlEnumValue("1")
+    THREEMONTHS,
+    @XmlEnumValue("2")
+    FOURMONTHS,   
+    @XmlEnumValue("3")
+    SIXMONTHS
+};
+
+}

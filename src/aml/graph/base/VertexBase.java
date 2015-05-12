@@ -7,7 +7,7 @@ package aml.graph.base;
 
 import aml.agent.base.AgentBase;
 import aml.global.Config;
-import aml.global.VertexType;
+import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
 import org.graphstream.graph.implementations.AbstractGraph;

@@ -7,7 +7,7 @@ package aml.graph;
 
 import aml.agent.base.AgentBase;
 import aml.global.Config;
-import aml.global.VertexType;
+import aml.global.Enums.*;
 import aml.graph.base.VertexBase;
 import org.graphstream.graph.implementations.*;
 

@@ -16,4 +16,5 @@ and open the template in the editor.
     <personStdDev>10</personStdDev>
     <companyMean>2000</companyMean>
     <companyStdDev>50</companyStdDev>
+    <scoreWindowType>1</scoreWindowType> /*number of months*/
 </config>

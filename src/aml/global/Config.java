@@ -5,6 +5,7 @@
  */
 package aml.global;
 
+import aml.global.Enums.WindowType;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ public class Config {
     private int maxAgentMessage, maxNumberOfEntity, maxTransactionsPerEntity;
     private int maxNumberParents, maxNumberPartners;
     private double personMean, personStdDev,companyMean, companyStdDev;
+    private WindowType windowType;
 
     private Config() {
         maxAgentMessage = 0;
@@ -137,5 +139,14 @@ public class Config {
 
     public void setCompanyStdDev(double num) {
         companyStdDev = num;
+    }
+    
+    @XmlElement
+    public WindowType getScoreWindowType() {
+        return windowType;
+    }
+
+    public void setScoreWindowType(WindowType type) {
+        windowType = type;
     }
 }
