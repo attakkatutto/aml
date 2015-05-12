@@ -12,7 +12,9 @@ package aml.global;
  */
 public final class Constant {    
     
-    public static final int MONTH_BOUND = 12;
+    public static final int MONTHS = 12;
+    
+    public static final int MAX_NUMBER_AGENT_MESSAGES = 20;
     
     /**
      * Max number of EntityBase in the network

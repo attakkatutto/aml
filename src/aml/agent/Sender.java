@@ -6,7 +6,8 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import static aml.global.Constant.MONTH_BOUND;
+import static aml.global.Constant.MONTHS;
+import static aml.global.Constant.MAX_NUMBER_AGENT_MESSAGES;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -42,7 +43,7 @@ public class Sender extends SimpleBehaviour {
         if (!base.isEmptyNeighbour()) {
             for (int i = 0; i < base.sizeNeighbour(); i++) {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-                int _time = random.nextInt(MONTH_BOUND);
+                int _time = random.nextInt(MONTHS);
                 try {
                     msg.addReceiver(new AID(base.getNeighbour(i), AID.ISLOCALNAME));
                     double _amount = getRandomAmount(base.getClass().getName());                    
@@ -63,7 +64,7 @@ public class Sender extends SimpleBehaviour {
 
     @Override
     public boolean done() {
-        return count == 20;
+        return count == MAX_NUMBER_AGENT_MESSAGES;
     }
 
 }
