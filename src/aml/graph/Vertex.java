@@ -10,8 +10,6 @@ import static aml.global.Constant.MAX_NUMBER_PARENTS;
 import static aml.global.Constant.MAX_NUMBER_PARTNERS;
 import aml.global.VertexType;
 import aml.graph.base.VertexBase;
-import java.util.ArrayList;
-import java.util.Random;
 import org.graphstream.graph.implementations.*;
 
 /**
@@ -19,14 +17,7 @@ import org.graphstream.graph.implementations.*;
  *
  * @author ddefalco
  */
-public final class Vertex extends VertexBase {
-
-    //Random List of busness partners 
-    protected ArrayList<String> partners;
-    //Random List of parents
-    protected ArrayList<String> parents;
-
-    Random random;
+public final class Vertex extends VertexBase {    
 
     /**
      * @param graph Network
@@ -34,16 +25,7 @@ public final class Vertex extends VertexBase {
      * @param type type of the vertex
      */
     public Vertex(AbstractGraph graph, String id, VertexType type) {
-        super(graph, id, type);
-        this.random = new Random();
-        this.partners = new ArrayList<>(MAX_NUMBER_PARTNERS);
-        this.parents = new ArrayList<>(MAX_NUMBER_PARENTS);
-        if (this.graph.getNodeCount() > 0) {
-            initPartners();
-            if (type == VertexType.PERSON) {
-                initParents();
-            }
-        }
+        super(graph, id, type);        
     }
 
     @Override

@@ -6,7 +6,11 @@
 package aml.graph.base;
 
 import aml.agent.base.AgentBase;
+import static aml.global.Constant.MAX_NUMBER_PARENTS;
+import static aml.global.Constant.MAX_NUMBER_PARTNERS;
 import aml.global.VertexType;
+import java.util.ArrayList;
+import java.util.Random;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
 
@@ -19,11 +23,27 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     protected AgentBase agent;
     protected VertexType type;
+    
+    //Random List of busness partners 
+    protected ArrayList<String> partners;
+    //Random List of parents
+    protected ArrayList<String> parents;
+
+    protected Random random;
 
     // *** Constructor ***
     public VertexBase(AbstractGraph graph, String id, VertexType type) {
         super(graph, id);
         this.type = type;
+        this.random = new Random();
+        this.partners = new ArrayList<>(MAX_NUMBER_PARTNERS);
+        this.parents = new ArrayList<>(MAX_NUMBER_PARENTS);
+        if (this.graph.getNodeCount() > 0) {
+            initPartners();
+            if (type == VertexType.PERSON) {
+                initParents();
+            }
+        }
     }       
 
     @Override
@@ -40,7 +60,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     }
 
     public double getScore(int month) {
-        return agent.getDeficitScore(month);
+        return agent.getFraudScore(month);
     }
 
     /**
@@ -48,4 +68,16 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     @Override
     public abstract void setColor();
+    
+    /**
+     * Initialize the parents of the current node PERSON
+     */
+    @Override
+    public abstract void initParents();
+    
+    /**
+     * Initialize the partners of the current node
+     */
+    @Override
+    public abstract void initPartners();
 }

@@ -20,4 +20,7 @@ public interface IVertexBase {
     
     void setAgent(AgentBase a);
     
+    void initPartners();
+    
+    void initParents();
 }
