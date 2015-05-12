@@ -46,6 +46,7 @@ public final class Vertex extends VertexBase {
         agent = a;
     }
 
+    @Override
     public void initPartners() {
         int count = 0;
         while (count < Config.getInstance().getMaxNumberPartners()) {
@@ -55,6 +56,7 @@ public final class Vertex extends VertexBase {
         }
     }
 
+    @Override
     public void initParents() {
         int count = 0;
         while (count < Config.getInstance().getMaxNumberParents()) {

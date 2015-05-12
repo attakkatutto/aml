@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import aml.global.Config;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +23,6 @@ public final class Company extends AgentBase {
     public Company(String idOwner) {
         super();
         this.idOwner = idOwner;
-        this.partners = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberPartners()));
-        initPartners();
     }
 
     /**
@@ -44,11 +41,6 @@ public final class Company extends AgentBase {
      */
     public void setIdOwner(String idOwner) {
         this.idOwner = idOwner;
-    }
-
-    @Override
-    public void initPartners() {       
-        
     }
 
     @Override

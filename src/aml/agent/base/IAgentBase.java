@@ -32,6 +32,4 @@ public interface IAgentBase {
 
     double getGlobalRevenues();
 
-    void initPartners();
-
 }

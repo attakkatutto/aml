@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import aml.global.Config;
 import java.util.ArrayList;
 
 /**
@@ -25,10 +24,6 @@ public final class Person extends AgentBase {
     public Person(){
         super();      
         this.dummy = random.nextBoolean();
-        this.partners = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberPartners()));
-        this.parents = new ArrayList<>(random.nextInt(Config.getInstance().getMaxNumberParents()));
-        initPartners();
-        initParents();
     }
     
     /**
@@ -43,14 +38,5 @@ public final class Person extends AgentBase {
     @Override
     public double getDeficitScore(int month) {
         return deficitScore[month-1];
-    }
-
-    @Override
-    public void initPartners() {
-       
-    }
-
-    public void initParents() {
-        
     }
 }
