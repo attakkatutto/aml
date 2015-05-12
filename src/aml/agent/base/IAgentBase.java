@@ -12,21 +12,21 @@ package aml.agent.base;
  */
 public interface IAgentBase {
 
-    double getRevenues();
+    double getRevenues(int month);
 
-    void setRevenues(double revenue);
+    void setRevenues(double revenue,int month);
 
-    void setCosts(double cost);
+    void setCosts(double cost,int month);
 
-    double getCosts();
+    double getCosts(int month);
 
-    double getBudget();
+    double getBudget(int month);
 
-    double getDeficitScore();
+    double getDeficitScore(int month);
 
-    double getFraudScore();
+    double getFraudScore(int month);
 
-    double getSuspectedScore();
+    double getSuspectedScore(int month);
 
     void initPartners();
     

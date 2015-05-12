@@ -39,8 +39,8 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         this.type = type;
     }
 
-    public double getScore() {
-        return agent.getDeficitScore();
+    public double getScore(int month) {
+        return agent.getDeficitScore(month);
     }
 
     /**

@@ -263,7 +263,7 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
         //double initialRank = 1.0 / graph.getNodeCount();
         for (int i = 0; i < graph.getNodeCount(); i++) {
             VertexBase node = graph.getNode(i);
-            node.addAttribute(rankAttribute, node.getScore());
+            //node.addAttribute(rankAttribute, node.getScore());
         }
         newRanks = new ArrayList<>(graph.getNodeCount());
         upToDate = false;

@@ -17,16 +17,18 @@ import java.util.Random;
  */
 public abstract class AgentBase extends Agent implements IAgentBase {
 
-    protected double revenues, costs;
-    protected double fraudScore, suspectedScore, deficitScore;
+    protected double[] revenues, costs;
+    protected double[] fraudScore, suspectedScore, deficitScore;
     protected final Random random = new Random();
     protected ArrayList<String> neighbour;
 
     public AgentBase() {
         super();
-        this.deficitScore = 0;
-        this.fraudScore = 0;
-        this.suspectedScore = 0;
+        this.deficitScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        this.fraudScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        this.suspectedScore = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        this.revenues = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        this.costs = new double[]{0,0,0,0,0,0,0,0,0,0,0,0};        
         this.neighbour = new ArrayList<>();
     }
 
@@ -55,71 +57,78 @@ public abstract class AgentBase extends Agent implements IAgentBase {
     /**
      * Get revenues of the EntityBase
      *
+     * @param month
      * @return revenues
      */
     @Override
-    public double getRevenues() {
-        return revenues;
+    public double getRevenues(int month) {
+        return revenues[month-1];
     }
 
     /**
      * Set revenue of the EntityBase and increment total revenues
      *
      * @param revenue of the EntityBase
+     * @param month
      */
     @Override
-    public void setRevenues(double revenue) {
-        revenues += revenue;
+    public void setRevenues(double revenue,int month) {
+        revenues[month-1] += revenue;
     }
 
     /**
      * Set cost of the EntityBase and increment total costs
      *
      * @param cost of the EntityBase
+     * @param month
      */
     @Override
-    public void setCosts(double cost) {
-        costs += cost;
+    public void setCosts(double cost,int month) {
+        costs[month-1] += cost;
     }
 
     /**
      * Get costs of the EntityBase
      *
+     * @param month
      * @return costs
      */
     @Override
-    public double getCosts() {
-        return costs;
+    public double getCosts(int month) {
+        return costs[month-1];
     }
 
     /**
      * Get budget of the EntityBase
      *
+     * @param month
      * @return revenues - costs
      */
     @Override
-    public double getBudget() {
-        return revenues - costs;
+    public double getBudget(int month) {
+        return revenues[month-1] - costs[month-1];
     }
 
     /**
      * Get fraudScore of the EntityBase
      *
+     * @param month
      * @return fraudScore
      */
     @Override
-    public double getFraudScore() {
-        return fraudScore;
+    public double getFraudScore(int month) {
+        return fraudScore[month-1];
     }
 
     /**
      * Get suspectedScore of the EntityBase
      *
+     * @param month
      * @return suspectedScore
      */
     @Override
-    public double getSuspectedScore() {
-        return suspectedScore;
+    public double getSuspectedScore(int month) {
+        return suspectedScore[month-1];
     }
     
     /**
@@ -128,11 +137,11 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      * @return true/false
      */
     public boolean IsHonest() {
-        return this.getDeficitScore() >= 0;
+        return true;
     }
 
     @Override
-    public abstract double getDeficitScore();
+    public abstract double getDeficitScore(int month);
 
     @Override
     public abstract void initPartners();

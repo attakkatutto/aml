@@ -24,9 +24,7 @@ public final class Person extends AgentBase {
     protected ArrayList<String> parents;
 
     public Person(){
-        super();
-        this.revenues = 0;
-        this.costs = 0;
+        super();      
         this.dummy = random.nextBoolean();
         this.partners = new ArrayList<>(random.nextInt(MAX_NUMBER_PARTNERS));
         this.parents = new ArrayList<>(random.nextInt(MAX_NUMBER_PARENTS));
@@ -44,8 +42,8 @@ public final class Person extends AgentBase {
     }
     
     @Override
-    public double getDeficitScore() {
-        return deficitScore;
+    public double getDeficitScore(int month) {
+        return deficitScore[month-1];
     }
 
     @Override

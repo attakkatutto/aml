@@ -42,13 +42,13 @@ public class Sender extends SimpleBehaviour {
         if (!base.isEmptyNeighbour()) {
             for (int i = 0; i < base.sizeNeighbour(); i++) {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-                int time = random.nextInt(MONTH_BOUND);
+                int _time = random.nextInt(MONTH_BOUND);
                 try {
                     msg.addReceiver(new AID(base.getNeighbour(i), AID.ISLOCALNAME));
                     double _amount = getRandomAmount(base.getClass().getName());                    
-                    msg.setContentObject(new Transaction(myAgent.getLocalName() + "_" + i + "_" + Instant.now(), _amount, myAgent.getLocalName(), String.valueOf(i), time));//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
+                    msg.setContentObject(new Transaction(myAgent.getLocalName() + "_" + i + "_" + Instant.now(), _amount, myAgent.getLocalName(), String.valueOf(i), _time));//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
                     myAgent.send(msg);
-                    base.setCosts(_amount);
+                    base.setCosts(_amount,_time);
                     System.out.println(" - "
                             + myAgent.getLocalName()
                             + " send to " + base.getNeighbour(i) + " -> "

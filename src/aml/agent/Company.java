@@ -23,8 +23,6 @@ public final class Company extends AgentBase {
 
     public Company(String idOwner) {
         super();
-        this.revenues = 0;
-        this.costs = 0;
         this.idOwner = idOwner;
         this.partners = new ArrayList<>(random.nextInt(MAX_NUMBER_PARTNERS));
         initPartners();
@@ -54,8 +52,8 @@ public final class Company extends AgentBase {
     }
 
     @Override
-    public double getDeficitScore() {
-        return deficitScore;
+    public double getDeficitScore(int month) {
+        return deficitScore[month-1];
     }
     
 }
