@@ -62,7 +62,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public double getRevenues(int month) {
-        return revenues[month-1];
+        return revenues[month];
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public void setRevenues(double revenue,int month) {
-        revenues[month-1] += revenue;
+        revenues[month] += revenue;
     }
 
     /**
@@ -84,7 +84,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public void setCosts(double cost,int month) {
-        costs[month-1] += cost;
+        costs[month] += cost;
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public double getCosts(int month) {
-        return costs[month-1];
+        return costs[month];
     }
 
     /**
@@ -106,7 +106,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public double getBudget(int month) {
-        return revenues[month-1] - costs[month-1];
+        return revenues[month] - costs[month];
     }
 
     /**
@@ -117,7 +117,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public double getFraudScore(int month) {
-        return fraudScore[month-1];
+        return fraudScore[month];
     }
 
     /**
@@ -128,7 +128,7 @@ public abstract class AgentBase extends Agent implements IAgentBase {
      */
     @Override
     public double getSuspectedScore(int month) {
-        return suspectedScore[month-1];
+        return suspectedScore[month];
     }
     
     /**
