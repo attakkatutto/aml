@@ -7,8 +7,8 @@ and open the template in the editor.
 
 
 <config>
-    <maxAgentMessage>10000</maxAgentMessage>
-    <maxNumberOfEntity>30</maxNumberOfEntity>
+    <maxAgentMessage>10</maxAgentMessage>
+    <maxNumberOfEntity>50</maxNumberOfEntity>
     <maxTransactionsPerEntity>3</maxTransactionsPerEntity>
     <maxNumberPartners>10</maxNumberPartners>
     <maxNumberParents>15</maxNumberParents>
