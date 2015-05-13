@@ -7,6 +7,7 @@ package aml.graph.base;
 
 import aml.agent.base.AgentBase;
 import aml.global.Config;
+import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -75,7 +76,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     public void setType(VertexType type) {
         this.type = type;
-    }   
+    }
 
     /**
      * Get fraudScore of the EntityBase
@@ -84,7 +85,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     @Override
     public double getFraudScore() {
-        return fraudScore[0];
+        return 0;
     }
 
     /**
@@ -94,12 +95,16 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     @Override
     public double getSuspectedScore() {
-        return suspectedScore[0];
+        return 0;
     }
-    
+
     @Override
     public double getDeficitScore() {
-        return deficitScore[0];
+        for (String partner : partners) {
+            VertexBase base = (VertexBase) graph.getNode(partner);
+            
+        }
+        return 0;
     }
 
     /**
@@ -109,7 +114,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     public boolean isHonest() {
         return true;
-    }    
+    }
 
     /**
      * Set color node in the network
