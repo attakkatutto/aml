@@ -26,6 +26,7 @@ public class Receiver extends CyclicBehaviour {
             try {
                 Transaction t = (Transaction) msg.getContentObject();
                 base.setRevenues(t.getAmount(),t.getMonth());
+                base.getReceived().add(t);
                 System.out.println(" - "
                         + myAgent.getLocalName() + " receive  -> "            
                         + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + base.getCosts(t.getMonth()) + " revenues: " + base.getRevenues(t.getMonth()));                

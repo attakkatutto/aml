@@ -7,7 +7,6 @@ package aml.agent;
 
 import aml.agent.base.ITransactionBase;
 import jade.content.AgentAction;
-import java.time.Instant;
 
 /**
  * Output Transaction Class

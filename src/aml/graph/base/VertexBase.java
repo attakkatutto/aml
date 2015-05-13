@@ -5,12 +5,14 @@
  */
 package aml.graph.base;
 
+import aml.agent.Transaction;
 import aml.agent.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
 
@@ -65,6 +67,22 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         }
     }
 
+    public ArrayList<String> getPartners() {
+        return partners;
+    }
+
+    public void setPartners(ArrayList<String> partners) {
+        this.partners = partners;
+    }
+
+    public ArrayList<String> getParents() {
+        return parents;
+    }
+
+    public void setParents(ArrayList<String> parents) {
+        this.parents = parents;
+    }    
+    
     @Override
     public void setIndex(int index) {
         super.setIndex(index);
@@ -99,16 +117,31 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     }
 
     @Override
-    public double getDeficitScore(int index) {        
-        for (int month = 0;month<MONTHS;month++) {
-            for (String partner : partners) {
-                VertexBase base = (VertexBase) graph.getNode(partner);
-                deficitScore[month/deficitScore.length] += base.getAgent().getBudget(month) - base.getAgent().getRevenues(month);
-//                if (base.parents.contains(id) || base.isDummy()) 
-//                    deficitScore[month/deficitScore.length] += base.getAgent().getBudget(month) - base.getAgent().getRevenues(month);
+    public double getDeficitScore(int index) {
+        updateDeficitScore();
+        return deficitScore[index];
+    }
+
+    private void updateDeficitScore() {
+        for (int month = 0; month < MONTHS; month++) {
+            deficitScore[month / deficitScore.length] = 0;
+            for (String u : partners) {
+                VertexBase v = (VertexBase) graph.getNode(u);
+                deficitScore[month / deficitScore.length] += v.getAgent().getBudget(month) - v.getAgent().getRevenues(month);
+                if (v.getType() == VertexType.PERSON) 
+                    for (String u1 : v.getParents()) {
+                        VertexBase v2 = (VertexBase) graph.getNode(u1);
+                        for (String u2 : v2.getPartners()) {
+                            VertexBase v3 = (VertexBase) graph.getNode(u2);
+                            deficitScore[month / deficitScore.length] += v3.getAgent().getBudget(month);
+                            for (Edge e : v3.getEdgeSet()) 
+                                if (e.getNode0() == v3 && e.getNode1() == v) 
+                                    for (Transaction t :v3.getAgent().getSent()) 
+                                        if (t.getIdTargetAgent().equals(v.getId())) deficitScore[month / deficitScore.length] -= t.getAmount();                                                              
+                        }
+                    }                
             }
         }
-        return 0;
     }
 
     /**
@@ -119,7 +152,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     public boolean isHonest() {
         return true;
     }
-    
+
     /**
      * Are you dummy?
      *

@@ -49,10 +49,12 @@ public class Sender extends SimpleBehaviour {
                 int _time = random.nextInt(MONTHS);
                 try {
                     msg.addReceiver(new AID(base.getNeighbour(i), AID.ISLOCALNAME));
-                    double _amount = getRandomAmount(base.getClass().getName());                    
-                    msg.setContentObject(new Transaction(myAgent.getLocalName() + "_" + i + "_" + Instant.now(), _amount, myAgent.getLocalName(), String.valueOf(i), _time));//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
+                    double _amount = getRandomAmount(base.getClass().getName());   
+                    Transaction t = new Transaction(myAgent.getLocalName() + "_" + i + "_" + Instant.now(), _amount, myAgent.getLocalName(), String.valueOf(i), _time);
+                    msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
                     myAgent.send(msg);
                     base.setCosts(_amount,_time);
+                    base.getSent().add(t);
                     System.out.println(" - "
                             + myAgent.getLocalName()
                             + " send to " + base.getNeighbour(i) + " ->  month " + _time

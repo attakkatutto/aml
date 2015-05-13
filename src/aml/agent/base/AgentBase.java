@@ -8,6 +8,7 @@ package aml.agent.base;
 import aml.global.Config;
 import aml.agent.Receiver;
 import aml.agent.Sender;
+import aml.agent.Transaction;
 import jade.core.Agent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,12 +22,16 @@ public abstract class AgentBase extends Agent implements IAgentBase {
     protected double[] revenues, costs;
     protected final Random random = new Random();
     protected ArrayList<String> neighbour;
+    protected ArrayList<Transaction> sent;
+    protected ArrayList<Transaction> received;
 
     public AgentBase() {
         super();        
         this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.neighbour = new ArrayList<>();
+        this.sent = new ArrayList<>();
+        this.received = new ArrayList<>();
     }
 
     public void addNeighbour(String id) {
@@ -124,4 +129,20 @@ public abstract class AgentBase extends Agent implements IAgentBase {
         return _global;
     }
 
+    public ArrayList<Transaction> getSent() {
+        return sent;
+    }
+
+    public void setSent(ArrayList<Transaction> sent) {
+        this.sent = sent;
+    }
+
+    public ArrayList<Transaction> getReceived() {
+        return received;
+    }
+
+    public void setReceived(ArrayList<Transaction> received) {
+        this.received = received;
+    }
+    
 }
