@@ -11,6 +11,7 @@ import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
 
@@ -99,10 +100,14 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     }
 
     @Override
-    public double getDeficitScore() {
-        for (String partner : partners) {
-            VertexBase base = (VertexBase) graph.getNode(partner);
-            
+    public double getDeficitScore() {        
+        for (int month = 0;month<MONTHS;month++) {
+            for (String partner : partners) {
+                VertexBase base = (VertexBase) graph.getNode(partner);
+                deficitScore[month/deficitScore.length] += base.getAgent().getBudget(month) - base.getAgent().getRevenues(month);
+//                if (base.parents.contains(id) || base.isDummy()) 
+//                    deficitScore[month/deficitScore.length] += base.getAgent().getBudget(month) - base.getAgent().getRevenues(month);
+            }
         }
         return 0;
     }
@@ -113,6 +118,15 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      * @return true/false
      */
     public boolean isHonest() {
+        return true;
+    }
+    
+    /**
+     * Are you dummy?
+     *
+     * @return true/false
+     */
+    public boolean isDummy() {
         return true;
     }
 
