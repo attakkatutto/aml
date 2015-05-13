@@ -11,7 +11,6 @@ import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
-import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
 
@@ -100,7 +99,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     }
 
     @Override
-    public double getDeficitScore() {        
+    public double getDeficitScore(int index) {        
         for (int month = 0;month<MONTHS;month++) {
             for (String partner : partners) {
                 VertexBase base = (VertexBase) graph.getNode(partner);

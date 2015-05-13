@@ -5,8 +5,7 @@
  */
 package aml.graph;
 
-import aml.agent.Company;
-import aml.agent.Person;
+import aml.agent.MyAgent;
 import aml.agent.base.AgentBase;
 import static aml.global.Constant.*;
 import aml.global.Enums.*;
@@ -123,19 +122,9 @@ public final class Network extends AbstractGraph {
     }    
 
      private void addAgent(VertexBase node) {
-        AgentBase agent = null;
-        try {          
-            switch (node.getType()) {
-                case PERSON:
-                    agent = new Person();
-                    break;
-                case COMPANY:
-                    agent = new Company("");
-                    break;
-                default:
-                    agent = new Person();
-                    break;
-            }        
+        
+        try {   
+            AgentBase agent = new MyAgent(node.getType());            
             node.setAgent(agent);
             agentContainer.acceptNewAgent(node.getId(), agent).start();              
         } catch (StaleProxyException ex) {

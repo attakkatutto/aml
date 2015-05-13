@@ -16,7 +16,10 @@ import org.graphstream.graph.implementations.*;
  *
  * @author ddefalco
  */
-public final class Vertex extends VertexBase {    
+public final class Vertex extends VertexBase {
+
+    boolean honest;
+    boolean dummy;
 
     /**
      * @param graph Network
@@ -24,7 +27,8 @@ public final class Vertex extends VertexBase {
      * @param type type of the vertex
      */
     public Vertex(AbstractGraph graph, String id, VertexType type) {
-        super(graph, id, type);        
+        super(graph, id, type);
+        this.dummy = random.nextBoolean();
     }
 
     @Override
@@ -67,4 +71,14 @@ public final class Vertex extends VertexBase {
             count++;
         }
     }
+    
+    /**
+     * Are you a dummy or not?
+     *
+     * @return true/false
+     */
+    @Override
+    public boolean isDummy() {
+        return dummy;
+    }  
 }

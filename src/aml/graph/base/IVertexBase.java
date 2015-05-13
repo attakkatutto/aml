@@ -24,7 +24,7 @@ public interface IVertexBase {
 
     void initParents();
 
-    double getDeficitScore();
+    double getDeficitScore(int index);
 
     double getFraudScore();
 
