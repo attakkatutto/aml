@@ -36,15 +36,15 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         super(graph, id);
         switch (Config.getInstance().getScoreWindowType()) {
             case THREEMONTHS:
-                this.deficitScore = new double[3];
+                this.fraudScore = new double[3];
                 this.suspectedScore = new double[3];
                 this.deficitScore = new double[3];
             case FOURMONTHS:
-                this.deficitScore = new double[4];
+                this.fraudScore = new double[4];
                 this.suspectedScore = new double[4];
                 this.deficitScore = new double[4];
             case SIXMONTHS:
-                this.deficitScore = new double[6];
+                this.fraudScore = new double[6];
                 this.suspectedScore = new double[6];
                 this.deficitScore = new double[6];
         }
@@ -80,23 +80,26 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     /**
      * Get fraudScore of the EntityBase
      *
-     * @param month
      * @return fraudScore
      */
     @Override
-    public double getFraudScore(int month) {
-        return fraudScore[month];
+    public double getFraudScore() {
+        return fraudScore[0];
     }
 
     /**
      * Get suspectedScore of the EntityBase
      *
-     * @param month
      * @return suspectedScore
      */
     @Override
-    public double getSuspectedScore(int month) {
-        return suspectedScore[month];
+    public double getSuspectedScore() {
+        return suspectedScore[0];
+    }
+    
+    @Override
+    public double getDeficitScore() {
+        return deficitScore[0];
     }
 
     /**
@@ -106,12 +109,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     public boolean isHonest() {
         return true;
-    }
-
-    @Override
-    public double getDeficitScore(int month) {
-        return deficitScore[month];
-    }
+    }    
 
     /**
      * Set color node in the network
