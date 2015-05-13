@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import java.util.ArrayList;
 
 /**
  *
