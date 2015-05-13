@@ -1,7 +1,7 @@
-package aml.rank;
+package aml.graph;
 
 import static aml.global.Constant.*;
-import aml.graph.base.VertexBase;
+import aml.base.VertexBase;
 import java.util.ArrayList;
 import java.util.List;
 

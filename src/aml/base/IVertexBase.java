@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aml.graph.base;
+package aml.base;
 
-import aml.agent.base.AgentBase;
+import aml.base.AgentBase;
 
 /**
  * Interface EntityBase

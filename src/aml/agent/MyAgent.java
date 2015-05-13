@@ -5,8 +5,9 @@
  */
 package aml.agent;
 
-import aml.agent.base.AgentBase;
+import aml.base.AgentBase;
 import aml.global.Enums.VertexType;
+import org.graphstream.graph.Node;
 
 /**
  *
@@ -14,10 +15,10 @@ import aml.global.Enums.VertexType;
  */
 public final class MyAgent extends AgentBase {
 
-    protected VertexType type;
+    protected VertexType type;    
 
-    public MyAgent(VertexType type) {
-        super();
+    public MyAgent(VertexType type,Node n) {
+        super(n);
         this.type = type;
     }
 

@@ -5,12 +5,13 @@
  */
 package aml.agent;
 
-import aml.agent.base.AgentBase;
+import aml.base.AgentBase;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.graphstream.graph.Node;
 
 /**
  *
@@ -18,6 +19,12 @@ import java.util.logging.Logger;
  */
 public class Receiver extends CyclicBehaviour {
 
+    Node n;
+    
+    public Receiver(Node n){
+       this.n=n;
+    }
+    
     @Override
     public void action() {
         AgentBase base = (AgentBase) myAgent;

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aml.graph.base;
+package aml.base;
 
+import aml.base.IVertexBase;
 import aml.agent.Transaction;
-import aml.agent.base.AgentBase;
+import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;

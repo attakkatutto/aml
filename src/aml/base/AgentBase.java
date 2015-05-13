@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aml.agent.base;
+package aml.base;
 
-import aml.global.Config;
 import aml.agent.Receiver;
 import aml.agent.Sender;
 import aml.agent.Transaction;
 import jade.core.Agent;
 import java.util.ArrayList;
 import java.util.Random;
+import org.graphstream.graph.Node;
 
 /**
  *
@@ -19,14 +19,16 @@ import java.util.Random;
  */
 public abstract class AgentBase extends Agent implements IAgentBase {
 
+    private Node n;
     protected double[] revenues, costs;
     protected final Random random = new Random();
     protected ArrayList<String> neighbour;
     protected ArrayList<Transaction> sent;
     protected ArrayList<Transaction> received;
 
-    public AgentBase() {
-        super();        
+    public AgentBase(Node n) {
+        super();    
+        this.n = n;
         this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.neighbour = new ArrayList<>();
@@ -34,26 +36,10 @@ public abstract class AgentBase extends Agent implements IAgentBase {
         this.received = new ArrayList<>();
     }
 
-    public void addNeighbour(String id) {
-        this.neighbour.add(id);
-    }
-
-    public String getNeighbour(int index) {
-        return this.neighbour.get(index);
-    }
-
-    public int sizeNeighbour() {
-        return this.neighbour.size();
-    }
-
-    public boolean isEmptyNeighbour() {
-        return this.neighbour.isEmpty();
-    }
-
     @Override
     public void setup() {
-        addBehaviour(new Sender());
-        addBehaviour(new Receiver());
+        addBehaviour(new Sender(n));
+        addBehaviour(new Receiver(n));
     }
 
     /**

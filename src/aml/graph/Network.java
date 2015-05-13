@@ -5,24 +5,15 @@
  */
 package aml.graph;
 
-import aml.agent.MyAgent;
-import aml.agent.base.AgentBase;
 import static aml.global.Constant.*;
 import aml.global.Enums.*;
-import aml.graph.base.VertexBase;
-import jade.core.Runtime;
-import jade.core.Profile;
-import jade.core.ProfileImpl;
-import jade.wrapper.AgentContainer;
-import jade.wrapper.StaleProxyException;
+import aml.base.VertexBase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.AbstractEdge;
@@ -49,8 +40,7 @@ public final class Network extends AbstractGraph {
 
     protected int nodeCount;
     protected int edgeCount;
-    
-    protected AgentContainer agentContainer;
+   
 
     //**** Constructor
     /**
@@ -77,22 +67,10 @@ public final class Network extends AbstractGraph {
         nodeCount = edgeCount = 0;
 
         initFactories();
-        startJade();
     }
 
     public Network(String id) {
         this(id, true, false);
-    }
-
-    protected void startJade() {
-        // Get a hold on JADE runtime
-        // Create a default profile
-        Profile p = new ProfileImpl();
-        // Create a new main container (i.e. on this host, port 1099) 
-        Runtime.instance().createMainContainer(p);
-        // Create a new non-main container, connecting to the default
-        // main container (i.e. on this host, port 1099) 
-        agentContainer = Runtime.instance().createAgentContainer(p);        
     }
 
     /**
@@ -119,29 +97,7 @@ public final class Network extends AbstractGraph {
 
         setEdgeFactory((String id1, Node src, Node dst, boolean directed) -> 
                 new Connection(id1, (VertexBase) src, (VertexBase) dst));
-    }    
-
-     private void addAgent(VertexBase node) {
-        
-        try {   
-            AgentBase agent = new MyAgent(node.getType());            
-            node.setAgent(agent);
-            agentContainer.acceptNewAgent(node.getId(), agent).start();              
-        } catch (StaleProxyException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-     
-     
-    private void addNewNeighbour(Connection edge){
-        VertexBase _source = edge.getSourceNode();
-        VertexBase _target = edge.getTargetNode();
-        try {                       
-            _source.getAgent().addNeighbour(_target.getId());
-        } catch (Exception ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } 
+    }         
     
     // *** Callbacks ***
     @Override
@@ -155,8 +111,7 @@ public final class Network extends AbstractGraph {
             edgeArray = tmp;
         }
         edgeArray[edgeCount] = edge;
-        edge.setIndex(edgeCount++);        
-        addNewNeighbour(edge);
+        edge.setIndex(edgeCount++);
     }
 
     @Override
@@ -171,7 +126,6 @@ public final class Network extends AbstractGraph {
         }
         nodeArray[nodeCount] = node;
         node.setIndex(nodeCount++);
-        addAgent(node);
     }
 
     @Override

@@ -6,6 +6,7 @@
 package aml.test;
 
 import aml.global.Config;
+import aml.agent.Jade;
 import aml.graph.Network;
 import org.graphstream.graph.*;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
@@ -17,27 +18,28 @@ import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
  */
 public class Test {
 
-    public static void main(String[] args) throws InterruptedException {                
-        Graph graph = new Network("AML Test");
+    public static void main(String[] args) throws InterruptedException {
 
+        Graph graph = new Network("AML Test");
         graph.addAttribute("ui.stylesheet",
                 "node {fill-color: red; size-mode: dyn-size;} edge {fill-color:lightgrey;}");
         graph.display(true);
+
+        Jade f = new Jade(graph);
 
         BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxTransactionsPerEntity(),
                 false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
-        b.begin();       
-
+        b.begin();
         while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
-            b.nextEvents();    
+            b.nextEvents();
             for (Node node : graph) {
-                node.addAttribute("ui.label", String.format("%s", node.getId()));  
+                node.addAttribute("ui.label", String.format("%s", node.getId()));
             }
             Thread.sleep(100);
         }
-
+        f.startAgents();
         b.end();
     }
 }

@@ -5,7 +5,7 @@
  */
 package aml.agent;
 
-import aml.agent.base.ITransactionBase;
+import aml.base.ITransactionBase;
 import jade.content.AgentAction;
 
 /**

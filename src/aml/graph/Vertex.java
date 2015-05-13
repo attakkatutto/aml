@@ -5,10 +5,10 @@
  */
 package aml.graph;
 
-import aml.agent.base.AgentBase;
+import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
-import aml.graph.base.VertexBase;
+import aml.base.VertexBase;
 import org.graphstream.graph.implementations.*;
 
 /**

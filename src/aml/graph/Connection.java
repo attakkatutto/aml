@@ -5,7 +5,7 @@
  */
 package aml.graph;
 
-import aml.graph.base.VertexBase;
+import aml.base.VertexBase;
 import org.graphstream.graph.implementations.AbstractEdge;
 
 /**
