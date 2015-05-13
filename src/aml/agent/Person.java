@@ -33,10 +33,5 @@ public final class Person extends AgentBase {
      */
     public boolean IsDummy() {
         return dummy;
-    }
-    
-    @Override
-    public double getDeficitScore(int month) {
-        return deficitScore[month-1];
-    }
+    }       
 }

@@ -29,7 +29,7 @@ public final class Vertex extends VertexBase {
 
     @Override
     public void setColor() {
-        if (agent.IsHonest()) {
+        if (isHonest()) {
             this.addAttribute("ui.style", "fill-color: rgb(0,204,0);");
         } else {
             this.addAttribute("ui.style", "fill-color: rgb(255,0,0);");

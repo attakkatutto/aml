@@ -22,12 +22,6 @@ public interface IAgentBase {
 
     double getBudget(int month);
 
-    double getDeficitScore(int month);
-
-    double getFraudScore(int month);
-
-    double getSuspectedScore(int month);
-
     double getGlobalCosts();
 
     double getGlobalRevenues();

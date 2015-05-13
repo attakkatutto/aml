@@ -42,10 +42,4 @@ public final class Company extends AgentBase {
     public void setIdOwner(String idOwner) {
         this.idOwner = idOwner;
     }
-
-    @Override
-    public double getDeficitScore(int month) {
-        return deficitScore[month-1];
-    }
-    
 }

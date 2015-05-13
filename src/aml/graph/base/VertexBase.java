@@ -22,25 +22,40 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     protected AgentBase agent;
     protected VertexType type;
-    
+
     //Random List of busness partners 
     protected ArrayList<String> partners;
     //Random List of parents
     protected ArrayList<String> parents;
 
     protected Random random;
+    protected double[] fraudScore, suspectedScore, deficitScore;
 
     // *** Constructor ***
     public VertexBase(AbstractGraph graph, String id, VertexType type) {
         super(graph, id);
+        switch (Config.getInstance().getScoreWindowType()) {
+            case THREEMONTHS:
+                this.deficitScore = new double[3];
+                this.suspectedScore = new double[3];
+                this.deficitScore = new double[3];
+            case FOURMONTHS:
+                this.deficitScore = new double[4];
+                this.suspectedScore = new double[4];
+                this.deficitScore = new double[4];
+            case SIXMONTHS:
+                this.deficitScore = new double[6];
+                this.suspectedScore = new double[6];
+                this.deficitScore = new double[6];
+        }
         this.type = type;
         this.random = new Random();
         this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
         this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
         initVertexRelationship();
-    }       
+    }
 
-    private void initVertexRelationship(){
+    private void initVertexRelationship() {
         if (this.graph.getNodeCount() > 0) {
             initPartners();
             if (type == VertexType.PERSON) {
@@ -48,7 +63,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
             }
         }
     }
-    
+
     @Override
     public void setIndex(int index) {
         super.setIndex(index);
@@ -60,10 +75,42 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     public void setType(VertexType type) {
         this.type = type;
+    }   
+
+    /**
+     * Get fraudScore of the EntityBase
+     *
+     * @param month
+     * @return fraudScore
+     */
+    @Override
+    public double getFraudScore(int month) {
+        return fraudScore[month];
     }
 
-    public double getScore(int month) {
-        return agent.getFraudScore(month);
+    /**
+     * Get suspectedScore of the EntityBase
+     *
+     * @param month
+     * @return suspectedScore
+     */
+    @Override
+    public double getSuspectedScore(int month) {
+        return suspectedScore[month];
+    }
+
+    /**
+     * Are you honest?
+     *
+     * @return true/false
+     */
+    public boolean isHonest() {
+        return true;
+    }
+
+    @Override
+    public double getDeficitScore(int month) {
+        return deficitScore[month];
     }
 
     /**
@@ -71,13 +118,13 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     @Override
     public abstract void setColor();
-    
+
     /**
      * Initialize the parents of the current node PERSON
      */
     @Override
     public abstract void initParents();
-    
+
     /**
      * Initialize the partners of the current node
      */

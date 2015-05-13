@@ -7,14 +7,14 @@ and open the template in the editor.
 
 
 <config>
-    <maxAgentMessage>200</maxAgentMessage>
+    <maxAgentMessage>10000</maxAgentMessage>
     <maxNumberOfEntity>30</maxNumberOfEntity>
     <maxTransactionsPerEntity>3</maxTransactionsPerEntity>
     <maxNumberPartners>10</maxNumberPartners>
     <maxNumberParents>15</maxNumberParents>
-    <personMean>1000</personMean>
+    <personMean>400</personMean>
     <personStdDev>10</personStdDev>
-    <companyMean>2000</companyMean>
+    <companyMean>900</companyMean>
     <companyStdDev>50</companyStdDev>
     <scoreWindowType>1</scoreWindowType> /*number of months*/
 </config>

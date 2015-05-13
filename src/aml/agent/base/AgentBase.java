@@ -5,6 +5,7 @@
  */
 package aml.agent.base;
 
+import aml.global.Config;
 import aml.agent.Receiver;
 import aml.agent.Sender;
 import jade.core.Agent;
@@ -18,15 +19,11 @@ import java.util.Random;
 public abstract class AgentBase extends Agent implements IAgentBase {
 
     protected double[] revenues, costs;
-    protected double[] fraudScore, suspectedScore, deficitScore;
     protected final Random random = new Random();
     protected ArrayList<String> neighbour;
 
     public AgentBase() {
-        super();
-        this.deficitScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        this.fraudScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        this.suspectedScore = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        super();        
         this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.neighbour = new ArrayList<>();
@@ -109,54 +106,21 @@ public abstract class AgentBase extends Agent implements IAgentBase {
         return revenues[month] - costs[month];
     }
 
-    /**
-     * Get fraudScore of the EntityBase
-     *
-     * @param month
-     * @return fraudScore
-     */
-    @Override
-    public double getFraudScore(int month) {
-        return fraudScore[month];
-    }
-
-    /**
-     * Get suspectedScore of the EntityBase
-     *
-     * @param month
-     * @return suspectedScore
-     */
-    @Override
-    public double getSuspectedScore(int month) {
-        return suspectedScore[month];
-    }
-
-    /**
-     * Are you honest?
-     *
-     * @return true/false
-     */
-    public boolean IsHonest() {
-        return true;
-    }
-
-    @Override
-    public double getDeficitScore(int month) {
-        return deficitScore[month];
-    }
-
-
     @Override
     public double getGlobalCosts() {
         double _global = 0;
-        for(double d: costs) {_global+=d;}
+        for (double d : costs) {
+            _global += d;
+        }
         return _global;
     }
-    
+
     @Override
     public double getGlobalRevenues() {
         double _global = 0;
-        for(double d: revenues) {_global+=d;}
+        for (double d : revenues) {
+            _global += d;
+        }
         return _global;
     }
 

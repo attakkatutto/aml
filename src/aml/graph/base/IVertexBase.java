@@ -12,15 +12,21 @@ import aml.agent.base.AgentBase;
  *
  * @author ddefalco
  */
-public interface IVertexBase {    
+public interface IVertexBase {
 
     void setColor();
-    
+
     AgentBase getAgent();
-    
+
     void setAgent(AgentBase a);
-    
+
     void initPartners();
-    
+
     void initParents();
+
+    double getDeficitScore(int month);
+
+    double getFraudScore(int month);
+
+    double getSuspectedScore(int month);
 }
