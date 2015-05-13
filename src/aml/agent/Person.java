@@ -16,10 +16,6 @@ public final class Person extends AgentBase {
 
     boolean honest;
     boolean dummy;
-    //Random List of busness partners 
-    protected ArrayList<String> partners;
-    //Random List of parents
-    protected ArrayList<String> parents;
 
     public Person(){
         super();      

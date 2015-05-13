@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.agent.base.AgentBase;
-import java.util.ArrayList;
 
 /**
  * Company of the network
@@ -17,8 +16,6 @@ public final class Company extends AgentBase {
 
     //identifier of the company owner
     private String idOwner;
-    //Random List of the company partners
-    protected ArrayList<String> partners;
 
     public Company(String idOwner) {
         super();
