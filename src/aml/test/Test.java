@@ -39,6 +39,7 @@ public class Test {
             }
             Thread.sleep(100);
         }
+        
         f.startAgents();
         b.end();
     }

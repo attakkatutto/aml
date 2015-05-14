@@ -8,7 +8,7 @@ package aml.graph;
 import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
-import aml.base.VertexBase;
+import aml.base.NodeBase;
 import org.graphstream.graph.implementations.*;
 
 /**
@@ -16,7 +16,7 @@ import org.graphstream.graph.implementations.*;
  *
  * @author ddefalco
  */
-public final class Vertex extends VertexBase {
+public final class MyNode extends NodeBase {
 
     boolean honest;
     boolean dummy;
@@ -26,7 +26,7 @@ public final class Vertex extends VertexBase {
      * @param id identifier of the Person
      * @param type type of the vertex
      */
-    public Vertex(AbstractGraph graph, String id, NodeType type) {
+    public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
         this.dummy = random.nextBoolean();
     }
@@ -64,7 +64,7 @@ public final class Vertex extends VertexBase {
     public void initParents() {
         int count = 0;
         while (count < Config.getInstance().getMaxNumberParents()) {
-            Vertex v = graph.getNode(random.nextInt(graph.getNodeCount()));
+            MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
             if (v.type == NodeType.PERSON) {
                 parents.add(v.getId());
             }

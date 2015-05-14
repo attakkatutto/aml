@@ -7,7 +7,7 @@ package aml.graph;
 
 import static aml.global.Constant.*;
 import aml.global.Enums.*;
-import aml.base.VertexBase;
+import aml.base.NodeBase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,13 +29,13 @@ public final class Network extends AbstractGraph {
 
     private final Random random;
 
-    protected HashMap<String, VertexBase> nodeMap;
+    protected HashMap<String, NodeBase> nodeMap;
     protected HashMap<String, Connection> edgeMap;
 
     public ArrayList<String> persons;
     public ArrayList<String> companies;
 
-    protected VertexBase[] nodeArray;
+    protected NodeBase[] nodeArray;
     protected Connection[] edgeArray;
 
     protected int nodeCount;
@@ -62,7 +62,7 @@ public final class Network extends AbstractGraph {
                 4 * DEFAULT_NODE_CAPACITY / 3 + 1);
         edgeMap = new HashMap<>(
                 4 * DEFAULT_EDGE_CAPACITY / 3 + 1);
-        nodeArray = new VertexBase[DEFAULT_NODE_CAPACITY];
+        nodeArray = new NodeBase[DEFAULT_NODE_CAPACITY];
         edgeArray = new Connection[DEFAULT_EDGE_CAPACITY];
         nodeCount = edgeCount = 0;
 
@@ -80,23 +80,23 @@ public final class Network extends AbstractGraph {
         setNodeFactory((String id1, Graph graph) -> {
             if (persons.size() <= 0) {
                 persons.add(id1);
-                return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
+                return (NodeBase) new MyNode((AbstractGraph) graph, id1, NodeType.PERSON);
             }
             switch (random.nextInt(3)) {
                 case 0:
                     persons.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
+                    return (NodeBase) new MyNode((AbstractGraph) graph, id1, NodeType.PERSON);
                 case 1:
                     companies.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.COMPANY);
+                    return (NodeBase) new MyNode((AbstractGraph) graph, id1, NodeType.COMPANY);
                 default:
                     persons.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
+                    return (NodeBase) new MyNode((AbstractGraph) graph, id1, NodeType.PERSON);
             }
         });
 
         setEdgeFactory((String id1, Node src, Node dst, boolean directed) -> 
-                new Connection(id1, (VertexBase) src, (VertexBase) dst));
+                new Connection(id1, (NodeBase) src, (NodeBase) dst));
     }         
     
     // *** Callbacks ***
@@ -116,10 +116,10 @@ public final class Network extends AbstractGraph {
 
     @Override
     protected void addNodeCallback(AbstractNode absnode) {
-        VertexBase node = (VertexBase) absnode;
+        NodeBase node = (NodeBase) absnode;
         nodeMap.put(node.getId(), node);
         if (nodeCount == nodeArray.length) {
-            VertexBase[] tmp = new VertexBase[(int) (nodeArray.length * GROW_FACTOR) + 1];
+            NodeBase[] tmp = new NodeBase[(int) (nodeArray.length * GROW_FACTOR) + 1];
             System.arraycopy(nodeArray, 0, tmp, 0, nodeArray.length);
             Arrays.fill(nodeArray, null);
             nodeArray = tmp;
@@ -175,17 +175,17 @@ public final class Network extends AbstractGraph {
     }
 
     @Override
-    public VertexBase getNode(String id) {
-        return (VertexBase) nodeMap.get(id);
+    public NodeBase getNode(String id) {
+        return (NodeBase) nodeMap.get(id);
     }
 
     @Override
-    public VertexBase getNode(int index) {
+    public NodeBase getNode(int index) {
         if (index < 0 || index > nodeCount) {
             throw new IndexOutOfBoundsException("Node " + index
                     + " does not exist");
         }
-        return (VertexBase) nodeArray[index];
+        return (NodeBase) nodeArray[index];
     }
 
     @Override
@@ -270,7 +270,7 @@ public final class Network extends AbstractGraph {
     }
 
     @Override
-    public Iterator<VertexBase> getNodeIterator() {
+    public Iterator<NodeBase> getNodeIterator() {
         return new NodeIterator<>();
     }
 }

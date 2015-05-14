@@ -7,7 +7,7 @@ package aml.agent;
 
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
-import aml.graph.Vertex;
+import aml.graph.MyNode;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -52,7 +52,7 @@ public class Sender extends SimpleBehaviour {
         if (n.getOutDegree() > 0) {
             Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
             MyAgent base = (MyAgent) myAgent;
-            Vertex v = e.getTargetNode();
+            MyNode v = e.getTargetNode();
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             int _time = random.nextInt(MONTHS);
             try {

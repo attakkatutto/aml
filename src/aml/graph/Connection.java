@@ -5,7 +5,7 @@
  */
 package aml.graph;
 
-import aml.base.VertexBase;
+import aml.base.NodeBase;
 import org.graphstream.graph.implementations.AbstractEdge;
 
 /**
@@ -22,7 +22,7 @@ public final class Connection extends AbstractEdge {
      * @param sourceAgent EntityBase transaction source
      * @param targetAgent EntityBase transaction target
      */
-    public Connection(String id, VertexBase sourceAgent, VertexBase targetAgent) {
+    public Connection(String id, NodeBase sourceAgent, NodeBase targetAgent) {
         super(id, sourceAgent, targetAgent, true);
         this.directed = true;
     }

@@ -17,7 +17,7 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
  *
  * @author ddefalco
  */
-public abstract class VertexBase extends AdjacencyListNode implements IVertexBase {
+public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
 
     protected AgentBase agent;
     protected NodeType type;
@@ -32,7 +32,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     protected double[] fraudScore, suspectedScore, deficitScore;
 
     // *** Constructor ***
-    public VertexBase(AbstractGraph graph, String id, NodeType type) {
+    public NodeBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
         this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

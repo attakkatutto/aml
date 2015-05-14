@@ -1,7 +1,7 @@
 package aml.graph;
 
 import static aml.global.Constant.*;
-import aml.base.VertexBase;
+import aml.base.NodeBase;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -262,7 +262,7 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
         graph.addElementSink(this);
         //double initialRank = 1.0 / graph.getNodeCount();
         for (int i = 0; i < graph.getNodeCount(); i++) {
-            VertexBase node = graph.getNode(i);
+            NodeBase node = graph.getNode(i);
             //node.addAttribute(rankAttribute, node.getScore());
         }
         newRanks = new ArrayList<>(graph.getNodeCount());
@@ -347,7 +347,7 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
         newRanks.clear();
         double danglingRank = 0;
         for (int i = 0; i < graph.getNodeCount(); i++) {
-            VertexBase node = graph.getNode(i);
+            NodeBase node = graph.getNode(i);
             double sum = 0;
             for (int j = 0; j < node.getInDegree(); j++) {
                 Node other = node.getEnteringEdge(j).getOpposite(node);
@@ -362,7 +362,7 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
 
         normDiff = 0;
         for (int i = 0; i < graph.getNodeCount(); i++) {
-            VertexBase node = graph.getNode(i);
+            NodeBase node = graph.getNode(i);
             double currentRank = node.getNumber(rankAttribute);
             double newRank = newRanks.get(i) + danglingRank;
             normDiff += Math.abs(newRank - currentRank);

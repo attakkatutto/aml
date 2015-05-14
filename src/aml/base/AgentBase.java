@@ -14,10 +14,11 @@ import java.util.Random;
 import org.graphstream.graph.Node;
 
 /**
- *
+ * Base class of custom JADE Agent
+ * 
  * @author Davide
  */
-public abstract class AgentBase extends Agent implements IAgentBase {
+public abstract class AgentBase extends Agent {
 
     private Node n;
     protected final Random random = new Random();

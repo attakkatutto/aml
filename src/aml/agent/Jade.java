@@ -7,7 +7,7 @@ package aml.agent;
 
 import aml.agent.MyAgent;
 import aml.graph.Network;
-import aml.graph.Vertex;
+import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
@@ -57,7 +57,7 @@ public final class Jade {
 
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
-            Vertex v = (Vertex) n;
+            MyNode v = (MyNode) n;
             MyAgent a = new MyAgent(v.getType(), n);            
             createAgent(a, n.getId());
         }

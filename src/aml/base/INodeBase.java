@@ -12,7 +12,7 @@ import aml.base.AgentBase;
  *
  * @author ddefalco
  */
-public interface IVertexBase {
+public interface INodeBase {
 
     void setColor();
 
