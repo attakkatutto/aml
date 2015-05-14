@@ -41,16 +41,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
         this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
         this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
         initScore();
-        initVertexRelationship();
-    }
-
-    private void initVertexRelationship() {
-        if (this.graph.getNodeCount() > 0) {
-            initPartners();
-            if (type == NodeType.PERSON) {
-                initParents();
-            }
-        }
     }
 
     public ArrayList<String> getPartners() {

@@ -5,7 +5,6 @@
  */
 package aml.base;
 
-import aml.base.AgentBase;
 
 /**
  * Interface EntityBase

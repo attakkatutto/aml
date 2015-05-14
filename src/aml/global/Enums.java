@@ -14,8 +14,10 @@ public class Enums{
  * @author ddefalco
  */
 public enum NodeType {
-    PERSON,
-    COMPANY
+    EMPLOYEE,
+    FREELANCE,
+    SMALLCOMPANY,
+    BIGCOMPANY
 };
 
 

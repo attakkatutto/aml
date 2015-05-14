@@ -65,7 +65,7 @@ public final class MyNode extends NodeBase {
         int count = 0;
         while (count < Config.getInstance().getMaxNumberParents()) {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
-            if (v.type == NodeType.PERSON) {
+            if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
                 parents.add(v.getId());
             }
             count++;
