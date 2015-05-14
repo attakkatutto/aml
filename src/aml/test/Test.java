@@ -7,6 +7,7 @@ package aml.test;
 
 import aml.global.Config;
 import aml.agent.Jade;
+import aml.graph.MyNode;
 import aml.graph.Network;
 import org.graphstream.graph.*;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
@@ -26,13 +27,14 @@ public class Test {
                 + "     fill-color: white; "
                 + "     stroke-mode: plain; "
                 + "     size-mode: fit; "
+                + "     shape:rounded-box;  "
                 + "} "
                 + "     node.person {  "
-                + "     shape:rounded-box; } "
+                + "     shape: rounded-box; } "
                 + "     node.company {   "
-                + "     shape:circle; }  "
+                + "     shape: circle; }  "
                 + "edge { "
-                + "     shape: freeplane; fill-color:lightgrey; "
+                + "     shape: freeplane; fill-color:grey; "
                 + "}");        
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
@@ -51,6 +53,19 @@ public class Test {
             b.nextEvents();
             for (Node node : graph) {
                 node.addAttribute("ui.label", String.format("%s", node.getId()));
+                MyNode n = (MyNode) node;
+                switch (n.getType()) {
+                    case EMPLOYEE:                       
+                        node.addAttribute("ui.class", "person");                       
+                    case SMALLCOMPANY:                        
+                        node.addAttribute("ui.class", "company");                      
+                    case FREELANCE:                
+                        node.setAttribute("ui.class", "person");
+                    case BIGCOMPANY:
+                        node.addAttribute("ui.style", "company");
+                    default:
+                        node.addAttribute("ui.style", "person");
+                }
             }
             Thread.sleep(100);
         }
