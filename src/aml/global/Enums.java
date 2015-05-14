@@ -10,7 +10,8 @@ import javax.xml.bind.annotation.XmlEnumValue;
 
 public class Enums{
 /**
- *
+ * Enumerations
+ *  
  * @author ddefalco
  */
 public enum NodeType {

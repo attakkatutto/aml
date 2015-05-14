@@ -26,6 +26,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
     protected ArrayList<String> partners;
     //Random List of parents
     protected ArrayList<String> parents;
+    //Random List of dummies
+    protected ArrayList<String> dummies;
 
     protected Random random;
     protected double[] revenues, costs;
@@ -40,6 +42,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
         this.random = new Random();
         this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
         this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
+        this.dummies = new ArrayList<>(Config.getInstance().getMaxNumberDummies());
         initScore();
     }
 
@@ -182,10 +185,11 @@ public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
     /**
      * Are you dummy?
      *
+     * @param id
      * @return true/false
      */
-    public boolean isDummy() {
-        return true;
+    public boolean isDummy(String id) {
+        return dummies.contains(id);
     }
 
     /**

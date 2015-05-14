@@ -19,7 +19,6 @@ import org.graphstream.graph.implementations.*;
 public final class MyNode extends NodeBase {
 
     boolean honest;
-    boolean dummy;
 
     /**
      * @param graph Network
@@ -28,7 +27,6 @@ public final class MyNode extends NodeBase {
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
-        this.dummy = random.nextBoolean();
     }
 
     @Override
@@ -70,15 +68,5 @@ public final class MyNode extends NodeBase {
             }
             count++;
         }
-    }
-    
-    /**
-     * Are you a dummy or not?
-     *
-     * @return true/false
-     */
-    @Override
-    public boolean isDummy() {
-        return dummy;
-    }  
+    }       
 }

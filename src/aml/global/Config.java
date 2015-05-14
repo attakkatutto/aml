@@ -24,21 +24,14 @@ public class Config {
 
     private static Config _instance;
     private int maxAgentMessage, maxNumberOfEntity, maxTransactionsPerEntity;
-    private int maxNumberParents, maxNumberPartners;
-    private double personMean, personStdDev,companyMean, companyStdDev;
+    private int maxNumberParents, maxNumberPartners,maxNumberDummies;
+    private double employeeMean, employeeStdDev,
+            freelanceMean, freelanceStdDev,
+            bigCompanyMean, bigCompanyStdDev,
+            smallCompanyMean, smallCompanyStdDev;
     private WindowType windowType;
 
-    private Config() {
-        maxAgentMessage = 0;
-        maxNumberOfEntity = 0;
-        maxTransactionsPerEntity = 0;
-        maxNumberPartners = 0;
-        maxNumberParents = 0;
-        personMean = 0;
-        personStdDev = 0;
-        companyMean = 0;
-        companyStdDev = 0;
-    }
+    private Config() {}
 
     public static Config getInstance() {
         if (_instance == null) {
@@ -69,6 +62,15 @@ public class Config {
         maxAgentMessage = num;
     }
 
+    @XmlElement
+    public int getMaxNumberDummies() {
+        return maxNumberDummies;
+    }
+
+    public void setMaxNumberDummies(int num) {
+        maxNumberDummies = num;
+    }
+    
     @XmlElement
     public int getMaxNumberOfEntity() {
         return maxNumberOfEntity;
@@ -106,39 +108,75 @@ public class Config {
     }
 
     @XmlElement
-    public double getPersonMean() {
-        return personMean;
+    public double getEmployeeMean() {
+        return employeeMean;
     }
 
-    public void setPersonMean(double num) {
-        personMean = num;
-    }
-
-    @XmlElement
-    public double getPersonStdDev() {
-        return personStdDev;
-    }
-
-    public void setPersonStdDev(double num) {
-        personStdDev = num;
+    public void setEmployeeMean(double num) {
+        employeeMean = num;
     }
     
     @XmlElement
-    public double getCompanyMean() {
-        return companyMean;
+    public double getEmployeeStdDev() {
+        return employeeStdDev;
     }
 
-    public void setCompanyMean(double num) {
-        companyMean = num;
+    public void setEmployeeStdDev(double num) {
+        employeeStdDev = num;
+    }
+    
+    @XmlElement
+    public double getFreelanceMean() {
+        return freelanceMean;
+    }
+
+    public void setFreelanceMean(double num) {
+        freelanceMean = num;
     }
 
     @XmlElement
-    public double getCompanyStdDev() {
-        return companyStdDev;
+    public double getFreelanceStdDev() {
+        return freelanceStdDev;
     }
 
-    public void setCompanyStdDev(double num) {
-        companyStdDev = num;
+    public void setFreelanceStdDev(double num) {
+        freelanceStdDev = num;
+    }
+    
+    @XmlElement
+    public double getSmallCompanyMean() {
+        return smallCompanyMean;
+    }
+
+    public void setSmallCompanyMean(double num) {
+        smallCompanyMean = num;
+    }
+
+    @XmlElement
+    public double getSmallCompanyStdDev() {
+        return smallCompanyStdDev;
+    }
+
+    public void setSmallCompanyStdDev(double num) {
+        smallCompanyStdDev = num;
+    }
+    
+    @XmlElement
+    public double getBigCompanyMean() {
+        return bigCompanyMean;
+    }
+
+    public void setBigCompanyMean(double num) {
+        bigCompanyMean = num;
+    }
+    
+    @XmlElement
+    public double getBigCompanyStdDev() {
+        return bigCompanyStdDev;
+    }
+
+    public void setBigCompanyStdDev(double num) {
+        bigCompanyStdDev = num;
     }
     
     @XmlElement

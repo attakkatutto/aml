@@ -8,7 +8,6 @@ package aml.graph;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;

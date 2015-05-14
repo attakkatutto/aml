@@ -7,6 +7,7 @@ package aml.agent;
 
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
+import aml.global.Enums.NodeType;
 import aml.graph.MyNode;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
@@ -33,17 +34,23 @@ public class Sender extends SimpleBehaviour {
         this.n = n;
     }
 
-    private double getRandomAmount(String name) {
-        switch (name.toLowerCase()) {
-            case "person":
-                return Config.getInstance().getPersonMean() * random.nextDouble()
-                        + Config.getInstance().getPersonStdDev();
-            case "company":
-                return Config.getInstance().getCompanyMean() * random.nextDouble()
-                        + Config.getInstance().getCompanyStdDev();
+    private double getRandomAmount(NodeType type) {
+        switch (type) {
+            case EMPLOYEE:
+                return Config.getInstance().getEmployeeMean() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDev();
+            case FREELANCE:
+                return Config.getInstance().getFreelanceMean() * random.nextDouble()
+                        + Config.getInstance().getFreelanceStdDev();
+            case BIGCOMPANY:
+                return Config.getInstance().getBigCompanyMean() * random.nextDouble()
+                        + Config.getInstance().getBigCompanyStdDev();
+            case SMALLCOMPANY:
+                return Config.getInstance().getSmallCompanyMean() * random.nextDouble()
+                        + Config.getInstance().getSmallCompanyStdDev();
             default:
-                return Config.getInstance().getPersonMean() * random.nextDouble()
-                        + Config.getInstance().getPersonStdDev();
+                return Config.getInstance().getEmployeeMean() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDev();
         }
     }
 
@@ -57,7 +64,7 @@ public class Sender extends SimpleBehaviour {
             int _time = random.nextInt(MONTHS);
             try {
                 msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
-                double _amount = getRandomAmount(base.getClass().getName());
+                double _amount = getRandomAmount(base.getType());
                 Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + Instant.now(), _amount, myAgent.getLocalName(), v.getId(), _time);
                 msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
                 myAgent.send(msg);
