@@ -19,10 +19,24 @@ import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 public class Test {
 
     public static void main(String[] args) throws InterruptedException {
-
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         Graph graph = new Network("AML Test");
-        graph.addAttribute("ui.stylesheet",
-                "node {fill-color: red; size-mode: dyn-size;} edge {fill-color:lightgrey;}");
+        graph.setAttribute("stylesheet", "node { "                
+                + "     padding: 6px; "
+                + "     fill-color: white; "
+                + "     stroke-mode: plain; "
+                + "     size-mode: fit; "
+                + "} "
+                + "     node.person {  "
+                + "     shape:rounded-box; } "
+                + "     node.company {   "
+                + "     shape:circle; }  "
+                + "edge { "
+                + "     shape: freeplane; fill-color:lightgrey; "
+                + "}");        
+        graph.addAttribute("ui.quality");
+        graph.addAttribute("ui.antialias");
+
         graph.display(true);
 
         Jade f = new Jade(graph);
@@ -32,7 +46,7 @@ public class Test {
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();
-        
+
         while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
             b.nextEvents();
             for (Node node : graph) {
@@ -40,7 +54,7 @@ public class Test {
             }
             Thread.sleep(100);
         }
-        
+
         f.startAgents();
         b.end();
     }

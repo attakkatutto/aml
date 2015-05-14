@@ -57,7 +57,7 @@ public final class Network extends SingleGraph {
             if (persons.size() <= 0) {
                 persons.add(id1);
                 NodeBase base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                base.addAttribute("ui.style", "shape: diamond;");
+                base.addAttribute("ui.class", "person");
                 return base;
             } else {
                 NodeBase base;
@@ -65,27 +65,27 @@ public final class Network extends SingleGraph {
                     case 0:
                         persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                        base.addAttribute("ui.style", "shape: diamond;");
+                        base.addAttribute("ui.class", "person");
                         return base;
                     case 1:
                         companies.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
-                        base.addAttribute("ui.style", "shape: circle;");
+                        base.addAttribute("ui.class", "company");
                         return base;
                     case 2:
                         persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
-                        base.addAttribute("ui.style", "shape: diamond;");
+                        base.addAttribute("ui.class", "person");
                         return base;
                     case 3:
                         companies.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
-                        base.addAttribute("ui.style", "shape: circle;");
+                        base.addAttribute("ui.style", "company");
                         return base;
                     default:
                         persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                        base.addAttribute("ui.style", "shape: diamond;");
+                        base.addAttribute("ui.style", "person");
                         return base;
                 }
             }
