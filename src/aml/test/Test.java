@@ -32,6 +32,7 @@ public class Test {
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();
+        
         while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
             b.nextEvents();
             for (Node node : graph) {
