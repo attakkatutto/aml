@@ -12,9 +12,13 @@ and open the template in the editor.
     <maxTransactionsPerEntity>3</maxTransactionsPerEntity>
     <maxNumberPartners>10</maxNumberPartners>
     <maxNumberParents>15</maxNumberParents>
-    <personMean>400</personMean>
-    <personStdDev>10</personStdDev>
-    <companyMean>900</companyMean>
-    <companyStdDev>50</companyStdDev>
+    <employeeMean>400</employeeMean>
+    <employeeStdDev>10</employeeStdDev>
+    <freelanceMean>600</freelanceMean>
+    <freelanceStdDev>30</freelanceStdDev>
+    <smallCompanyMean>5000</smallCompanyMean>
+    <smallCompanyStdDev>50</smallCompanyStdDev>
+    <bigCompanyMean>8000</bigCompanyMean>
+    <bigCompanyStdDev>90</bigCompanyStdDev>
     <scoreWindowType>1</scoreWindowType> /*number of months*/
 </config>
