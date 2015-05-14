@@ -5,15 +5,10 @@
  */
 package aml.base;
 
-import aml.base.IVertexBase;
-import aml.agent.Transaction;
-import aml.base.AgentBase;
 import aml.global.Config;
-import static aml.global.Constant.MONTHS;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.Random;
-import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
 
@@ -25,7 +20,7 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
 public abstract class VertexBase extends AdjacencyListNode implements IVertexBase {
 
     protected AgentBase agent;
-    protected VertexType type;
+    protected NodeType type;
 
     //Random List of busness partners 
     protected ArrayList<String> partners;
@@ -37,7 +32,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     protected double[] fraudScore, suspectedScore, deficitScore;
 
     // *** Constructor ***
-    public VertexBase(AbstractGraph graph, String id, VertexType type) {
+    public VertexBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
         this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -52,7 +47,7 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     private void initVertexRelationship() {
         if (this.graph.getNodeCount() > 0) {
             initPartners();
-            if (type == VertexType.PERSON) {
+            if (type == NodeType.PERSON) {
                 initParents();
             }
         }
@@ -79,11 +74,11 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
         super.setIndex(index);
     }
 
-    public VertexType getType() {
+    public NodeType getType() {
         return type;
     }
 
-    public void setType(VertexType type) {
+    public void setType(NodeType type) {
         this.type = type;
     }
 

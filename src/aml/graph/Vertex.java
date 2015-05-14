@@ -26,7 +26,7 @@ public final class Vertex extends VertexBase {
      * @param id identifier of the Person
      * @param type type of the vertex
      */
-    public Vertex(AbstractGraph graph, String id, VertexType type) {
+    public Vertex(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
         this.dummy = random.nextBoolean();
     }
@@ -65,7 +65,7 @@ public final class Vertex extends VertexBase {
         int count = 0;
         while (count < Config.getInstance().getMaxNumberParents()) {
             Vertex v = graph.getNode(random.nextInt(graph.getNodeCount()));
-            if (v.type == VertexType.PERSON) {
+            if (v.type == NodeType.PERSON) {
                 parents.add(v.getId());
             }
             count++;

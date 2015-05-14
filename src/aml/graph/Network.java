@@ -80,18 +80,18 @@ public final class Network extends AbstractGraph {
         setNodeFactory((String id1, Graph graph) -> {
             if (persons.size() <= 0) {
                 persons.add(id1);
-                return (VertexBase) new Vertex((AbstractGraph) graph, id1, VertexType.PERSON);
+                return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
             }
             switch (random.nextInt(3)) {
                 case 0:
                     persons.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, VertexType.PERSON);
+                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
                 case 1:
                     companies.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, VertexType.COMPANY);
+                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.COMPANY);
                 default:
                     persons.add(id1);
-                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, VertexType.PERSON);
+                    return (VertexBase) new Vertex((AbstractGraph) graph, id1, NodeType.PERSON);
             }
         });
 

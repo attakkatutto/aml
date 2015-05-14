@@ -13,7 +13,7 @@ public class Enums{
  *
  * @author ddefalco
  */
-public enum VertexType {
+public enum NodeType {
     PERSON,
     COMPANY
 };
