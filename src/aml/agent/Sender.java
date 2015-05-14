@@ -26,13 +26,12 @@ import org.graphstream.graph.Node;
 public class Sender extends SimpleBehaviour {
 
     Node n;
-
+    Random random = new Random();
+    int count = 0;
+    
     public Sender(Node n) {
         this.n = n;
     }
-
-    Random random = new Random();
-    int count = 0;
 
     private double getRandomAmount(String name) {
         switch (name.toLowerCase()) {
@@ -50,26 +49,25 @@ public class Sender extends SimpleBehaviour {
 
     @Override
     public void action() {
-        for (Edge e : n.getEachLeavingEdge()) {
-            MyAgent base = (MyAgent) myAgent;
-            Vertex v = e.getTargetNode();
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-            int _time = random.nextInt(MONTHS);
-            try {
-                msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
-                double _amount = getRandomAmount(base.getClass().getName());
-                Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + Instant.now(), _amount, myAgent.getLocalName(), v.getId(), _time);
-                msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
-                myAgent.send(msg);
-                v.setCosts(_amount, _time);
-                base.getSent().add(t);
-                System.out.println(" - "
-                        + myAgent.getLocalName()
-                        + " send to " + v.getId() + " ->  month " + _time
-                        + " amount " + _amount);
-            } catch (IOException ex) {
-                Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
+        MyAgent base = (MyAgent) myAgent;
+        Vertex v = e.getTargetNode();
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        int _time = random.nextInt(MONTHS);
+        try {
+            msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
+            double _amount = getRandomAmount(base.getClass().getName());
+            Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + Instant.now(), _amount, myAgent.getLocalName(), v.getId(), _time);
+            msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
+            myAgent.send(msg);
+            v.setCosts(_amount, _time);
+            base.getSent().add(t);
+            System.out.println(" - "
+                    + myAgent.getLocalName()
+                    + " send to " + v.getId() + " ->  month " + _time
+                    + " amount " + _amount);
+        } catch (IOException ex) {
+            Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
         }
         count++;
     }
