@@ -61,7 +61,7 @@ public class Sender extends SimpleBehaviour {
                 Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + Instant.now(), _amount, myAgent.getLocalName(), v.getId(), _time);
                 msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
                 myAgent.send(msg);
-                base.setCosts(_amount, _time);
+                v.setCosts(_amount, _time);
                 base.getSent().add(t);
                 System.out.println(" - "
                         + myAgent.getLocalName()

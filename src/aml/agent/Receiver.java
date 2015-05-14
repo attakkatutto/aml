@@ -6,6 +6,7 @@
 package aml.agent;
 
 import aml.base.AgentBase;
+import aml.graph.Vertex;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
@@ -29,14 +30,15 @@ public class Receiver extends CyclicBehaviour {
     public void action() {
         AgentBase base = (AgentBase) myAgent;
         ACLMessage msg = myAgent.receive();
+        Vertex v = (Vertex) n;
         if (msg != null) {            
             try {
                 Transaction t = (Transaction) msg.getContentObject();
-                base.setRevenues(t.getAmount(),t.getMonth());
+                v.setRevenues(t.getAmount(),t.getMonth());
                 base.getReceived().add(t);
                 System.out.println(" - "
                         + myAgent.getLocalName() + " receive  -> "            
-                        + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + base.getCosts(t.getMonth()) + " revenues: " + base.getRevenues(t.getMonth()));                
+                        + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + v.getCosts(t.getMonth()) + " revenues: " + v.getRevenues(t.getMonth()));                
             } catch (UnreadableException ex) {
                 Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
             }

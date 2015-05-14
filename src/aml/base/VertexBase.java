@@ -33,29 +33,19 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
     protected ArrayList<String> parents;
 
     protected Random random;
+    protected double[] revenues, costs;
     protected double[] fraudScore, suspectedScore, deficitScore;
 
     // *** Constructor ***
     public VertexBase(AbstractGraph graph, String id, VertexType type) {
         super(graph, id);
-        switch (Config.getInstance().getScoreWindowType()) {
-            case THREEMONTHS:
-                this.fraudScore = new double[3];
-                this.suspectedScore = new double[3];
-                this.deficitScore = new double[3];
-            case FOURMONTHS:
-                this.fraudScore = new double[4];
-                this.suspectedScore = new double[4];
-                this.deficitScore = new double[4];
-            case SIXMONTHS:
-                this.fraudScore = new double[6];
-                this.suspectedScore = new double[6];
-                this.deficitScore = new double[6];
-        }
+        this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.type = type;
         this.random = new Random();
         this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
         this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
+        initScore();
         initVertexRelationship();
     }
 
@@ -82,8 +72,8 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     public void setParents(ArrayList<String> parents) {
         this.parents = parents;
-    }    
-    
+    }
+
     @Override
     public void setIndex(int index) {
         super.setIndex(index);
@@ -119,30 +109,80 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
 
     @Override
     public double getDeficitScore(int index) {
-        updateDeficitScore();
         return deficitScore[index];
     }
+    
+    /**
+     * Get revenues of the EntityBase
+     *
+     * @param month
+     * @return revenues
+     */
+    @Override
+    public double getRevenues(int month) {
+        return revenues[month];
+    }
 
-    private void updateDeficitScore() {
-        for (int month = 0; month < MONTHS; month++) {
-            deficitScore[month / deficitScore.length] = 0;
-            for (String u : partners) {
-                VertexBase v = (VertexBase) graph.getNode(u);
-                deficitScore[month / deficitScore.length] += v.getAgent().getBudget(month) - v.getAgent().getRevenues(month);
-                if (v.getType() == VertexType.PERSON) 
-                    for (String u1 : v.getParents()) {
-                        VertexBase v2 = (VertexBase) graph.getNode(u1);
-                        for (String u2 : v2.getPartners()) {
-                            VertexBase v3 = (VertexBase) graph.getNode(u2);
-                            deficitScore[month / deficitScore.length] += v3.getAgent().getBudget(month);
-                            for (Edge e : v3.getEdgeSet()) 
-                                if (e.getNode0() == v3 && e.getNode1() == v) 
-                                    for (Transaction t :v3.getAgent().getSent()) 
-                                        if (t.getIdTargetAgent().equals(v.getId())) deficitScore[month / deficitScore.length] -= t.getAmount();                                                              
-                        }
-                    }                
-            }
+    /**
+     * Set revenue of the EntityBase and increment total revenues
+     *
+     * @param revenue of the EntityBase
+     * @param month
+     */
+    @Override
+    public void setRevenues(double revenue, int month) {
+        revenues[month] += revenue;
+    }
+
+    /**
+     * Set cost of the EntityBase and increment total costs
+     *
+     * @param cost of the EntityBase
+     * @param month
+     */
+    @Override
+    public void setCosts(double cost, int month) {
+        costs[month] += cost;
+    }
+
+    /**
+     * Get costs of the EntityBase
+     *
+     * @param month
+     * @return costs
+     */
+    @Override
+    public double getCosts(int month) {
+        return costs[month];
+    }
+
+    /**
+     * Get budget of the EntityBase
+     *
+     * @param month
+     * @return revenues - costs
+     */
+    @Override
+    public double getBudget(int month) {
+        return revenues[month] - costs[month];
+    }
+
+    @Override
+    public double getGlobalCosts() {
+        double _global = 0;
+        for (double d : costs) {
+            _global += d;
         }
+        return _global;
+    }
+
+    @Override
+    public double getGlobalRevenues() {
+        double _global = 0;
+        for (double d : revenues) {
+            _global += d;
+        }
+        return _global;
     }
 
     /**
@@ -180,4 +220,21 @@ public abstract class VertexBase extends AdjacencyListNode implements IVertexBas
      */
     @Override
     public abstract void initPartners();
+
+    private void initScore() {
+        switch (Config.getInstance().getScoreWindowType()) {
+            case THREEMONTHS:
+                this.fraudScore = new double[3];
+                this.suspectedScore = new double[3];
+                this.deficitScore = new double[3];
+            case FOURMONTHS:
+                this.fraudScore = new double[4];
+                this.suspectedScore = new double[4];
+                this.deficitScore = new double[4];
+            case SIXMONTHS:
+                this.fraudScore = new double[6];
+                this.suspectedScore = new double[6];
+                this.deficitScore = new double[6];
+        }
+    }
 }
