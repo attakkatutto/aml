@@ -8,6 +8,7 @@ package aml.base;
 import aml.agent.Receiver;
 import aml.agent.Sender;
 import aml.agent.Transaction;
+import aml.global.Writer;
 import jade.core.Agent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,7 +16,7 @@ import org.graphstream.graph.Node;
 
 /**
  * Base class of custom JADE Agent
- * 
+ *
  * @author Davide
  */
 public abstract class AgentBase extends Agent {
@@ -24,9 +25,10 @@ public abstract class AgentBase extends Agent {
     protected final Random random = new Random();
     protected ArrayList<Transaction> sent;
     protected ArrayList<Transaction> received;
+    protected Writer writer;
 
     public AgentBase(Node n) {
-        super();    
+        super();
         this.n = n;
         this.sent = new ArrayList<>();
         this.received = new ArrayList<>();
@@ -53,5 +55,9 @@ public abstract class AgentBase extends Agent {
     public void setReceived(ArrayList<Transaction> received) {
         this.received = received;
     }
-    
+
+    public Writer getWriter() {
+        return writer;
+    }
+
 }

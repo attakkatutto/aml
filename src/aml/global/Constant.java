@@ -13,6 +13,10 @@ package aml.global;
 public final class Constant {    
     
     public static final int MONTHS = 12;   
+    
+    
+    
+    public static final String WRITER_FILENAME = "C:/dbsynthetic_%s.csv";
 
     /**
      * Default damping factor
@@ -29,18 +33,4 @@ public final class Constant {
      */
     public static final String DEFAULT_RANK_ATTRIBUTE = "PageRank";
 
-    /**
-     * Growth Factor
-     */
-    public static final double GROW_FACTOR = 1.1;
-
-    /**
-     * Node Capacity
-     */
-    public static final int DEFAULT_NODE_CAPACITY = 128;
-
-    /**
-     * Edge Capacity
-     */
-    public static final int DEFAULT_EDGE_CAPACITY = 1024;
 }

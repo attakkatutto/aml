@@ -28,9 +28,11 @@ public class Sender extends SimpleBehaviour {
 
     Node n;
     Random random = new Random();
+    MyAgent base;
     int count = 0;
 
     public Sender(Node n) {
+        base = (MyAgent) myAgent;
         this.n = n;
     }
 
@@ -57,8 +59,7 @@ public class Sender extends SimpleBehaviour {
     @Override
     public void action() {
         if (n.getOutDegree() > 0) {
-            Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
-            MyAgent base = (MyAgent) myAgent;
+            Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));            
             MyNode v = e.getTargetNode();
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             int _time = random.nextInt(MONTHS);
@@ -85,5 +86,5 @@ public class Sender extends SimpleBehaviour {
     public boolean done() {
         return count == Config.getInstance().getMaxAgentMessage();
     }
-
+   
 }

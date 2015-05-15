@@ -338,7 +338,7 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
     // helpers 
     protected void iteration() {
         /**
-         * ITERATIVE reference http://en.wikipedia.org/wiki/PageRank At t=0, an
+         * ITERATION reference http://en.wikipedia.org/wiki/PageRank At t=0, an
          * initial probability distribution is assumed, usually PR(pi;0)=1/N At
          * each time step, the computation, as detailed above, yields 1-d/N + d
          * * SUM PR(pj;t)/L(pj)

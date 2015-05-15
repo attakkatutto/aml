@@ -7,13 +7,10 @@ package aml.graph;
 
 import aml.global.Enums.*;
 import aml.base.NodeBase;
-import static aml.global.Enums.NodeType.EMPLOYEE;
-import static aml.global.Enums.NodeType.FREELANCE;
 import aml.test.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -22,8 +19,6 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.AbstractGraph;
-import org.graphstream.graph.implementations.AbstractNode;
-import static org.graphstream.graph.implementations.AdjacencyListGraph.GROW_FACTOR;
 
 /**
  * Network of Vertex connected by Connection
@@ -34,8 +29,6 @@ public final class Network extends SingleGraph {
 
     private final Random random;
 
-    public ArrayList<String> persons;
-    public ArrayList<String> companies;
 
     //**** Constructor
     /**
@@ -50,8 +43,6 @@ public final class Network extends SingleGraph {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         random = new Random();
 
-        persons = new ArrayList<>();
-        companies = new ArrayList<>();
 
         initStyle();
         initFactories();
@@ -65,37 +56,25 @@ public final class Network extends SingleGraph {
      * Initialize the factories of EntityBase and TransactionBase
      */
     private void initFactories() {
-        setNodeFactory((String id1, Graph graph) -> {
-            if (persons.size() <= 0) {
-                persons.add(id1);
-                NodeBase base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                //base.addAttribute("ui.class", "person");
-                return base;
-            } else {
+        setNodeFactory((String id1, Graph graph) -> {            
                 NodeBase base;
                 switch (random.nextInt(3)) {
                     case 0:
-                        persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
                         return base;
                     case 1:
-                        companies.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
                         return base;
                     case 2:
-                        persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
                         return base;
                     case 3:
-                        companies.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
                         return base;
                     default:
-                        persons.add(id1);
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
                         return base;
-                }
-            }
+                }            
         });
 
         setEdgeFactory((String id1, Node src, Node dst, boolean directed)

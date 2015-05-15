@@ -7,6 +7,7 @@ package aml.agent;
 
 import aml.base.AgentBase;
 import aml.global.Enums.NodeType;
+import aml.global.Writer;
 import org.graphstream.graph.Node;
 
 /**
@@ -15,15 +16,21 @@ import org.graphstream.graph.Node;
  */
 public final class MyAgent extends AgentBase {
 
-    protected NodeType type;    
+    protected NodeType type;
+    protected Writer writer;
 
-    public MyAgent(NodeType type,Node n) {
+    public MyAgent(NodeType type , Node n, Writer w) {
         super(n);
+        this.writer = w;
         this.type = type;
     }
 
     public NodeType getType() {
         return type;
     }
+    
+    public Writer getWriter() {
+        return writer;
+    }   
 
 }

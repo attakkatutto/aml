@@ -47,7 +47,7 @@ public class Test {
             Thread.sleep(100);
         }
 
-        //f.startAgents();
+        f.startAgents();
         b.end();
     }
 }

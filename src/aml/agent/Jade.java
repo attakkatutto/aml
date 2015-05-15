@@ -5,12 +5,14 @@
  */
 package aml.agent;
 
+import aml.global.Writer;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.StaleProxyException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,14 +24,20 @@ import org.graphstream.graph.Node;
  * @author DAVIDE
  */
 public final class Jade {
-    
+
     private AgentContainer agentContainer;
     private final HashMap<String, MyAgent> map;
     private final Graph graph;
+    private Writer writer;
 
     public Jade(Graph graph) {
         this.map = new HashMap<>();
         this.graph = graph;
+        try {
+            this.writer = new Writer();
+        } catch (IOException ex) {
+            Logger.getLogger(Jade.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initJade();
     }
 
@@ -52,11 +60,15 @@ public final class Jade {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    protected void removeAgent(MyAgent agent) {
+         map.remove(agent);        
+    }
 
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
             MyNode v = (MyNode) n;
-            MyAgent a = new MyAgent(v.getType(), n);            
+            MyAgent a = new MyAgent(v.getType(), n,writer);
             createAgent(a, n.getId());
         }
     }
