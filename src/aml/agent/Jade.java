@@ -5,7 +5,6 @@
  */
 package aml.agent;
 
-import aml.agent.MyAgent;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
@@ -15,7 +14,6 @@ import jade.wrapper.StaleProxyException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
