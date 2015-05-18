@@ -10,7 +10,6 @@ import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Node;
@@ -36,12 +35,11 @@ public class Receiver extends CyclicBehaviour {
             try {
                 Transaction t = (Transaction) msg.getContentObject();
                 v.setRevenues(t.getAmount(),t.getMonth());
-                base.getReceived().add(t);
+                base.addReceived(t);
                 System.out.println(" - "
                         + myAgent.getLocalName() + " receive  -> "            
-                        + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + v.getCosts(t.getMonth()) + " revenues: " + v.getRevenues(t.getMonth()));                
-                base.getWriter().write(t.getId(),t.getIdSourceAgent(),"",t.getMonth(),t.getAmount(),t.getIdTargetAgent(),"");
-            } catch (UnreadableException | IOException ex) {
+                        + t.getAmount() + " month: " + (t.getMonth()+1) + " costs: " + v.getCosts(t.getMonth()) + " revenues: " + v.getRevenues(t.getMonth()));                                
+            } catch (UnreadableException ex) {
                 Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

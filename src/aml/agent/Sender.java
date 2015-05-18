@@ -28,11 +28,9 @@ public class Sender extends SimpleBehaviour {
 
     Node n;
     Random random = new Random();
-    MyAgent base;
     int count = 0;
 
-    public Sender(Node n) {
-        base = (MyAgent) myAgent;
+    public Sender(Node n) {        
         this.n = n;
     }
 
@@ -58,6 +56,7 @@ public class Sender extends SimpleBehaviour {
 
     @Override
     public void action() {
+        MyAgent base = (MyAgent) myAgent;
         if (n.getOutDegree() > 0) {
             Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));            
             MyNode v = e.getTargetNode();
@@ -70,7 +69,7 @@ public class Sender extends SimpleBehaviour {
                 msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
                 myAgent.send(msg);
                 v.setCosts(_amount, _time);
-                base.getSent().add(t);
+                base.addSent(t);
                 System.out.println(" - "
                         + myAgent.getLocalName()
                         + " send to " + v.getId() + " ->  month " + _time

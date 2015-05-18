@@ -5,15 +5,13 @@
  */
 package aml.agent;
 
-import aml.global.Writer;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.StaleProxyException;
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Graph;
@@ -26,18 +24,12 @@ import org.graphstream.graph.Node;
 public final class Jade {
 
     private AgentContainer agentContainer;
-    private final HashMap<String, MyAgent> map;
-    private final Graph graph;
-    private Writer writer;
+    private final ArrayList<MyAgent> map;
+    private final Graph graph; 
 
     public Jade(Graph graph) {
-        this.map = new HashMap<>();
-        this.graph = graph;
-        try {
-            this.writer = new Writer();
-        } catch (IOException ex) {
-            Logger.getLogger(Jade.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.map = new ArrayList<>();
+        this.graph = graph;        
         initJade();
     }
 
@@ -55,7 +47,7 @@ public final class Jade {
     private void createAgent(MyAgent agent, String id) {
         try {
             agentContainer.acceptNewAgent(id, agent).start();
-            map.put(id, agent);
+            map.add(agent);
         } catch (StaleProxyException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,7 +60,7 @@ public final class Jade {
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
             MyNode v = (MyNode) n;
-            MyAgent a = new MyAgent(v.getType(), n,writer);
+            MyAgent a = new MyAgent(v.getType(), n);
             createAgent(a, n.getId());
         }
     }
