@@ -6,10 +6,9 @@
 package aml.agent;
 
 import aml.graph.MyNode;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Node;
@@ -18,9 +17,10 @@ import org.graphstream.graph.Node;
  *
  * @author Davide
  */
-public class Receiver extends CyclicBehaviour {
+public class Receiver extends SimpleBehaviour {
 
     Node n;
+    boolean finished;
     
     public Receiver(Node n){
        this.n=n;
@@ -46,11 +46,17 @@ public class Receiver extends CyclicBehaviour {
                     break;
                 case ACLMessage.CANCEL:
                     System.out.println(" - "
-                                + myAgent.getLocalName() + " receive  -> " + msg.getContent());
+                                + myAgent.getLocalName() + " receive  -> " + msg.getContent());                    
                     base.addBehaviour(new Stop(msg.getSender().getLocalName()));
+                    finished = true;
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean done() {
+        return finished;
     }
 
 }
