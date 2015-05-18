@@ -17,7 +17,7 @@ import org.graphstream.graph.Node;
 public final class MyAgent extends AgentBase{
 
     protected NodeType type;
-    private ArrayList<String> activeLink;
+    protected  ArrayList<String> activeLink;
 
     public MyAgent(NodeType type, Node n) {
         super(n);
@@ -45,4 +45,12 @@ public final class MyAgent extends AgentBase{
         return activeLink.isEmpty();
     }
     
+    @Override
+    public void takeDown(){
+        System.out.println(" - "
+                            + this.getLocalName()
+                            + " terminated! "); 
+        removeBehaviour(beh1);
+        removeBehaviour(beh2);
+    }
 }

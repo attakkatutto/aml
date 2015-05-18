@@ -53,10 +53,6 @@ public final class Jade {
         }
     }
     
-    protected void removeAgent(MyAgent agent) {
-         map.remove(agent);        
-    }
-
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
             MyNode v = (MyNode) n;

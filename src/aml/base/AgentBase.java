@@ -22,6 +22,8 @@ public abstract class AgentBase extends Agent {
 
     private Node n;
     protected final Random random = new Random();
+    protected Sender beh1;
+    protected Receiver beh2;
     protected ArrayList<Transaction> sent;
     protected ArrayList<Transaction> received;
 
@@ -30,12 +32,14 @@ public abstract class AgentBase extends Agent {
         this.n = n;
         this.sent = new ArrayList<>();
         this.received = new ArrayList<>();
+        this.beh1 = new Sender(n);
+        this.beh2 = new Receiver(n);
     }
 
     @Override
     public void setup() {
-        addBehaviour(new Sender(n));
-        addBehaviour(new Receiver(n));
+        addBehaviour(beh1);
+        addBehaviour(beh2);
     }
 
     public void addSent(Transaction sent) {

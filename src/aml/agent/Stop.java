@@ -24,6 +24,7 @@ public class Stop extends SimpleBehaviour {
     public void action() {
         MyAgent base = (MyAgent) myAgent;
         if (!base.removeLink(id)) {
+            base.doDelete();
             finished = true;
         }
     }
