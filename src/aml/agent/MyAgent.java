@@ -14,15 +14,17 @@ import org.graphstream.graph.Node;
  *
  * @author DAVIDE
  */
-public final class MyAgent extends AgentBase{
+public final class MyAgent extends AgentBase {
 
     protected NodeType type;
-    protected  ArrayList<String> activeLink;
+    protected ArrayList<String> activeLink;
+    protected String id;
 
     public MyAgent(NodeType type, Node n) {
         super(n);
         this.type = type;
         this.activeLink = new ArrayList<>();
+        this.id = n.getId();
     }
 
     public NodeType getType() {
@@ -30,13 +32,15 @@ public final class MyAgent extends AgentBase{
     }
 
     public void addLink(String idAgent) {
-        if (!activeLink.contains(idAgent)) activeLink.add(idAgent);
+        if (!activeLink.contains(idAgent)) {
+            activeLink.add(idAgent);
+        }
     }
-    
+
     public boolean removeLink(String idAgent) {
         return activeLink.remove(idAgent);
     }
-    
+
     public boolean containsLink(String idAgent) {
         return activeLink.contains(idAgent);
     }
@@ -44,13 +48,18 @@ public final class MyAgent extends AgentBase{
     public boolean isEmptyLink() {
         return activeLink.isEmpty();
     }
-    
+
     @Override
-    public void takeDown(){
+    public void takeDown() {
         System.out.println(" - "
-                            + this.getLocalName()
-                            + " terminated! "); 
+                + this.getLocalName()
+                + " terminated! ");
         removeBehaviour(beh1);
         removeBehaviour(beh2);
     }
+
+    public String getId() {
+        return id;
+    }
+       
 }
