@@ -5,7 +5,6 @@
  */
 package aml.agent;
 
-import aml.base.AgentBase;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;

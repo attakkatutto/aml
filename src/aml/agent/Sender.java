@@ -28,6 +28,7 @@ public class Sender extends SimpleBehaviour {
 
     Node n;
     Random random = new Random();
+    boolean finished = false;
     int count = 0;
 
     public Sender(Node n) {        
@@ -56,34 +57,48 @@ public class Sender extends SimpleBehaviour {
 
     @Override
     public void action() {
-        MyAgent base = (MyAgent) myAgent;
+         MyAgent base = (MyAgent) myAgent;
         if (n.getOutDegree() > 0) {
-            Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));            
-            MyNode v = e.getTargetNode();
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-            int _time = random.nextInt(MONTHS);
-            try {
-                msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
-                double _amount = getRandomAmount(base.getType());
-                Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + Instant.now(), _amount, myAgent.getLocalName(), v.getId(), _time);
-                msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
-                myAgent.send(msg);
-                v.setCosts(_amount, _time);
-                base.addSent(t);
-                System.out.println(" - "
-                        + myAgent.getLocalName()
-                        + " send to " + v.getId() + " ->  month " + _time
-                        + " amount " + _amount);
-            } catch (IOException ex) {
-                Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+            if (count == Config.getInstance().getMaxAgentMessage()) {
+                for (Edge e : n.getLeavingEdgeSet()) {
+                    MyNode v = e.getTargetNode();
+                    ACLMessage msg = new ACLMessage(ACLMessage.CANCEL);
+                    msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
+                    msg.setContent("Simulation finished");
+                    myAgent.send(msg);
+                    System.out.println(" - "
+                            + myAgent.getLocalName()
+                            + " send to " + v.getId() + " ->  " + msg.getContent());                   
+                }                
+                finished = true;
+            } else {
+                Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
+                MyNode v = e.getTargetNode();
+                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+                int _time = random.nextInt(MONTHS);
+                try {
+                    msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
+                    double _amount = getRandomAmount(base.getType());
+                    Transaction t = new Transaction(myAgent.getLocalName() + "_" + v.getId() + "_" + System.currentTimeMillis(), _amount, myAgent.getLocalName(), v.getId(), _time);
+                    msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
+                    myAgent.send(msg);
+                    v.setCosts(_amount, _time);
+                    base.addLink(v.getId());
+                    System.out.println(" - "
+                            + myAgent.getLocalName()
+                            + " send to " + v.getId() + " ->  month " + _time
+                            + " amount " + _amount);
+                } catch (IOException ex) {
+                    Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                count++;
             }
-            count++;
         }
     }
 
     @Override
     public boolean done() {
-        return count == Config.getInstance().getMaxAgentMessage();
+        return  finished;
     }
    
 }
