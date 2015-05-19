@@ -17,49 +17,30 @@ import org.graphstream.graph.Node;
 public final class MyAgent extends AgentBase {
 
     protected NodeType type;
-    protected ArrayList<String> activeLink;
     protected String id;
+    protected ArrayList<String> queue;
 
     public MyAgent(NodeType type, Node n) {
         super(n);
         this.type = type;
-        this.activeLink = new ArrayList<>();
         this.id = n.getId();
+        this.queue = new ArrayList<>();            
     }
 
     public NodeType getType() {
         return type;
-    }
-
-    public void addLink(String idAgent) {
-        if (!activeLink.contains(idAgent)) {
-            activeLink.add(idAgent);
-        }
-    }
-
-    public boolean removeLink(String idAgent) {
-        return activeLink.remove(idAgent);
-    }
-
-    public boolean containsLink(String idAgent) {
-        return activeLink.contains(idAgent);
-    }
-
-    public boolean isEmptyLink() {
-        return activeLink.isEmpty();
-    }
-
-    @Override
-    public void takeDown() {
-        System.out.println(" - "
-                + this.getLocalName()
-                + " terminated! ");
-        removeBehaviour(beh1);
-        removeBehaviour(beh2);
-    }
+    }    
 
     public String getId() {
         return id;
     }
-       
+      
+    public void enqueueMessage(String idAgent){
+        if (!queue.contains(idAgent))
+        queue.add(idAgent);
+    }
+    
+    public boolean dequeueMessage(String idAgent){
+        return queue.remove(idAgent);
+    }
 }

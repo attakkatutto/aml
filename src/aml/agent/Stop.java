@@ -8,30 +8,23 @@ package aml.agent;
 import jade.core.behaviours.SimpleBehaviour;
 
 /**
- *
+ * 
+ * 
  * @author ddefalco
  */
 public class Stop extends SimpleBehaviour {
 
-    boolean finished;
-    String id;
-
-    public Stop(String id) {
-        this.id = id;
-    }
-
+    protected boolean finished = false;
+    
     @Override
     public void action() {
-        MyAgent base = (MyAgent) myAgent;
-        if (!base.removeLink(id)) {
-            base.doDelete();
-            finished = true;
-        }
+        myAgent.doDelete();
+        finished = true;
     }
 
     @Override
     public boolean done() {
-        return finished == true;
+        return finished;
     }
-
+    
 }

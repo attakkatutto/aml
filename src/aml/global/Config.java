@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
 
     private static Config _instance;
-    private int maxAgentMessage, maxNumberOfEntity, maxTransactionsPerEntity;
+    private int maxAgentMessage, maxNumberOfEntity, maxEdgesPerEntity;
     private int maxNumberParents, maxNumberPartners,maxNumberDummies;
     private double employeeMean, employeeStdDev,
             freelanceMean, freelanceStdDev,
@@ -81,12 +81,12 @@ public class Config {
     }
 
     @XmlElement
-    public int getMaxTransactionsPerEntity() {
-        return maxTransactionsPerEntity;
+    public int getMaxEdgesPerEntity() {
+        return maxEdgesPerEntity;
     }
 
-    public void setMaxTransactionsPerEntity(int num) {
-        maxTransactionsPerEntity = num;
+    public void setMaxEdgesPerEntity(int num) {
+        maxEdgesPerEntity = num;
     }
 
     @XmlElement

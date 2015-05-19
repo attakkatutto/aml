@@ -5,10 +5,12 @@
  */
 package aml.graph;
 
+import aml.agent.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
+import java.util.ArrayList;
 import org.graphstream.graph.implementations.*;
 
 /**
@@ -19,6 +21,8 @@ import org.graphstream.graph.implementations.*;
 public final class MyNode extends NodeBase {
 
     boolean honest;
+    protected ArrayList<Transaction> sent;
+    protected ArrayList<Transaction> received;
 
     /**
      * @param graph Network
@@ -27,6 +31,8 @@ public final class MyNode extends NodeBase {
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
+        this.sent = new ArrayList<>();
+        this.received = new ArrayList<>();
     }
 
     @Override
@@ -68,5 +74,13 @@ public final class MyNode extends NodeBase {
             }
             count++;
         }
-    }       
+    }
+    
+     public void addSent(Transaction sent) {
+        this.sent.add(sent);
+    }
+
+    public void addReceived(Transaction received) {
+        this.received.add(received);
+    }
 }

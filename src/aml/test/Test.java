@@ -28,7 +28,7 @@ public class Test {
 
         Jade f = new Jade(graph);
 
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxTransactionsPerEntity(),
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
                 false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
@@ -44,7 +44,7 @@ public class Test {
                 else                      
                         node.addAttribute("ui.class", "company");
             }
-            Thread.sleep(100);
+            Thread.sleep(500);
         }
 
         f.startAgents();

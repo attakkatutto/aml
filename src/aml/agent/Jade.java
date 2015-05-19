@@ -10,7 +10,6 @@ import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
-import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,27 +41,15 @@ public class Jade {
         agentContainer = jade.core.Runtime.instance().createAgentContainer(p);
     }
 
-    public void registerAgent(MyAgent agent) {
-        try {
-            agentContainer.acceptNewAgent(agent.getId(), agent).start();
-        } catch (StaleProxyException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void unregisterAgent(String id) {
-        try {
-            agentContainer.getAgent(id).kill();
-        } catch (ControllerException ex) {
-            Logger.getLogger(Jade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
             MyNode v = (MyNode) n;
             MyAgent a = new MyAgent(v.getType(), n);
-            registerAgent(a);
+            try {
+                agentContainer.acceptNewAgent(a.getId(), a).start();
+            } catch (StaleProxyException ex) {
+                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
