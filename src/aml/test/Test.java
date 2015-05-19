@@ -25,7 +25,9 @@ public class Test {
         Graph graph = new Network("AML Test");
 
         graph.display(true);
-
+                
+        Jade f = new Jade(graph);
+        
         BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
                 false);
         b.setDirectedEdges(true, true);
@@ -47,8 +49,7 @@ public class Test {
         }
 
         b.end();
-        
-        Jade f = new Jade(graph);
+
         f.startAgents();
     }
 }
