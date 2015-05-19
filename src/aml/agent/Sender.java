@@ -25,12 +25,12 @@ import org.graphstream.graph.Node;
  */
 public class Sender extends SimpleBehaviour {
 
-    Node n;
+    MyNode n;
     Random random = new Random();
     boolean finished = false;
     int count = 0;
 
-    public Sender(Node n) {
+    public Sender(MyNode n) {
         this.n = n;
     }
 

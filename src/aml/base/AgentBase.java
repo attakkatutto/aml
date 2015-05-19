@@ -7,9 +7,9 @@ package aml.base;
 
 import aml.agent.Receiver;
 import aml.agent.Sender;
+import aml.graph.MyNode;
 import jade.core.Agent;
 import java.util.Random;
-import org.graphstream.graph.Node;
 
 /**
  * Base class of custom JADE Agent
@@ -18,10 +18,10 @@ import org.graphstream.graph.Node;
  */
 public abstract class AgentBase extends Agent {
 
-    private Node n;
+    private MyNode n;
     protected final Random random = new Random();
 
-    public AgentBase(Node n) {
+    public AgentBase(MyNode n) {
         super();
         this.n = n;
     }

@@ -26,8 +26,6 @@ public class Test {
 
         graph.display(true);
 
-        Jade f = new Jade(graph);
-
         BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
                 false);
         b.setDirectedEdges(true, true);
@@ -38,16 +36,19 @@ public class Test {
             b.nextEvents();
             for (Node node : graph) {
                 node.addAttribute("ui.label", String.format("%s", node.getId()));
-                if (((MyNode) node).getType() == EMPLOYEE || 
-                        ((MyNode) node).getType() == FREELANCE)
-                        node.addAttribute("ui.class", "person");
-                else                      
-                        node.addAttribute("ui.class", "company");
+                if (((MyNode) node).getType() == EMPLOYEE
+                        || ((MyNode) node).getType() == FREELANCE) {
+                    node.addAttribute("ui.class", "person");
+                } else {
+                    node.addAttribute("ui.class", "company");
+                }
             }
             Thread.sleep(500);
         }
 
-        f.startAgents();
         b.end();
+        
+        Jade f = new Jade(graph);
+        f.startAgents();
     }
 }

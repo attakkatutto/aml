@@ -7,8 +7,8 @@ package aml.agent;
 
 import aml.base.AgentBase;
 import aml.global.Enums.NodeType;
+import aml.graph.MyNode;
 import java.util.ArrayList;
-import org.graphstream.graph.Node;
 
 /**
  *
@@ -20,27 +20,30 @@ public final class MyAgent extends AgentBase {
     protected String id;
     protected ArrayList<String> queue;
 
-    public MyAgent(NodeType type, Node n) {
+    public MyAgent(MyNode n) {
         super(n);
-        this.type = type;
+        this.type = n.getType();
         this.id = n.getId();
-        this.queue = new ArrayList<>();            
+        this.queue = new ArrayList<>();
     }
 
     public NodeType getType() {
         return type;
-    }    
+    }
 
     public String getId() {
         return id;
     }
-      
-    public void enqueueMessage(String idAgent){
-        if (!queue.contains(idAgent))
-        queue.add(idAgent);
+
+    public synchronized void enqueueMessage(String idAgent) {
+
+        if (!queue.contains(idAgent)) {
+            queue.add(idAgent);
+        }
+
     }
-    
-    public boolean dequeueMessage(String idAgent){
+
+    public synchronized boolean dequeueMessage(String idAgent) {
         return queue.remove(idAgent);
     }
 }

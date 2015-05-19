@@ -13,7 +13,6 @@ import jade.lang.acl.UnreadableException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.Node;
 
 /**
  *
@@ -21,10 +20,10 @@ import org.graphstream.graph.Node;
  */
 public class Receiver extends SimpleBehaviour {
 
-    Node n;
+    MyNode n;
     boolean finished;
 
-    public Receiver(Node n) {
+    public Receiver(MyNode n) {
         this.n = n;
     }
 
@@ -32,28 +31,27 @@ public class Receiver extends SimpleBehaviour {
     public void action() {
         ACLMessage msg = myAgent.receive();
         MyAgent base = (MyAgent) myAgent;
-        MyNode v = (MyNode) n;
         if (msg != null) {
             switch (msg.getPerformative()) {
                 case ACLMessage.INFORM:
                     try {
                         Transaction t = (Transaction) msg.getContentObject();
-                        v.setRevenues(t.getAmount(), t.getMonth());
-                        v.addReceived(t);
+                        n.setRevenues(t.getAmount(), t.getMonth());
+                        n.addReceived(t);
                         ACLMessage reply = msg.createReply();
                         reply.setPerformative(ACLMessage.AGREE);
                         reply.setContent(myAgent.getLocalName());
                         myAgent.send(reply);
                         System.out.println(" - "
                                 + t.getIdTargetAgent() + " receive from " + t.getIdSourceAgent() + " -> "
-                                + t.getAmount() + " month: " + (t.getMonth() + 1) + " costs: " + v.getCosts(t.getMonth()) + " revenues: " + v.getRevenues(t.getMonth()));
+                                + t.getAmount() + " month: " + (t.getMonth() + 1) + " costs: " + n.getCosts(t.getMonth()) + " revenues: " + n.getRevenues(t.getMonth()));
                     } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 case ACLMessage.AGREE:
                     if (!base.dequeueMessage(msg.getContent())) {
-                        for (Edge e : v.getLeavingEdgeSet()) {
+                        for (Edge e : n.getLeavingEdgeSet()) {
                             MyNode vc = e.getTargetNode();
                             ACLMessage msgCanc = new ACLMessage(ACLMessage.CANCEL);
                             msgCanc.addReceiver(new AID(vc.getId(), AID.ISLOCALNAME));
