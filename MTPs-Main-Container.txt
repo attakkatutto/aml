@@ -1,1 +1,1 @@
-http://W7DEFALCOD.devsigcip.local:7778/acc
+http://Bart:7778/acc
