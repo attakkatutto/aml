@@ -22,7 +22,7 @@ import org.graphstream.graph.Node;
  */
 public class Jade  {
 
-    private AgentContainer agentContainer;
+    private AgentContainer mainContainer;
     private final Graph graph;
 
     public Jade(Graph graph) {
@@ -35,7 +35,7 @@ public class Jade  {
         // Create a default profile
         Profile p = new ProfileImpl();
         // Create a new main container (i.e. on this host, port 1099) 
-        agentContainer = jade.core.Runtime.instance().createMainContainer(p);
+        mainContainer = jade.core.Runtime.instance().createMainContainer(p);
         // Create a new non-main container, connecting to the default
         // main container (i.e. on this host, port 1099) 
         //agentContainer = jade.core.Runtime.instance().createAgentContainer(p);
@@ -45,7 +45,7 @@ public class Jade  {
         for (Node n : graph.getEachNode()) {
             MyAgent a = new MyAgent((MyNode) n);
             try {
-                agentContainer.acceptNewAgent(a.getId(), a).start();
+                mainContainer.acceptNewAgent(a.getId(), a).start();
             } catch (StaleProxyException ex) {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
