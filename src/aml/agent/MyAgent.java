@@ -31,5 +31,4 @@ public final class MyAgent extends AgentBase {
     public String getId() {
         return id;
     }
-      
 }

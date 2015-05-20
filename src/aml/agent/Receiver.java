@@ -42,7 +42,6 @@ public class Receiver extends CyclicBehaviour {
                         ACLMessage reply = msg.createReply();
                         reply.setPerformative(ACLMessage.AGREE);
                         reply.setContent(myAgent.getLocalName());
-                        base.send(reply);
                         System.out.println(" - "
                                 + t.getIdTargetAgent()
                                 + " receive from "
@@ -51,6 +50,7 @@ public class Receiver extends CyclicBehaviour {
                                 + " month: "
                                 + (t.getMonth() + 1)
                                 + " budget: " + n.getBudget(t.getMonth()));
+                        base.send(reply);
                     } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -59,11 +59,11 @@ public class Receiver extends CyclicBehaviour {
                     System.out.println(" - "
                             + base.getLocalName()
                             + " receive transaction ack from "
-                            + msg.getContent());                                   
-                    break;                
+                            + msg.getContent());
+                    break;
             }
         }
         block(random.nextInt(MAX_WAITING));
-    }    
+    }
 
 }

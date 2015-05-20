@@ -67,9 +67,8 @@ public class Sender extends SimpleBehaviour {
                 double _amount = getRandomAmount(base.getType());
                 Transaction t = new Transaction(base.getLocalName() + "_" + v.getId() + "_" + System.currentTimeMillis(), _amount, base.getLocalName(), v.getId(), _time);
                 msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));
-                base.send(msg);                
                 v.setCosts(_amount, _time);
-                v.addSent(t);
+                v.addSent(t);                
                 System.out.println(" - "
                         + base.getLocalName()
                         + " send to " 
@@ -78,6 +77,7 @@ public class Sender extends SimpleBehaviour {
                         + _time
                         + " amount " 
                         + _amount);
+                base.send(msg);                                                
             } catch (IOException ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
