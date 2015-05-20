@@ -5,14 +5,14 @@
  */
 package aml.agent;
 
+import static aml.global.Constant.MAX_WAITING;
 import aml.graph.MyNode;
-import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.graphstream.graph.Edge;
 
 /**
  *
@@ -22,6 +22,7 @@ public class Receiver extends SimpleBehaviour {
 
     MyNode n;
     boolean finished;
+    Random random = new Random();
 
     public Receiver(MyNode n) {
         this.n = n;
@@ -38,41 +39,36 @@ public class Receiver extends SimpleBehaviour {
                         Transaction t = (Transaction) msg.getContentObject();
                         n.setRevenues(t.getAmount(), t.getMonth());
                         n.addReceived(t);
+                        base.enqueueInMessage(t.getIdSourceAgent());
                         ACLMessage reply = msg.createReply();
                         reply.setPerformative(ACLMessage.AGREE);
                         reply.setContent(myAgent.getLocalName());
                         myAgent.send(reply);
                         System.out.println(" - "
-                                + t.getIdTargetAgent() + " receive from " + t.getIdSourceAgent() + " -> "
-                                + t.getAmount() + " month: " + (t.getMonth() + 1) + " costs: " + n.getCosts(t.getMonth()) + " revenues: " + n.getRevenues(t.getMonth()));
+                                + t.getIdTargetAgent()
+                                + " receive from "
+                                + t.getIdSourceAgent() + " -> "
+                                + t.getAmount()
+                                + " month: "
+                                + (t.getMonth() + 1)
+                                + " budget: " + n.getBudget(t.getMonth()));
                     } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 case ACLMessage.AGREE:
-                    if (!base.dequeueMessage(msg.getContent())) {
-                        for (Edge e : n.getLeavingEdgeSet()) {
-                            MyNode vc = e.getTargetNode();
-                            ACLMessage msgCanc = new ACLMessage(ACLMessage.CANCEL);
-                            msgCanc.addReceiver(new AID(vc.getId(), AID.ISLOCALNAME));
-                            msgCanc.setContent(" finished! ");
-                            myAgent.send(msgCanc);
-                            System.out.println(" - "
-                                    + myAgent.getLocalName()
-                                    + " send to " + vc.getId() + " ->  " + msgCanc.getContent());
-                        }
+                    System.out.println(" - "
+                            + myAgent.getLocalName()
+                            + " receive transaction ack from "
+                            + msg.getContent());
+                    if (!base.dequeueInMessage(msg.getContent())) {                        
+                        myAgent.addBehaviour(new Stop());
+                        finished = true;
                     }
-                    System.out.println(" - "
-                            + myAgent.getLocalName() + " receive transaction ack from " + msg.getContent());
-                    break;
-                case ACLMessage.CANCEL:
-                    System.out.println(" - "
-                            + myAgent.getLocalName() + " receive from " + msg.getSender().getLocalName() + " -> " + msg.getContent());
-                    myAgent.addBehaviour(new Stop());
-                    finished = true;
-                    break;
+                    break;                
             }
         }
+        block(random.nextInt(MAX_WAITING));
     }
 
     @Override

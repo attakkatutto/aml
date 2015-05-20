@@ -18,13 +18,15 @@ public final class MyAgent extends AgentBase {
 
     protected NodeType type;
     protected String id;
-    protected ArrayList<String> queue;
+    protected ArrayList<String> inqueue;
+    protected ArrayList<String> outqueue;
 
     public MyAgent(MyNode n) {
         super(n);
         this.type = n.getType();
         this.id = n.getId();
-        this.queue = new ArrayList<>();
+        this.inqueue = new ArrayList<>();
+        this.outqueue = new ArrayList<>();
     }
 
     public NodeType getType() {
@@ -35,15 +37,27 @@ public final class MyAgent extends AgentBase {
         return id;
     }
 
-    public synchronized void enqueueMessage(String idAgent) {
+    public synchronized void enqueueInMessage(String idAgent) {
 
-        if (!queue.contains(idAgent)) {
-            queue.add(idAgent);
+        if (!inqueue.contains(idAgent)) {
+            inqueue.add(idAgent);
+        }
+
+    }
+    
+    public synchronized void enqueueOutMessage(String idAgent) {
+
+        if (!outqueue.contains(idAgent)) {
+            outqueue.add(idAgent);
         }
 
     }
 
-    public synchronized boolean dequeueMessage(String idAgent) {
-        return queue.remove(idAgent);
+    public synchronized boolean dequeueInMessage(String idAgent) {
+        return inqueue.remove(idAgent);
+    }
+    
+     public synchronized boolean dequeueOutMessage(String idAgent) {
+        return outqueue.remove(idAgent);
     }
 }

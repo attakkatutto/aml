@@ -7,11 +7,11 @@ and open the template in the editor.
 
 
 <config>
-    <maxAgentMessage>10</maxAgentMessage>
-    <maxNumberOfEntity>50</maxNumberOfEntity>
-    <maxEdgesPerEntity>5</maxEdgesPerEntity>
-    <maxNumberPartners>10</maxNumberPartners>
-    <maxNumberParents>15</maxNumberParents>
+    <maxAgentMessage>3</maxAgentMessage>
+    <maxNumberOfEntity>5</maxNumberOfEntity>
+    <maxEdgesPerEntity>2</maxEdgesPerEntity>
+    <maxNumberPartners>2</maxNumberPartners>
+    <maxNumberParents>1</maxNumberParents>
     <employeeMean>400</employeeMean>
     <employeeStdDev>10</employeeStdDev>
     <freelanceMean>600</freelanceMean>

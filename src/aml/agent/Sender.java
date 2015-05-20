@@ -7,6 +7,7 @@ package aml.agent;
 
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
+import static aml.global.Constant.MAX_WAITING;
 import aml.global.Enums.NodeType;
 import aml.graph.MyNode;
 import jade.core.AID;
@@ -17,23 +18,22 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.Node;
 
 /**
  *
  * @author Davide
  */
 public class Sender extends SimpleBehaviour {
-
+    
     MyNode n;
     Random random = new Random();
     boolean finished = false;
     int count = 0;
-
+    
     public Sender(MyNode n) {
         this.n = n;
     }
-
+    
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
@@ -53,7 +53,7 @@ public class Sender extends SimpleBehaviour {
                         + Config.getInstance().getEmployeeStdDev();
         }
     }
-
+    
     @Override
     public void action() {
         MyAgent base = (MyAgent) myAgent;
@@ -70,21 +70,26 @@ public class Sender extends SimpleBehaviour {
                 myAgent.send(msg);                
                 v.setCosts(_amount, _time);
                 v.addSent(t);
-                base.enqueueMessage(v.getId());
+                base.enqueueOutMessage(v.getId());
                 System.out.println(" - "
                         + myAgent.getLocalName()
-                        + " send to " + v.getId() + " ->  month " + _time
-                        + " amount " + _amount);
+                        + " send to " 
+                        + v.getId() 
+                        + " ->  month " 
+                        + _time
+                        + " amount " 
+                        + _amount);
             } catch (IOException ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
             count++;
         }
+        block(random.nextInt(MAX_WAITING));
     }
-
+    
     @Override
     public boolean done() {
         return count == Config.getInstance().getMaxAgentMessage();
     }
-
+    
 }

@@ -12,6 +12,14 @@ package aml.global;
  */
 public final class Constant {    
     
+    /*    
+    * Tempo massimo di attesa in ms   
+    */
+    public static final int MAX_WAITING = 5000;
+    
+    /*    
+    * Numero di mesi    
+    */
     public static final int MONTHS = 12;   
     
     
