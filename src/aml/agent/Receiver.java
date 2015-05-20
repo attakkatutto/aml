@@ -7,7 +7,7 @@ package aml.agent;
 
 import static aml.global.Constant.MAX_WAITING;
 import aml.graph.MyNode;
-import jade.core.behaviours.SimpleBehaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import java.util.Random;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Davide
  */
-public class Receiver extends SimpleBehaviour {
+public class Receiver extends CyclicBehaviour {
 
     MyNode n;
     boolean finished;
@@ -39,11 +39,10 @@ public class Receiver extends SimpleBehaviour {
                         Transaction t = (Transaction) msg.getContentObject();
                         n.setRevenues(t.getAmount(), t.getMonth());
                         n.addReceived(t);
-                        base.enqueueInMessage(t.getIdSourceAgent());
                         ACLMessage reply = msg.createReply();
                         reply.setPerformative(ACLMessage.AGREE);
                         reply.setContent(myAgent.getLocalName());
-                        myAgent.send(reply);
+                        base.send(reply);
                         System.out.println(" - "
                                 + t.getIdTargetAgent()
                                 + " receive from "
@@ -58,22 +57,13 @@ public class Receiver extends SimpleBehaviour {
                     break;
                 case ACLMessage.AGREE:
                     System.out.println(" - "
-                            + myAgent.getLocalName()
+                            + base.getLocalName()
                             + " receive transaction ack from "
-                            + msg.getContent());
-                    if (!base.dequeueInMessage(msg.getContent())) {                        
-                        myAgent.addBehaviour(new Stop());
-                        finished = true;
-                    }
+                            + msg.getContent());                                   
                     break;                
             }
         }
         block(random.nextInt(MAX_WAITING));
-    }
-
-    @Override
-    public boolean done() {
-        return finished;
-    }
+    }    
 
 }
