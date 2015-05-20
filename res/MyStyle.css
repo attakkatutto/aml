@@ -2,14 +2,13 @@ node {  fill-color: red;
         stroke-color: grey;
         text-color: white;
         text-style: bold;
-        stroke-mode: plain; 
+        stroke-mode: plain;
+        padding: 8px;
         size-mode: fit; }
 
-node.person { padding: 6px; 
-              shape: box; } 
+node.person { shape: box; } 
 
-node.company { padding: 6px; 
-               shape: circle; }  
+node.company { shape: circle; }  
 
 edge { fill-color:darkgrey; }
 
