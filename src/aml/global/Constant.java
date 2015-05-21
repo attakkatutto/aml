@@ -15,7 +15,7 @@ public final class Constant {
     /*    
     * Tempo massimo di attesa in ms   
     */
-    public static final int MAX_WAITING = 5000;
+    public static final int MAX_WAITING = 2000;
     
     /*    
     * Numero di mesi    

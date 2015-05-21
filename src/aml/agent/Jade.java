@@ -5,12 +5,14 @@
  */
 package aml.agent;
 
+import aml.global.Config;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.StaleProxyException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Graph;
@@ -24,9 +26,11 @@ public class Jade  {
 
     private AgentContainer mainContainer;
     private final Graph graph;
+    private final ArrayList<MyAgent> activeAgents;
 
     public Jade(Graph graph) {
         this.graph = graph;
+        this.activeAgents = new ArrayList<>();
         initJade();
     }
 
@@ -43,13 +47,24 @@ public class Jade  {
 
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
-            MyAgent a = new MyAgent((MyNode) n);
+            MyAgent a = new MyAgent((MyNode) n,this);
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
+                activeAgents.add(a);
             } catch (StaleProxyException ex) {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        
+    }
+    
+    public void addKill(MyAgent agent){
+        this.activeAgents.remove(agent);
+        if (activeAgents.isEmpty())
+            notifyAllAgent();
+    }
+
+    private void notifyAllAgent() {
+        
     }
 
 }
