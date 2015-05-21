@@ -13,6 +13,8 @@ import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.StaleProxyException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.graphstream.graph.Graph;
@@ -26,11 +28,11 @@ public class Jade  {
 
     private AgentContainer mainContainer;
     private final Graph graph;
-    private final ArrayList<MyAgent> activeAgents;
+    private final ArrayList<String> killed;
 
     public Jade(Graph graph) {
         this.graph = graph;
-        this.activeAgents = new ArrayList<>();
+        this.killed = new ArrayList<>();
         initJade();
     }
 
@@ -47,24 +49,23 @@ public class Jade  {
 
     public void startAgents() {
         for (Node n : graph.getEachNode()) {
-            MyAgent a = new MyAgent((MyNode) n,this);
+            MyAgent a = new MyAgent((MyNode) n);
             try {
-                mainContainer.acceptNewAgent(a.getId(), a).start();
-                activeAgents.add(a);
+                mainContainer.acceptNewAgent(a.getId(), a).start();            
             } catch (StaleProxyException ex) {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        
     }
     
-    public void addKill(MyAgent agent){
-        this.activeAgents.remove(agent);
-        if (activeAgents.isEmpty())
+    public void addKill(String agent){
+        this.killed.add(agent);
+        if (killed.size() == Config.getInstance().getMaxNumberOfEntity())
             notifyAllAgent();
     }
 
     private void notifyAllAgent() {
-        
+        System.out.println(" - KILLALL");
     }
 
 }

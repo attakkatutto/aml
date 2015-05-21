@@ -18,13 +18,11 @@ public final class MyAgent extends AgentBase {
     protected NodeType type;
     protected String id;
     protected int FIN;
-    protected Jade jade;
 
-    public MyAgent(MyNode node,Jade jade) {
+    public MyAgent(MyNode node) {
         super(node);
         this.type = node.getType();
         this.id = node.getId();
-        this.jade = jade;
     }
 
     public NodeType getType() {
@@ -42,4 +40,5 @@ public final class MyAgent extends AgentBase {
     public int addFIN() {
         return FIN++;
     }
+   
 }

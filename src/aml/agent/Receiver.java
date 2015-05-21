@@ -71,8 +71,9 @@ public class Receiver extends CyclicBehaviour {
                             + n.getDegree()
                             + " FIN count: "
                             + base.getFIN());
-                    if (base.getFIN()==n.getDegree())
-                        System.out.println(" - KILL " + base.getId());
+                    if (base.getFIN()==n.getDegree()){
+                        System.out.println(" - KILL " + base.getId());                        
+                    }
                     break;
             }
         }
