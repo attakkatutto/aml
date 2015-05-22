@@ -6,14 +6,13 @@
 package aml.agent;
 
 import aml.base.ITransaction;
-import jade.content.AgentAction;
 
 /**
  * Output Transaction Class
  *
  * @author ddefalco
  */
-public class Transaction implements AgentAction, ITransaction {
+public class Transaction implements java.io.Serializable, ITransaction {
 
     String id;
 
@@ -87,6 +86,7 @@ public class Transaction implements AgentAction, ITransaction {
         return month;
     } 
     
+    @Override
     public String toString(){
         return "(person\n\t:id " + getId() 
                 + "\n\t:amount " + getAmount() 
