@@ -11,7 +11,7 @@ package aml.base;
  *
  * @author ddefalco
  */
-public interface INodeBase {
+public interface INode {
 
     void setColor();
 

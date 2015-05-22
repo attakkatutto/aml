@@ -80,7 +80,7 @@ public class Sender extends SimpleBehaviour {
             ACLMessage msg = createSendMessage(t, v.getId());
             base.send(msg);
             count++;
-        } //this agent declares FINISH
+        } //this agent wait MAX_WAITING ms and then declares FINISH
         else {
             block(random.nextInt(MAX_WAITING));
             System.out.println(" - "

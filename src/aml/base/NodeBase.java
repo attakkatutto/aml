@@ -17,7 +17,7 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
  *
  * @author ddefalco
  */
-public abstract class NodeBase extends AdjacencyListNode implements INodeBase {
+public abstract class NodeBase extends AdjacencyListNode implements INode {
 
     protected AgentBase agent;
     protected NodeType type;

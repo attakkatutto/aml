@@ -5,7 +5,7 @@
  */
 package aml.agent;
 
-import aml.base.ITransactionBase;
+import aml.base.ITransaction;
 import jade.content.AgentAction;
 
 /**
@@ -13,7 +13,7 @@ import jade.content.AgentAction;
  *
  * @author ddefalco
  */
-public class Transaction implements AgentAction, ITransactionBase {
+public class Transaction implements AgentAction, ITransaction {
 
     String id;
 
@@ -85,5 +85,14 @@ public class Transaction implements AgentAction, ITransactionBase {
     @Override
     public int getMonth() {
         return month;
-    }    
+    } 
+    
+    public String toString(){
+        return "(person\n\t:id " + getId() 
+                + "\n\t:amount " + getAmount() 
+                + "\n\t:month " + getMonth() 
+                + "\n\t:source " + getIdSourceAgent() 
+                + "\n\t:target " + getIdTargetAgent()                 
+                + ")";
+    }
 }

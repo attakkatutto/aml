@@ -5,14 +5,12 @@
  */
 package aml.base;
 
-import java.time.Instant;
-
 /**
  * Interface TransactionBase
  *
  * @author ddefalco
  */
-public interface ITransactionBase {
+public interface ITransaction {
 
     public double getAmount();
     
