@@ -5,6 +5,7 @@
  */
 package aml.agent;
 
+import aml.base.AgentBase;
 import static aml.global.Constant.MAX_WAITING;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
@@ -24,7 +25,8 @@ public class Receiver extends CyclicBehaviour {
     boolean finished;
     Random random = new Random();
 
-    public Receiver(MyNode n) {
+    public Receiver(AgentBase agent,MyNode n) {
+        super(agent);
         this.n = n;
     }
 
@@ -66,18 +68,18 @@ public class Receiver extends CyclicBehaviour {
                     System.out.println(" - "
                             + base.getLocalName()
                             + " receive finish message from "
-                            + msg.getSender().getLocalName() 
-                            + " node degree: " 
+                            + msg.getSender().getLocalName()
+                            + " node degree: "
                             + n.getDegree()
                             + " FIN count: "
                             + base.getFIN());
-//                    if (base.getFIN()==n.getDegree()){
-//                        System.out.println(" - KILL " + base.getId());                        
-//                    }
+                    if (base.getFIN() == n.getDegree()) {
+                        System.out.println(" - KILL " + base.getId());
+                    }
                     break;
             }
+        } else {
+            this.block();
         }
-        block(random.nextInt(MAX_WAITING));
     }
-
 }

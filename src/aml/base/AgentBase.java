@@ -28,8 +28,8 @@ public abstract class AgentBase extends Agent {
 
     @Override
     public void setup() {
-        addBehaviour(new Sender(n));
-        addBehaviour(new Receiver(n));
+        addBehaviour(new Sender(this,n));
+        addBehaviour(new Receiver(this,n));
     }
 
     @Override
@@ -38,5 +38,4 @@ public abstract class AgentBase extends Agent {
                 + this.getLocalName()
                 + " terminated! ");
     }
-
 }

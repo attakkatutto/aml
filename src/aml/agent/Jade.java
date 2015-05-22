@@ -56,16 +56,6 @@ public class Jade  {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        
-    }
-    
-    public void addKill(String agent){
-        this.killed.add(agent);
-        if (killed.size() == Config.getInstance().getMaxNumberOfEntity())
-            notifyAllAgent();
-    }
-
-    private void notifyAllAgent() {
-        System.out.println(" - KILLALL");
-    }
+    }   
 
 }

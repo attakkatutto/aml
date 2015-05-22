@@ -5,6 +5,7 @@
  */
 package aml.agent;
 
+import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
 import static aml.global.Constant.MAX_WAITING;
@@ -30,7 +31,8 @@ public class Sender extends SimpleBehaviour {
     int count = 0;
     boolean finished = false;
 
-    public Sender(MyNode n) {
+    public Sender(AgentBase agent,MyNode n) {
+        super(agent);
         this.n = n;
     }
 
@@ -80,14 +82,14 @@ public class Sender extends SimpleBehaviour {
             count++;
         } //this agent declares FINISH
         else {
+            block(random.nextInt(MAX_WAITING));
             System.out.println(" - "
                     + base.getLocalName()
                     + " declare FINISH ");
             ACLMessage msg = createFinishMessage();
             base.send(msg);
             finished = true;
-        }
-        block(random.nextInt(MAX_WAITING));
+        }        
     }
 
     @Override
