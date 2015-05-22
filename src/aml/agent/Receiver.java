@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.base.AgentBase;
-import static aml.global.Constant.MAX_WAITING;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -41,9 +40,9 @@ public class Receiver extends CyclicBehaviour {
                         Transaction t = (Transaction) msg.getContentObject();
                         n.setRevenues(t.getAmount(), t.getMonth());
                         n.addReceived(t);
-//                        ACLMessage reply = msg.createReply();
-//                        reply.setPerformative(ACLMessage.AGREE);
-//                        reply.setContent(myAgent.getLocalName());
+                        ACLMessage reply = msg.createReply();
+                        reply.setPerformative(ACLMessage.CONFIRM);
+                        reply.setContent(myAgent.getLocalName());
                         System.out.println(" - "
                                 + t.getIdTargetAgent()
                                 + " receive from "
@@ -52,17 +51,17 @@ public class Receiver extends CyclicBehaviour {
                                 + " month: "
                                 + (t.getMonth() + 1)
                                 + " budget: " + n.getBudget(t.getMonth()));
-//                        base.send(reply);
+                        base.send(reply);
                     } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-//                case ACLMessage.AGREE:
-//                    System.out.println(" - "
-//                            + base.getLocalName()
-//                            + " receive transaction ack from "
-//                            + msg.getContent());
-//                    break;
+                case ACLMessage.CONFIRM:
+                    System.out.println(" - "
+                            + base.getLocalName()
+                            + " receive transaction ack from "
+                            + msg.getContent());
+                    break;
                 case ACLMessage.PROPAGATE:
                     base.addFIN();
                     System.out.println(" - "
