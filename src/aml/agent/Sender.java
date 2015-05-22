@@ -5,6 +5,7 @@
  */
 package aml.agent;
 
+import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
@@ -15,6 +16,7 @@ import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,11 +65,11 @@ public class Sender extends SimpleBehaviour {
             //this agent send messages
             Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
             MyNode v = e.getTargetNode();
-            int _time = random.nextInt(MONTHS);
+            short _time = (short)random.nextInt(MONTHS);
             double _amount = getRandomAmount(base.getType());
             v.setCosts(_amount, _time);
             Transaction t = new Transaction(base.getLocalName() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                    _amount, base.getLocalName(), v.getId(), _time);
+                     base.getLocalName(), v.getId(),_amount, _time);
             v.addSent(t);
             System.out.println(" - "
                     + base.getLocalName()

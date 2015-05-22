@@ -5,6 +5,7 @@
  */
 package aml.agent;
 
+import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
@@ -44,9 +45,9 @@ public class Receiver extends CyclicBehaviour {
                         reply.setPerformative(ACLMessage.CONFIRM);
                         reply.setContent(myAgent.getLocalName());
                         System.out.println(" - "
-                                + t.getIdTargetAgent()
+                                + t.getIdTarget()
                                 + " receive from "
-                                + t.getIdSourceAgent() + " -> "
+                                + t.getIdSource() + " -> "
                                 + t.getAmount()
                                 + " month: "
                                 + (t.getMonth() + 1)

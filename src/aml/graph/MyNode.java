@@ -5,7 +5,7 @@
  */
 package aml.graph;
 
-import aml.agent.Transaction;
+import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
