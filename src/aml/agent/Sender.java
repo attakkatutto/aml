@@ -16,7 +16,6 @@ import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,7 +83,7 @@ public class Sender extends SimpleBehaviour {
             count++;
         } //this agent wait MAX_WAITING ms and then declares FINISH
         else {
-            block(random.nextInt(MAX_WAITING));
+            //block(random.nextInt(MAX_WAITING));
             System.out.println(" - "
                     + base.getLocalName()
                     + " declare FINISH ");

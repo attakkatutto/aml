@@ -21,35 +21,35 @@ import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
  */
 public class Test {
 
-    public static void main(String[] args) throws InterruptedException {
-        Graph graph = new Network("AML Test");
-
-        graph.display(true);
-                
-        Jade f = new Jade(graph);
-        
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
-                false);
-        b.setDirectedEdges(true, true);
-        b.addSink(graph);
-        b.begin();
-
-        while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
-            b.nextEvents();
-            for (Node node : graph) {
-                node.addAttribute("ui.label", String.format("%s", node.getId()));
-                if (((MyNode) node).getType() == EMPLOYEE
-                        || ((MyNode) node).getType() == FREELANCE) {
-                    node.addAttribute("ui.class", "person");
-                } else {
-                    node.addAttribute("ui.class", "company");
-                }
-            }
-            Thread.sleep(500);
-        }
-
-        b.end();
-
-        f.startAgents();
-    }
+//    public static void main(String[] args) throws InterruptedException {
+//        Graph graph = new Network("AML Test");
+//
+//        graph.display(true);
+//                
+//        Jade f = new Jade(graph);
+//        
+//        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
+//                false);
+//        b.setDirectedEdges(true, true);
+//        b.addSink(graph);
+//        b.begin();
+//
+//        while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
+//            b.nextEvents();
+//            for (Node node : graph) {
+//                node.addAttribute("ui.label", String.format("%s", node.getId()));
+//                if (((MyNode) node).getType() == EMPLOYEE
+//                        || ((MyNode) node).getType() == FREELANCE) {
+//                    node.addAttribute("ui.class", "person");
+//                } else {
+//                    node.addAttribute("ui.class", "company");
+//                }
+//            }
+//            Thread.sleep(500);
+//        }
+//
+//        b.end();
+//
+//        f.startAgents();
+//    }
 }
