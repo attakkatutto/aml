@@ -59,7 +59,7 @@ public class Sender extends SimpleBehaviour {
     @Override
     public void action() {
         MyAgent base = (MyAgent) myAgent;
-        if (n.getOutDegree() > 0 && count < Config.getInstance().getMaxAgentMessage()) {
+        if (n.getOutDegree() > 0 && count < Config.getInstance().getAgentMessage()) {
             try {
                 //this agent send messages
                 Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));

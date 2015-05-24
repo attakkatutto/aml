@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
 
     private static Config _instance;
-    private int maxAgentMessage, maxNumberOfEntity, maxEdgesPerEntity;
-    private int maxNumberParents, maxNumberPartners,maxNumberDummies;
+    private int agentMessage, numberOfEntity, maxEdgesPerEntity;
+    private int numberParents, numberPartners,numberDummies;
     private double employeeMean, employeeStdDev,
             freelanceMean, freelanceStdDev,
             bigCompanyMean, bigCompanyStdDev,
@@ -54,30 +54,30 @@ public class Config {
     }
 
     @XmlElement
-    public int getMaxAgentMessage() {
-        return maxAgentMessage;
+    public int getAgentMessage() {
+        return agentMessage;
     }
 
-    public void setMaxAgentMessage(int num) {
-        maxAgentMessage = num;
+    public void setAgentMessage(int num) {
+        agentMessage = num;
     }
 
     @XmlElement
     public int getMaxNumberDummies() {
-        return maxNumberDummies;
+        return numberDummies;
     }
 
     public void setMaxNumberDummies(int num) {
-        maxNumberDummies = num;
+        numberDummies = num;
     }
     
     @XmlElement
-    public int getMaxNumberOfEntity() {
-        return maxNumberOfEntity;
+    public int getNumberOfEntity() {
+        return numberOfEntity;
     }
 
-    public void setMaxNumberOfEntity(int num) {
-        maxNumberOfEntity = num;
+    public void setNumberOfEntity(int num) {
+        numberOfEntity = num;
     }
 
     @XmlElement
@@ -90,21 +90,21 @@ public class Config {
     }
 
     @XmlElement
-    public int getMaxNumberPartners() {
-        return maxNumberPartners;
+    public int getNumberPartners() {
+        return numberPartners;
     }
 
-    public void setMaxNumberPartners(int num) {
-        maxNumberPartners = num;
+    public void setNumberPartners(int num) {
+        numberPartners = num;
     }
 
     @XmlElement
-    public int getMaxNumberParents() {
-        return maxNumberParents;
+    public int getNumberParents() {
+        return numberParents;
     }
 
-    public void setMaxNumberParents(int num) {
-        maxNumberParents = num;
+    public void setNumberParents(int num) {
+        numberParents = num;
     }
 
     @XmlElement

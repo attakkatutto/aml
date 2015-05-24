@@ -34,7 +34,7 @@ public class Test {
         b.addSink(graph);
         b.begin();
 
-        while (graph.getNodeCount() < Config.getInstance().getMaxNumberOfEntity()) {
+        while (graph.getNodeCount() < Config.getInstance().getNumberOfEntity()) {
             b.nextEvents();
             for (Node node : graph) {
                 node.addAttribute("ui.label", String.format("%s", node.getId()));
