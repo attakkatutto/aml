@@ -7,7 +7,7 @@ and open the template in the editor.
 
 
 <config>
-    <agentMessage>1000</agentMessage>
+    <agentMessage>10000</agentMessage>
     <numberOfEntity>100</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>20</numberPartners>
