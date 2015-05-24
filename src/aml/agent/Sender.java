@@ -32,9 +32,9 @@ public class Sender extends SimpleBehaviour {
     int count = 0;
     boolean finished = false;
 
-    public Sender(AgentBase agent,MyNode n) {
+    public Sender(AgentBase agent) {
         super(agent);
-        this.n = n;
+        this.n = agent.getNode();
     }
 
     private double getRandomAmount(NodeType type) {
@@ -61,27 +61,32 @@ public class Sender extends SimpleBehaviour {
     public void action() {
         MyAgent base = (MyAgent) myAgent;
         if (n.getOutDegree() > 0 && count < Config.getInstance().getMaxAgentMessage()) {
-            //this agent send messages
-            Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
-            MyNode v = e.getTargetNode();
-            short _time = (short)random.nextInt(MONTHS);
-            double _amount = getRandomAmount(base.getType());
-            v.setCosts(_amount, _time);
-            Transaction t = new Transaction(base.getLocalName() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                     base.getLocalName(), v.getId(),_amount, _time);
-            v.addSent(t);
-            System.out.println(" - "
-                    + base.getLocalName()
-                    + " send to "
-                    + v.getId()
-                    + " ->  month "
-                    + _time
-                    + " amount "
-                    + _amount);
-            ACLMessage msg = createSendMessage(t, v.getId());
-            base.send(msg);
-            count++;
-        } //this agent wait MAX_WAITING ms and then declares FINISH
+            try {
+                //this agent send messages
+                Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
+                MyNode v = e.getTargetNode();
+                short _time = (short)random.nextInt(MONTHS);
+                double _amount = getRandomAmount(base.getType());
+                n.setCosts(_amount, _time);
+                Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
+                        n.getId(), v.getId(),_amount, _time);
+                System.out.println(" - "
+                        + n.getId()
+                        + " send to "
+                        + v.getId()
+                        + " ->  month "
+                        + _time
+                        + " amount "
+                        + _amount);
+                ACLMessage msg = createSendMessage(t, v.getId());
+                base.send(msg);
+                count++;
+                block(random.nextInt(MAX_WAITING));
+            } //this agent wait MAX_WAITING ms and then declares FINISH
+            catch (Exception ex) {
+                Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         else {
             //block(random.nextInt(MAX_WAITING));
             System.out.println(" - "

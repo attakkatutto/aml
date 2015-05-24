@@ -11,6 +11,7 @@ import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+import jade.wrapper.StaleProxyException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +23,11 @@ import java.util.logging.Logger;
 public class Receiver extends CyclicBehaviour {
 
     MyNode n;
-    boolean finished;
     Random random = new Random();
 
-    public Receiver(AgentBase agent,MyNode n) {
+    public Receiver(AgentBase agent) {
         super(agent);
-        this.n = n;
+        this.n = agent.getNode();
     }
 
     @Override
@@ -40,10 +40,6 @@ public class Receiver extends CyclicBehaviour {
                     try {
                         Transaction t = (Transaction) msg.getContentObject();
                         n.setRevenues(t.getAmount(), t.getMonth());
-                        n.addReceived(t);
-//                        ACLMessage reply = msg.createReply();
-//                        reply.setPerformative(ACLMessage.CONFIRM);
-//                        reply.setContent(myAgent.getLocalName());
                         System.out.println(" - "
                                 + t.getIdTarget()
                                 + " receive from "
@@ -51,30 +47,26 @@ public class Receiver extends CyclicBehaviour {
                                 + t.getAmount()
                                 + " month: "
                                 + (t.getMonth() + 1)
+                                + " revenues: " + n.getRevenues(t.getMonth())
+                                + " costs: " + n.getCosts(t.getMonth())
                                 + " budget: " + n.getBudget(t.getMonth()));
-//                        base.send(reply);
                     } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-//                case ACLMessage.CONFIRM:
-//                    System.out.println(" - "
-//                            + base.getLocalName()
-//                            + " receive transaction ack from "
-//                            + msg.getContent());
-//                    break;
                 case ACLMessage.PROPAGATE:
-                    base.addFIN();
+                    base.addEND();
                     System.out.println(" - "
                             + base.getLocalName()
                             + " receive finish message from "
                             + msg.getSender().getLocalName()
                             + " node degree: "
                             + n.getDegree()
-                            + " FIN count: "
-                            + base.getFIN());
-                    if (base.getFIN() == n.getDegree()) {
+                            + " END count: "
+                            + base.getEND());
+                    if (base.getEND() == n.getDegree()) {
                         System.out.println(" - KILL " + base.getId());
+                        //base.doDelete();
                     }
                     break;
             }

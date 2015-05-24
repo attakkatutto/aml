@@ -40,9 +40,9 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
         this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.type = type;
         this.random = new Random();
-        this.partners = new ArrayList<>(Config.getInstance().getMaxNumberPartners());
-        this.parents = new ArrayList<>(Config.getInstance().getMaxNumberParents());
-        this.dummies = new ArrayList<>(Config.getInstance().getMaxNumberDummies());
+        this.partners = new ArrayList<>();
+        this.parents = new ArrayList<>();
+        this.dummies = new ArrayList<>();
         initScore();
     }
 

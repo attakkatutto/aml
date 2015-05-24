@@ -17,7 +17,7 @@ public final class MyAgent extends AgentBase {
 
     protected NodeType type;
     protected String id;
-    protected int FIN;
+    protected int END;
 
     public MyAgent(MyNode node) {
         super(node);
@@ -25,6 +25,11 @@ public final class MyAgent extends AgentBase {
         this.id = node.getId();
     }
 
+    @Override
+    public MyNode getNode(){
+        return super.n;
+    }
+    
     public NodeType getType() {
         return type;
     }
@@ -33,12 +38,12 @@ public final class MyAgent extends AgentBase {
         return id;
     }
    
-    public int getFIN() {
-        return FIN;
+    public int getEND() {
+        return END;
     }
     
-    public int addFIN() {
-        return FIN++;
+    public int addEND() {
+        return END++;
     }
    
 }

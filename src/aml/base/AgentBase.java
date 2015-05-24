@@ -9,6 +9,7 @@ import aml.agent.Receiver;
 import aml.agent.Sender;
 import aml.graph.MyNode;
 import jade.core.Agent;
+import jade.core.behaviours.SequentialBehaviour;
 import java.util.Random;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Random;
  */
 public abstract class AgentBase extends Agent {
 
-    private MyNode n;
+    protected MyNode n;
     protected final Random random = new Random();
 
     public AgentBase(MyNode n) {
@@ -28,14 +29,18 @@ public abstract class AgentBase extends Agent {
 
     @Override
     public void setup() {
-        addBehaviour(new Sender(this,n));
-        addBehaviour(new Receiver(this,n));
+        SequentialBehaviour seq = new SequentialBehaviour(this);
+        seq.addSubBehaviour(new Sender(this));
+        seq.addSubBehaviour(new Receiver(this));
+        this.addBehaviour(seq);        
     }
+    
+    public abstract MyNode getNode();
 
     @Override
     public void takeDown() {
         System.out.println(" - "
                 + this.getLocalName()
-                + " terminated! ");
+                + " terminated! ");        
     }
 }
