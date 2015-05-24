@@ -9,7 +9,6 @@ import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.MONTHS;
-import static aml.global.Constant.MAX_WAITING;
 import aml.global.Enums.NodeType;
 import aml.graph.MyNode;
 import jade.core.AID;
@@ -81,14 +80,12 @@ public class Sender extends SimpleBehaviour {
                 ACLMessage msg = createSendMessage(t, v.getId());
                 base.send(msg);
                 count++;
-                block(random.nextInt(MAX_WAITING));
             } //this agent wait MAX_WAITING ms and then declares FINISH
             catch (Exception ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else {
-            //block(random.nextInt(MAX_WAITING));
             System.out.println(" - "
                     + base.getLocalName()
                     + " declare FINISH ");

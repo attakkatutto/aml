@@ -8,10 +8,9 @@ package aml.agent;
 import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.graph.MyNode;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import jade.wrapper.StaleProxyException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,10 +19,11 @@ import java.util.logging.Logger;
  *
  * @author Davide
  */
-public class Receiver extends CyclicBehaviour {
+public class Receiver extends SimpleBehaviour {
 
     MyNode n;
     Random random = new Random();
+    boolean finished = false;
 
     public Receiver(AgentBase agent) {
         super(agent);
@@ -66,12 +66,17 @@ public class Receiver extends CyclicBehaviour {
                             + base.getEND());
                     if (base.getEND() == n.getDegree()) {
                         System.out.println(" - KILL " + base.getId());
-                        //base.doDelete();
+                        finished = true;
                     }
                     break;
             }
         } else {
             this.block();
         }
+    }
+
+    @Override
+    public boolean done() {
+        return finished;
     }
 }
