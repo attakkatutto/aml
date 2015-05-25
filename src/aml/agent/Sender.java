@@ -62,8 +62,7 @@ public class Sender extends SimpleBehaviour {
         if (n.getOutDegree() > 0 && count < Config.getInstance().getNumberAgentMessage()) {
             try {
                 //this agent send messages
-                Edge e = n.getLeavingEdge(random.nextInt(n.getOutDegree()));
-                MyNode v = e.getTargetNode();
+                MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
                 short _time = (short)random.nextInt(MONTHS);
                 double _amount = getRandomAmount(base.getType());
                 n.setCosts(_amount, _time);
