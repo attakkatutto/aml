@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
 
     private static Config _instance;
-    private int agentMessage, numberOfEntity, maxEdgesPerEntity;
+    private int numberAgentMessage, numberOfEntity, maxEdgesPerEntity;
     private int numberParents, numberPartners,numberDummies;
     private double employeeMean, employeeStdDev,
             freelanceMean, freelanceStdDev,
@@ -54,12 +54,12 @@ public class Config {
     }
 
     @XmlElement
-    public int getAgentMessage() {
-        return agentMessage;
+    public int getNumberAgentMessage() {
+        return numberAgentMessage;
     }
 
-    public void setAgentMessage(int num) {
-        agentMessage = num;
+    public void setNumberAgentMessage(int num) {
+        numberAgentMessage = num;
     }
 
     @XmlElement
