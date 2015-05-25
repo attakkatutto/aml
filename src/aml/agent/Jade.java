@@ -30,13 +30,11 @@ public class Jade {
 
     private AgentContainer mainContainer;
     private final Graph graph;
-    //private final List<String> agents;
 
     public Jade(Graph graph) {
         this.graph = graph;
         initJade();
         handleAgent();
-        //agents = new ArrayList<>();
     }
 
     private void initJade() {
@@ -64,6 +62,8 @@ public class Jade {
     private void handleAgent() {
         try {
             mainContainer.addPlatformListener(new PlatformController.Listener() {
+                List<String> agents = new ArrayList<>();
+                
                 @Override
                 public void deadAgent(PlatformEvent anEvent) {
                     // WORKS 
@@ -71,11 +71,11 @@ public class Jade {
                     System.out.println(" - "
                             + name
                             + " dead ");
-                    //agents.remove(name);
-//                    if (agents.isEmpty()) {
-//                        System.out.println(" - "
-//                                + " JADE end! ");                        
-//                    }
+                    agents.remove(name);
+                    if (agents.isEmpty()) {
+                        System.out.println(" - "
+                                + " JADE end! ");                        
+                    }
                 }
 
                 @Override
@@ -85,7 +85,7 @@ public class Jade {
                     System.out.println(" - "
                             + name
                             + " born ");
-                    //agents.add(name);
+                    agents.add(name);
                 }
 
                 @Override
