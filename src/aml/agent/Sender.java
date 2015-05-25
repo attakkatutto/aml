@@ -73,7 +73,7 @@ public class Sender extends SimpleBehaviour {
                         + " send to "
                         + v.getId()
                         + " ->  month "
-                        + _time
+                        + (_time + 1)
                         + " amount "
                         + _amount);
                 ACLMessage msg = createSendMessage(t, v.getId());
