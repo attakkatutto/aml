@@ -8,7 +8,7 @@ node {  fill-color: red;
 
 node.person { shape: box; } 
 
-node.company { shape: circle; }  
+node.company { shape: circle; }
 
 edge { fill-color:darkgrey; }
 

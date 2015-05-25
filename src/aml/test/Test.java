@@ -5,14 +5,7 @@
  */
 package aml.test;
 
-import aml.global.Config;
-import aml.agent.Jade;
-import static aml.global.Enums.NodeType.EMPLOYEE;
-import static aml.global.Enums.NodeType.FREELANCE;
-import aml.graph.MyNode;
-import aml.graph.Network;
-import org.graphstream.graph.*;
-import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
+import aml.agent.JadeManager;
 
 /**
  * Test class for the network
@@ -22,34 +15,9 @@ import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 public class Test {
 
     public static void main(String[] args) throws InterruptedException {
-        Graph graph = new Network("AML Test");
-
-        graph.display(true);
                 
-        Jade f = new Jade(graph);
-        
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
-                false);
-        b.setDirectedEdges(true, true);
-        b.addSink(graph);
-        b.begin();
-
-        while (graph.getNodeCount() < Config.getInstance().getNumberOfEntity()) {
-            b.nextEvents();
-            for (Node node : graph) {
-                node.addAttribute("ui.label", String.format("%s", node.getId()));
-                if (((MyNode) node).getType() == EMPLOYEE
-                        || ((MyNode) node).getType() == FREELANCE) {
-                    node.addAttribute("ui.class", "person");
-                } else {
-                    node.addAttribute("ui.class", "company");
-                }
-            }
-            Thread.sleep(500);
-        }
-
-        b.end();
-
-        f.startAgents();
+        JadeManager f = new JadeManager();
+               
+        f.exec();
     }
 }
