@@ -7,18 +7,18 @@ and open the template in the editor.
 
 
 <config>
-    <numberAgentMessage>1000</numberAgentMessage>
+    <numberAgentMessage>5000</numberAgentMessage>
     <numberOfEntity>100</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
-    <employeeMean>400</employeeMean>
-    <employeeStdDev>10</employeeStdDev>
-    <freelanceMean>800</freelanceMean>
-    <freelanceStdDev>50</freelanceStdDev>
-    <smallCompanyMean>30000</smallCompanyMean>
-    <smallCompanyStdDev>1000</smallCompanyStdDev>
-    <bigCompanyMean>50000</bigCompanyMean>
-    <bigCompanyStdDev>8000</bigCompanyStdDev>
+    <employeeMean>1</employeeMean>
+    <employeeStdDev>0.5</employeeStdDev>
+    <freelanceMean>5</freelanceMean>
+    <freelanceStdDev>1</freelanceStdDev>
+    <smallCompanyMean>80</smallCompanyMean>
+    <smallCompanyStdDev>10</smallCompanyStdDev>
+    <bigCompanyMean>300</bigCompanyMean>
+    <bigCompanyStdDev>20</bigCompanyStdDev>
     <scoreWindowType>1</scoreWindowType> /*number of months*/
 </config>
