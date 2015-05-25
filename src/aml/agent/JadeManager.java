@@ -78,14 +78,10 @@ public class JadeManager {
                             + " dead ");
                     agents.remove(name);
                     if (agents.isEmpty()) {
-                        try {
-                            System.out.println(" - "
-                                    + " JADE end! ");
-                            mainContainer.getPlatformController().kill();                            
-                            calculatePageRank();
-                        } catch (ControllerException ex) {
-                            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        System.out.println(" - "
+                                + " JADE end! ");
+                        jade.core.Runtime.instance().setCloseVM(true);
+                        calculatePageRank();
                     }
                 }
 
@@ -130,8 +126,8 @@ public class JadeManager {
         for (Node node : graph) {
             double rank = pageRank.getRank(node);
             double rankperc = 5 + Math.sqrt(graph.getNodeCount() * rank * 20);
-            node.addAttribute("ui.size",
-                    rankperc);
+            node.addAttribute("ui.style",
+                   "padding:" + rankperc + "px;");
             if (rankperc > 12) {
                 node.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
             }
