@@ -81,8 +81,7 @@ public class JadeManager {
                         try {
                             System.out.println(" - "
                                     + " JADE end! ");
-                            mainContainer.getPlatformController().kill();
-                            Runtime.instance().shutDown();
+                            mainContainer.getPlatformController().kill();                            
                             calculatePageRank();
                         } catch (ControllerException ex) {
                             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
