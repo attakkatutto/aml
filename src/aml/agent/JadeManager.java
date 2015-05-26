@@ -51,7 +51,7 @@ public class JadeManager {
         // main container (i.e. on this host, port 1099) 
         //agentContainer = jade.core.Runtime.instance().createAgentContainer(p);     
         agentsHandler();
-    }    
+    }
 
     public void exec() {
         generateBarabasiGraph();
@@ -65,10 +65,19 @@ public class JadeManager {
         }
     }
 
+    private void stop() {
+        try {            
+            mainContainer.getPlatformController().kill();            
+        } catch (ControllerException ex) {
+            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void agentsHandler() {
         try {
             mainContainer.addPlatformListener(new PlatformController.Listener() {
                 List<String> agents = new ArrayList<>();
+
                 @Override
                 public void deadAgent(PlatformEvent anEvent) {
                     // WORKS 
@@ -80,7 +89,7 @@ public class JadeManager {
                     if (agents.isEmpty()) {
                         System.out.println(" - "
                                 + " JADE end! ");
-                        jade.core.Runtime.instance().setCloseVM(true);
+                        stop();
                         calculatePageRank();
                     }
                 }
@@ -127,7 +136,7 @@ public class JadeManager {
             double rank = pageRank.getRank(node);
             double rankperc = 5 + Math.sqrt(graph.getNodeCount() * rank * 20);
             node.addAttribute("ui.style",
-                   "padding:" + rankperc + "px;");
+                    "padding:" + rankperc + "px;");
             if (rankperc > 12) {
                 node.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
             }
