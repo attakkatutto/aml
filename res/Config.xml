@@ -13,7 +13,7 @@ and open the template in the editor.
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
-    <laundererPercentage>5</laundererPercentage>
+    <laundererPercentage>15</laundererPercentage>
     /*HONEST*/
     <employeeMeanHonest>1</employeeMeanHonest>
     <employeeStdDevHonest>0.5</employeeStdDevHonest>
@@ -31,7 +31,7 @@ and open the template in the editor.
     <smallCompanyMeanLaunderer>80</smallCompanyMeanLaunderer>
     <smallCompanyStdDevLaunderer>10</smallCompanyStdDevLaunderer>
     <bigCompanyMeanLaunderer>300</bigCompanyMeanLaunderer>
-    <bigCompanyStdDevLaunderer>20</bigCompanyMeanLaunderer>
+    <bigCompanyStdDevLaunderer>20</bigCompanyStdDevLaunderer>
     /*TYPE OF WINDOW*/
     <scoreWindowType>1</scoreWindowType> 
 </config>

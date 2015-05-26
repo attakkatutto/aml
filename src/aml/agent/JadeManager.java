@@ -21,7 +21,6 @@ import jade.wrapper.PlatformEvent;
 import jade.wrapper.StaleProxyException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,12 +36,12 @@ public class JadeManager {
 
     private final AgentContainer mainContainer;
     private final Graph graph;
-    private final PageRank pageRank;
+//    private final PageRank pageRank;
 
     public JadeManager() {
         this.graph = new Network("AML Test");
-        this.pageRank = new PageRank();
-        this.pageRank.init(graph);
+//        this.pageRank = new PageRank();
+//        this.pageRank.init(graph);
         this.graph.display(true);
         // Get a hold on JADE runtime
         // Create a default profile
@@ -90,7 +89,7 @@ public class JadeManager {
                             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         jade.core.Runtime.instance().shutDown();
-                        calculatePageRank();
+                        //calculatePageRank();
                     }
                 }
 
@@ -131,25 +130,25 @@ public class JadeManager {
         }
     }
 
-    private void calculatePageRank() {
-        for (Node node : graph) {
-            double rank = pageRank.getRank(node);
-            double rankperc = 5 + Math.sqrt(graph.getNodeCount() * rank * 20);
-            node.addAttribute("ui.style",
-                    "padding:" + rankperc + "px;");
-            if (rankperc > 12) {
-                node.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
-            }
-        }
-    }
+//    private void calculatePageRank() {
+//        for (Node node : graph) {
+//            double rank = pageRank.getRank(node);
+//            double rankperc = 5 + Math.sqrt(graph.getNodeCount() * rank * 20);
+//            node.addAttribute("ui.style",
+//                    "padding:" + rankperc + "px;");
+//            if (rankperc > 12) {
+//                node.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
+//            }
+//        }
+//    }
 
     private void generateBarabasiGraph() {
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.getInstance().getMaxEdgesPerEntity(),
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerEntity(),
                 false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();
-        while (graph.getNodeCount() < Config.getInstance().getNumberOfEntity()) {
+        while (graph.getNodeCount() < Config.instance().getNumberOfEntity()) {
             try {
                 b.nextEvents();
                 for (Node node : graph) {
@@ -170,9 +169,13 @@ public class JadeManager {
     }
 
     private void setLaunderersAndHonests() {
-        
-    }   
+        int numberLaunderer = (Config.instance().getNumberOfEntity() * Config.instance().getLaundererPercentage()) / 100;
+        List<MyNode> nodes = new ArrayList<>(graph.getNodeSet());
+        Collections.sort(nodes);
+        for (int index = 0;index<nodes.size();index++){
+            MyNode n = nodes.get(index);          
+            n.setHonest(index>=numberLaunderer);
+            if (index>=numberLaunderer) n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
+        }        
+    }
 }
-
-
-

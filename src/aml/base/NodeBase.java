@@ -17,7 +17,7 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
  *
  * @author ddefalco
  */
-public abstract class NodeBase extends AdjacencyListNode implements INode {
+public abstract class NodeBase extends AdjacencyListNode implements INode,Comparable {
 
     protected AgentBase agent;
     protected NodeType type;
@@ -220,7 +220,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
     public abstract void initPartners();
 
     private void initScore() {
-        switch (Config.getInstance().getScoreWindowType()) {
+        switch (Config.instance().getScoreWindowType()) {
             case THREEMONTHS:
                 this.fraudScore = new double[3];
                 this.suspectedScore = new double[3];
@@ -234,5 +234,12 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
                 this.suspectedScore = new double[6];
                 this.deficitScore = new double[6];
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(this.getOutDegree() < ((NodeBase)o).getOutDegree()) return 1;
+        if(this.getOutDegree() > ((NodeBase)o).getOutDegree()) return -1;
+        return 0;
     }
 }

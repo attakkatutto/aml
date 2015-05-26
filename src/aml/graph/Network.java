@@ -10,7 +10,6 @@ import aml.base.NodeBase;
 import aml.test.Test;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;

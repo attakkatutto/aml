@@ -39,37 +39,37 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return (n.isHonest()) ? Config.getInstance().getEmployeeMeanHonest() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDevHonest() : 
-                        Config.getInstance().getEmployeeMeanLaunderer() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevHonest() : 
+                        Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
-                return (n.isHonest()) ? Config.getInstance().getFreelanceMeanHonest() * random.nextDouble()
-                        + Config.getInstance().getFreelanceStdDevHonest() :
-                        Config.getInstance().getFreelanceMeanLaunderer() * random.nextDouble()
-                        + Config.getInstance().getFreelanceStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() * random.nextDouble()
+                        + Config.instance().getFreelanceStdDevHonest() :
+                        Config.instance().getFreelanceMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
-                return (n.isHonest()) ? Config.getInstance().getBigCompanyMeanHonest() * random.nextDouble()
-                        + Config.getInstance().getBigCompanyStdDevHonest() :
-                        Config.getInstance().getBigCompanyMeanLaunderer() * random.nextDouble()
-                        + Config.getInstance().getBigCompanyStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() * random.nextDouble()
+                        + Config.instance().getBigCompanyStdDevHonest() :
+                        Config.instance().getBigCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
-                return (n.isHonest()) ? Config.getInstance().getSmallCompanyMeanHonest() * random.nextDouble()
-                        + Config.getInstance().getSmallCompanyStdDevHonest() :
-                         Config.getInstance().getSmallCompanyMeanLaunderer() * random.nextDouble()
-                        + Config.getInstance().getSmallCompanyStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() * random.nextDouble()
+                        + Config.instance().getSmallCompanyStdDevHonest() :
+                         Config.instance().getSmallCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getSmallCompanyStdDevLaunderer();
             default:
-                return (n.isHonest()) ? Config.getInstance().getEmployeeMeanHonest() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDevHonest() :
-                        Config.getInstance().getEmployeeMeanLaunderer() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevHonest() :
+                        Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevLaunderer();
         }
     }
 
     @Override
     public void action() {
         MyAgent base = (MyAgent) myAgent;
-        if (n.getOutDegree() > 0 && count < Config.getInstance().getNumberAgentMessage()) {
+        if (n.getOutDegree() > 0 && count < Config.instance().getNumberAgentMessage()) {
             try {
                 //this agent send messages
                 MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();

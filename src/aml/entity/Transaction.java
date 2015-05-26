@@ -6,42 +6,20 @@
 package aml.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ddefalco
  */
-@Entity
-@Table(name = "TRANSACTIONS")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t")})
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
+
     private String id;
-    @Basic(optional = false)
-    @Column(name = "ID_SOURCE")
     private String idSource;
-    @Basic(optional = false)
-    @Column(name = "ID_TARGET")
     private String idTarget;
-    @Basic(optional = false)
     private double amount;
-    @Basic(optional = false)
     private short month;
-    @Column(name = "SOURCE_TYPE")
     private String sourceType;
-    @Column(name = "TARGET_TYPE")
     private String targetType;
 
     public Transaction() {

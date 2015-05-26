@@ -34,7 +34,7 @@ public class Config {
 
     private Config() {}
 
-    public static Config getInstance() {
+    public static Config instance() {
         if (_instance == null) {
             _instance = unmashall();
             return _instance;
