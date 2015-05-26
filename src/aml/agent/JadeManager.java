@@ -65,13 +65,12 @@ public class JadeManager {
         }
     }
 
-    private void stop() {
+    public void stop() {
         try {            
             mainContainer.getPlatformController().kill();            
         } catch (ControllerException ex) {
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        calculatePageRank();
+        }        
     }
 
     private void agentsHandler() {
@@ -90,7 +89,8 @@ public class JadeManager {
                     if (agents.isEmpty()) {
                         System.out.println(" - "
                                 + " JADE end! ");
-                        stop();                        
+                        stop();  
+                        calculatePageRank();
                     }
                 }
 

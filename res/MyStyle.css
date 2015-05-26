@@ -3,7 +3,7 @@ node {  fill-color: red;
         text-color: white;
         text-style: bold;
         stroke-mode: plain;
-        padding: 6px;
+        padding: 5px;
         size-mode: fit; }
 
 node.person { shape: box; } 
