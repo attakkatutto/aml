@@ -39,20 +39,30 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return Config.getInstance().getEmployeeMean() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDev();
+                return (n.isHonest()) ? Config.getInstance().getEmployeeMeanHonest() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDevHonest() : 
+                        Config.getInstance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDevLaunderer();
             case FREELANCE:
-                return Config.getInstance().getFreelanceMean() * random.nextDouble()
-                        + Config.getInstance().getFreelanceStdDev();
+                return (n.isHonest()) ? Config.getInstance().getFreelanceMeanHonest() * random.nextDouble()
+                        + Config.getInstance().getFreelanceStdDevHonest() :
+                        Config.getInstance().getFreelanceMeanLaunderer() * random.nextDouble()
+                        + Config.getInstance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
-                return Config.getInstance().getBigCompanyMean() * random.nextDouble()
-                        + Config.getInstance().getBigCompanyStdDev();
+                return (n.isHonest()) ? Config.getInstance().getBigCompanyMeanHonest() * random.nextDouble()
+                        + Config.getInstance().getBigCompanyStdDevHonest() :
+                        Config.getInstance().getBigCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.getInstance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
-                return Config.getInstance().getSmallCompanyMean() * random.nextDouble()
-                        + Config.getInstance().getSmallCompanyStdDev();
+                return (n.isHonest()) ? Config.getInstance().getSmallCompanyMeanHonest() * random.nextDouble()
+                        + Config.getInstance().getSmallCompanyStdDevHonest() :
+                         Config.getInstance().getSmallCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.getInstance().getSmallCompanyStdDevLaunderer();
             default:
-                return Config.getInstance().getEmployeeMean() * random.nextDouble()
-                        + Config.getInstance().getEmployeeStdDev();
+                return (n.isHonest()) ? Config.getInstance().getEmployeeMeanHonest() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDevHonest() :
+                        Config.getInstance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.getInstance().getEmployeeStdDevLaunderer();
         }
     }
 

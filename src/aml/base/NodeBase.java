@@ -21,6 +21,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
 
     protected AgentBase agent;
     protected NodeType type;
+    protected boolean honest;
 
     //Random List of busness partners 
     protected ArrayList<String> partners;
@@ -99,7 +100,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
     public double getDeficitScore(int index) {
         return deficitScore[index];
     }
-    
+
     /**
      * Get revenues of the EntityBase
      *
@@ -176,10 +177,18 @@ public abstract class NodeBase extends AdjacencyListNode implements INode {
     /**
      * Are you honest?
      *
-     * @return true/false
+     * @return true/false calcolo onesto o disonesto sulla base degli archi
+     * uscenti in modo da ottenere disonesti per il 5% (xml) del totale dei
+     * nodi. media e deviazione std per disonesti (quella che è config nel xml
+     * rimane così ed è quella degli onesti)
+     *
      */
     public boolean isHonest() {
-        return true;
+        return honest;
+    }
+
+    public void setHonest(boolean honest) {
+        this.honest = honest;
     }
 
     /**

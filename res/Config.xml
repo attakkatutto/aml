@@ -7,18 +7,31 @@ and open the template in the editor.
 
 
 <config>
+    /*NETWORK CONFIG*/
     <numberAgentMessage>1000</numberAgentMessage>
     <numberOfEntity>100</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
-    <employeeMean>1</employeeMean>
-    <employeeStdDev>0.5</employeeStdDev>
-    <freelanceMean>5</freelanceMean>
-    <freelanceStdDev>1</freelanceStdDev>
-    <smallCompanyMean>80</smallCompanyMean>
-    <smallCompanyStdDev>10</smallCompanyStdDev>
-    <bigCompanyMean>300</bigCompanyMean>
-    <bigCompanyStdDev>20</bigCompanyStdDev>
-    <scoreWindowType>1</scoreWindowType> /*number of months*/
+    <laundererPercentage>5</laundererPercentage>
+    /*HONEST*/
+    <employeeMeanHonest>1</employeeMeanHonest>
+    <employeeStdDevHonest>0.5</employeeStdDevHonest>
+    <freelanceMeanHonest>5</freelanceMeanHonest>
+    <freelanceStdDevHonest>1</freelanceStdDevHonest>
+    <smallCompanyMeanHonest>80</smallCompanyMeanHonest>
+    <smallCompanyStdDevHonest>10</smallCompanyStdDevHonest>
+    <bigCompanyMeanHonest>300</bigCompanyMeanHonest>
+    <bigCompanyStdDevHonest>20</bigCompanyStdDevHonest>
+    /*LAUNDERER*/
+    <employeeMeanLaunderer>1</employeeMeanLaunderer>
+    <employeeStdDevLaunderer>0.5</employeeStdDevLaunderer>
+    <freelanceMeanLaunderer>5</freelanceMeanLaunderer>
+    <freelanceStdDevLaunderer>1</freelanceStdDevLaunderer>
+    <smallCompanyMeanLaunderer>80</smallCompanyMeanLaunderer>
+    <smallCompanyStdDevLaunderer>10</smallCompanyStdDevLaunderer>
+    <bigCompanyMeanLaunderer>300</bigCompanyMeanLaunderer>
+    <bigCompanyStdDevLaunderer>20</bigCompanyMeanLaunderer>
+    /*TYPE OF WINDOW*/
+    <scoreWindowType>1</scoreWindowType> 
 </config>
