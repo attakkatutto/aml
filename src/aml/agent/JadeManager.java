@@ -67,6 +67,14 @@ public class JadeManager {
         }
     }
 
+    public void stop() {
+        try {            
+            mainContainer.getPlatformController().kill();            
+        } catch (ControllerException ex) {
+            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+
     private void agentsHandler() {
         try {
             mainContainer.addPlatformListener(new PlatformController.Listener() {
