@@ -7,10 +7,12 @@ package aml.agent;
 
 import aml.entity.Transaction;
 import aml.base.AgentBase;
+import aml.entity.DBSynthetic;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +41,7 @@ public class Receiver extends CyclicBehaviour {
                 case ACLMessage.INFORM:
                     try {
                         Transaction t = (Transaction) msg.getContentObject();
+                        DBSynthetic.insertRecordIntoTable(t);
                         n.setRevenues(t.getAmount(), t.getMonth());
                         System.out.println(" - "
                                 + t.getIdTarget()
@@ -50,7 +53,7 @@ public class Receiver extends CyclicBehaviour {
                                 + " revenues: " + n.getRevenues(t.getMonth())
                                 + " costs: " + n.getCosts(t.getMonth())
                                 + " budget: " + n.getBudget(t.getMonth()));
-                    } catch (UnreadableException ex) {
+                    } catch (UnreadableException | SQLException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
