@@ -25,7 +25,7 @@ public class SynthDB {
     private final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
     private final String DB_CONNECTION = "jdbc:derby://localhost:1527/synthetic";
     private final String DB_USER = "sa";
-    private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
+    private final String FILE_NAME = "C:\\SYNTHETIC.csv";
     private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE \n";
     private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, $s \n";
     private final String DB_PASSWORD = "password";
@@ -34,7 +34,7 @@ public class SynthDB {
 
     public SynthDB() {
         try {
-            File file = new File(String.format(FILE_NAME, System.currentTimeMillis()));
+            File file = new File(FILE_NAME);
             fw = new FileWriter(file.getAbsoluteFile(), true);
             fw.write(HEADER_FILE);
         } catch (IOException ex) {
