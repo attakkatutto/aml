@@ -10,6 +10,8 @@ import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
+import aml.entity.Transaction;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import org.graphstream.graph.implementations.*;
 
@@ -82,4 +84,9 @@ public final class MyNode extends NodeBase {
 //    public void addReceived(Transaction received) {
 //        this.received.add(received);
 //    }
+//
+//    public ArrayList<Transaction> getReceived() {
+//        return received;
+//    }
+       
 }

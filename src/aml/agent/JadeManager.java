@@ -5,6 +5,8 @@
  */
 package aml.agent;
 
+import aml.entity.SynthDB;
+import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
@@ -18,11 +20,13 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.PlatformController;
 import jade.wrapper.PlatformEvent;
 import jade.wrapper.StaleProxyException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -96,6 +100,8 @@ public class JadeManager {
                             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         jade.core.Runtime.instance().shutDown();
+//                        write2DB();
+                        JOptionPane.showMessageDialog(null, "Simulation finished!");
                         //calculatePageRank();
                     }
                 }
@@ -137,6 +143,21 @@ public class JadeManager {
         }
     }
 
+    
+//    private void write2DB() {
+//        SynthDB db = new SynthDB();
+//        for (Node node : graph) {
+//            MyNode mynode = (MyNode) node;
+//            for (Transaction trans : mynode.getReceived()){
+//                try {
+//                    db.insertRecordIntoTable(trans);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
+//    }
+    
     
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
