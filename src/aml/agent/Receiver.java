@@ -41,7 +41,7 @@ public class Receiver extends CyclicBehaviour {
                 case ACLMessage.INFORM:
                     try {
                         Transaction t = (Transaction) msg.getContentObject();
-                        SynthDB.instance().insertRecordIntoTable(t);
+                        SynthDB.instance().writeFile(t);
                         n.setRevenues(t.getAmount(), t.getMonth());
                         System.out.println(" - "
                                 + t.getIdTarget()
@@ -53,7 +53,7 @@ public class Receiver extends CyclicBehaviour {
                                 + " revenues: " + n.getRevenues(t.getMonth())
                                 + " costs: " + n.getCosts(t.getMonth())
                                 + " budget: " + n.getBudget(t.getMonth()));
-                    } catch (UnreadableException | SQLException ex) {
+                    } catch (UnreadableException ex) {
                         Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;

@@ -5,8 +5,6 @@
  */
 package aml.agent;
 
-import aml.entity.SynthDB;
-import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
@@ -20,13 +18,11 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.PlatformController;
 import jade.wrapper.PlatformEvent;
 import jade.wrapper.StaleProxyException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -36,7 +32,7 @@ import org.graphstream.graph.Node;
  * @author DAVIDE
  */
 public class JadeManager {
-
+    
     private final AgentContainer mainContainer;
     private final Graph graph;
 //    private final PageRank pageRank;
@@ -56,11 +52,11 @@ public class JadeManager {
         //agentContainer = jade.core.Runtime.instance().createAgentContainer(p);     
         agentsHandler();
     }
-
+    
     public void exec() {
         generateBarabasiGraph();
         setLaunderersAndHonests();
-        for (Node n : graph.getEachNode()) {                  
+        for (Node n : graph.getEachNode()) {            
             MyAgent a = new MyAgent((MyNode) n);
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
@@ -69,7 +65,7 @@ public class JadeManager {
             }            
         }
     }
-
+    
     public void stop() {
         try {            
             mainContainer.getPlatformController().kill();            
@@ -77,12 +73,12 @@ public class JadeManager {
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
-
+    
     private void agentsHandler() {
         try {
             mainContainer.addPlatformListener(new PlatformController.Listener() {
                 List<String> agents = new ArrayList<>();
-
+                
                 @Override
                 public void deadAgent(PlatformEvent anEvent) {
                     // WORKS 
@@ -99,13 +95,12 @@ public class JadeManager {
                         } catch (ControllerException ex) {
                             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        jade.core.Runtime.instance().shutDown();
-//                        write2DB();
-                        JOptionPane.showMessageDialog(null, "Simulation finished!");
+                        System.exit(0);
+//                        write2DB();                        
                         //calculatePageRank();
                     }
                 }
-
+                
                 @Override
                 public void bornAgent(PlatformEvent anEvent) {
                     // WORKS
@@ -115,22 +110,22 @@ public class JadeManager {
                             + " born ");
                     agents.add(name);
                 }
-
+                
                 @Override
                 public void startedPlatform(PlatformEvent pe) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
-
+                
                 @Override
                 public void suspendedPlatform(PlatformEvent pe) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
-
+                
                 @Override
                 public void resumedPlatform(PlatformEvent pe) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
-
+                
                 @Override
                 public void killedPlatform(PlatformEvent pe) {
                     System.out.println(" - "
@@ -143,7 +138,6 @@ public class JadeManager {
         }
     }
 
-    
 //    private void write2DB() {
 //        SynthDB db = new SynthDB();
 //        for (Node node : graph) {
@@ -157,8 +151,6 @@ public class JadeManager {
 //            }
 //        }
 //    }
-    
-    
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
 //            double rank = pageRank.getRank(node);
@@ -170,7 +162,6 @@ public class JadeManager {
 //            }
 //        }
 //    }
-
     private void generateBarabasiGraph() {
         BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerEntity(),
                 false);
@@ -196,15 +187,17 @@ public class JadeManager {
         }
         b.end();
     }
-
+    
     private void setLaunderersAndHonests() {
         int numberLaunderer = (Config.instance().getNumberOfEntity() * Config.instance().getLaundererPercentage()) / 100;
         List<MyNode> nodes = new ArrayList<>(graph.getNodeSet());
         Collections.sort(nodes);
-        for (int index = 0;index<nodes.size();index++){
-            MyNode n = nodes.get(index);          
-            n.setHonest(index>=numberLaunderer);
-            if (index>=numberLaunderer) n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
+        for (int index = 0; index < nodes.size(); index++) {
+            MyNode n = nodes.get(index);            
+            n.setHonest(index >= numberLaunderer);
+            if (index >= numberLaunderer) {
+                n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
+            }
         }        
     }
 }
