@@ -32,7 +32,7 @@ public class SynthDB {
     private final Object LOCK = new Object();
     private FileWriter fw;
 
-    private SynthDB() {
+    public SynthDB() {
         try {
             File file = new File(String.format(FILE_NAME, System.currentTimeMillis()));
             fw = new FileWriter(file.getAbsoluteFile(), true);
@@ -42,14 +42,14 @@ public class SynthDB {
         }
     }
 
-    public static SynthDB instance() {
-        return SynthDBHolder.INSTANCE;
-    }
+//    public static SynthDB instance() {
+//        return SynthDBHolder.INSTANCE;
+//    }
 
-    private static class SynthDBHolder {
-
-        private static final SynthDB INSTANCE = new SynthDB();
-    }
+//    private static class SynthDBHolder {
+//
+//        private static final SynthDB INSTANCE = new SynthDB();
+//    }
 
     public void insertRecordIntoTable(Transaction t) throws SQLException {
         synchronized (LOCK) {

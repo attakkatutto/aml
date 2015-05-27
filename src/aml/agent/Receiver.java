@@ -25,7 +25,8 @@ public class Receiver extends CyclicBehaviour {
 
     MyNode n;
     Random random = new Random();
-    boolean finished = false;    
+    boolean finished = false;  
+    SynthDB db = new SynthDB();
 
     public Receiver(AgentBase agent) {
         super(agent);
@@ -41,7 +42,7 @@ public class Receiver extends CyclicBehaviour {
                 case ACLMessage.INFORM:
                     try {
                         Transaction t = (Transaction) msg.getContentObject();
-                        SynthDB.instance().writeFile(t);
+                        db.writeFile(t);
                         n.setRevenues(t.getAmount(), t.getMonth());
                         System.out.println(" - "
                                 + t.getIdTarget()
