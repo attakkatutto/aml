@@ -10,7 +10,6 @@ import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
 import aml.graph.Network;
 import aml.graph.MyNode;
-import aml.graph.PageRank;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -57,13 +56,13 @@ public class JadeManager {
     public void exec() {
         generateBarabasiGraph();
         setLaunderersAndHonests();
-        for (Node n : graph.getEachNode()) {
+        for (Node n : graph.getEachNode()) {                  
             MyAgent a = new MyAgent((MyNode) n);
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
             } catch (StaleProxyException ex) {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }            
         }
     }
 
@@ -138,6 +137,7 @@ public class JadeManager {
         }
     }
 
+    
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
 //            double rank = pageRank.getRank(node);

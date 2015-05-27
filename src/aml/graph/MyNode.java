@@ -20,7 +20,6 @@ import org.graphstream.graph.implementations.*;
  */
 public final class MyNode extends NodeBase {
 
-    boolean honest;
 //    protected ArrayList<Transaction> sent;
 //    protected ArrayList<Transaction> received;
 
