@@ -17,7 +17,7 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
  *
  * @author ddefalco
  */
-public abstract class NodeBase extends AdjacencyListNode implements INode,Comparable {
+public abstract class NodeBase extends AdjacencyListNode implements INode, Comparable {
 
     protected AgentBase agent;
     protected NodeType type;
@@ -30,21 +30,17 @@ public abstract class NodeBase extends AdjacencyListNode implements INode,Compar
     //Random List of dummies
     protected ArrayList<String> dummies;
 
-    protected Random random;
-    protected double[] revenues, costs;
-    protected double[] fraudScore, suspectedScore, deficitScore;
+    protected Random random = new Random();
+    protected double[] revenues, costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    //, fraudScore, suspectedScore, deficitScore
 
     // *** Constructor ***
     public NodeBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
-        this.revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        this.costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.type = type;
-        this.random = new Random();
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
-        initScore();
     }
 
     public ArrayList<String> getPartners() {
@@ -74,31 +70,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode,Compar
 
     public void setType(NodeType type) {
         this.type = type;
-    }
-
-    /**
-     * Get fraudScore of the EntityBase
-     *
-     * @return fraudScore
-     */
-    @Override
-    public double getFraudScore() {
-        return 0;
-    }
-
-    /**
-     * Get suspectedScore of the EntityBase
-     *
-     * @return suspectedScore
-     */
-    @Override
-    public double getSuspectedScore() {
-        return 0;
-    }
-
-    @Override
-    public double getDeficitScore(int index) {
-        return deficitScore[index];
     }
 
     /**
@@ -218,35 +189,22 @@ public abstract class NodeBase extends AdjacencyListNode implements INode,Compar
      */
     @Override
     public abstract void initPartners();
-    
-    
+
     /**
-     * Initialize the partners of the current node
+     * Initialize the dummies of the current node PERSON
      */
     @Override
     public abstract void initDummies();
 
-    private void initScore() {
-        switch (Config.instance().getScoreWindowType()) {
-            case THREEMONTHS:
-                this.fraudScore = new double[3];
-                this.suspectedScore = new double[3];
-                this.deficitScore = new double[3];
-            case FOURMONTHS:
-                this.fraudScore = new double[4];
-                this.suspectedScore = new double[4];
-                this.deficitScore = new double[4];
-            case SIXMONTHS:
-                this.fraudScore = new double[6];
-                this.suspectedScore = new double[6];
-                this.deficitScore = new double[6];
-        }
-    }
 
     @Override
     public int compareTo(Object o) {
-        if(this.getOutDegree() < ((NodeBase)o).getOutDegree()) return 1;
-        if(this.getOutDegree() > ((NodeBase)o).getOutDegree()) return -1;
+        if (this.getOutDegree() < ((NodeBase) o).getOutDegree()) {
+            return 1;
+        }
+        if (this.getOutDegree() > ((NodeBase) o).getOutDegree()) {
+            return -1;
+        }
         return 0;
     }
 }

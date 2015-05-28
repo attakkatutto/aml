@@ -37,11 +37,5 @@ public interface INode {
 
     double getGlobalCosts();
 
-    double getGlobalRevenues();
-
-    double getDeficitScore(int index);
-
-    double getFraudScore();
-
-    double getSuspectedScore();
+    double getGlobalRevenues();    
 }
