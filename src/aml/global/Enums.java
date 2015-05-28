@@ -21,6 +21,10 @@ public enum NodeType {
     BIGCOMPANY
 };
 
+public enum PersistenceMode{
+    FILE,
+    DATABASE
+};
 
 public enum WindowType {
     @XmlEnumValue("1")

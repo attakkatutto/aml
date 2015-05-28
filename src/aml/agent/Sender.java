@@ -21,7 +21,8 @@ import java.util.logging.Logger;
 import org.graphstream.graph.Edge;
 
 /**
- *
+ * This behaviour handle message for other agents
+ * 
  * @author Davide
  */
 public class Sender extends SimpleBehaviour {
@@ -31,37 +32,37 @@ public class Sender extends SimpleBehaviour {
     int count = 0;
     boolean finished = false;
 
-    public Sender(AgentBase agent) {
+    public Sender(AgentBase agent, MyNode n) {
         super(agent);
-        this.n = agent.getNode();
+        this.n = n;
     }
 
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
                 return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
-                        + Config.instance().getEmployeeStdDevHonest() : 
-                        Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevHonest()
+                        : Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
                         + Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
                 return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() * random.nextDouble()
-                        + Config.instance().getFreelanceStdDevHonest() :
-                        Config.instance().getFreelanceMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getFreelanceStdDevHonest()
+                        : Config.instance().getFreelanceMeanLaunderer() * random.nextDouble()
                         + Config.instance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
                 return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() * random.nextDouble()
-                        + Config.instance().getBigCompanyStdDevHonest() :
-                        Config.instance().getBigCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getBigCompanyStdDevHonest()
+                        : Config.instance().getBigCompanyMeanLaunderer() * random.nextDouble()
                         + Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
                 return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() * random.nextDouble()
-                        + Config.instance().getSmallCompanyStdDevHonest() :
-                         Config.instance().getSmallCompanyMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getSmallCompanyStdDevHonest()
+                        : Config.instance().getSmallCompanyMeanLaunderer() * random.nextDouble()
                         + Config.instance().getSmallCompanyStdDevLaunderer();
             default:
                 return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
-                        + Config.instance().getEmployeeStdDevHonest() :
-                        Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        + Config.instance().getEmployeeStdDevHonest()
+                        : Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
                         + Config.instance().getEmployeeStdDevLaunderer();
         }
     }
@@ -71,37 +72,18 @@ public class Sender extends SimpleBehaviour {
         MyAgent base = (MyAgent) myAgent;
         if (n.getOutDegree() > 0 && count < Config.instance().getNumberAgentMessage()) {
             try {
-                //this agent send messages
-                MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
-                short _time = (short)random.nextInt(MONTHS);
-                double _amount = getRandomAmount(base.getType());
-                n.setCosts(_amount, _time);
-                Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                        n.getId(), v.getId(),_amount, _time);
-                System.out.println(" - "
-                        + n.getId()
-                        + " send to "
-                        + v.getId()
-                        + " ->  month "
-                        + (_time + 1)
-                        + " amount "
-                        + _amount);
-                ACLMessage msg = createSendMessage(t, v.getId());
+                ACLMessage msg = createSendMessage(n);
                 base.send(msg);
                 count++;
             } //this agent wait MAX_WAITING ms and then declares FINISH
             catch (Exception ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else {
-            System.out.println(" - "
-                    + base.getLocalName()
-                    + " declare FINISH ");
+        } else {            
             ACLMessage msg = createFinishMessage();
             base.send(msg);
             finished = true;
-        }        
+        }
     }
 
     @Override
@@ -109,7 +91,7 @@ public class Sender extends SimpleBehaviour {
         return finished;
     }
 
-    private ACLMessage createFinishMessage() {
+    private ACLMessage createFinishMessage() {        
         ACLMessage msg = new ACLMessage(ACLMessage.PROPAGATE);
         msg.setContent("FINISH");
         for (Edge e : n.getEachLeavingEdge()) {
@@ -123,10 +105,27 @@ public class Sender extends SimpleBehaviour {
         return msg;
     }
 
-    private ACLMessage createSendMessage(Transaction t, String idTarget) {
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+    private ACLMessage createSendMessage(MyNode n) {
+        //this agent send messages
+        MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
+        short _time = (short) random.nextInt(MONTHS);
+        double _amount = getRandomAmount(n.getType());
+        n.setCosts(_amount, _time);
+        Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
+                n.getId(), v.getId(), _amount, _time);
+        t.setSourceType(n.getType().name());
+        t.setTargetType(v.getType().name());
+        System.out.println(" - "
+                + n.getId()
+                + " send to "
+                + v.getId());
+//                + " ->  month "
+//                + (_time + 1)
+//                + " amount "
+//                + _amount);
+        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         try {
-            msg.addReceiver(new AID(idTarget, AID.ISLOCALNAME));
+            msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
             msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));            
         } catch (IOException ex) {
             Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);

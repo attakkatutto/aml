@@ -6,6 +6,8 @@
 package aml.test;
 
 import aml.agent.JadeManager;
+import aml.graph.Network;
+import org.graphstream.graph.Graph;
 
 /**
  * Test class for the network
@@ -13,11 +15,11 @@ import aml.agent.JadeManager;
  * @author ddefalco
  */
 public class Test {
-
+    
     public static void main(String[] args) throws InterruptedException {
-                
-        JadeManager f = new JadeManager();
-               
+        Graph graph = new Network("AML Test");
+        graph.display(true);
+        JadeManager f = new JadeManager(graph);               
         f.exec();
     }
 }

@@ -23,7 +23,7 @@ import org.graphstream.graph.implementations.*;
 public final class MyNode extends NodeBase {
 
 //    protected ArrayList<Transaction> sent;
-//    protected ArrayList<Transaction> received;
+    protected ArrayList<Transaction> received;
 
     /**
      * @param graph Network
@@ -33,7 +33,7 @@ public final class MyNode extends NodeBase {
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
 //        this.sent = new ArrayList<>();
-//        this.received = new ArrayList<>();
+        this.received = new ArrayList<>();
     }
 
     @Override
@@ -81,12 +81,23 @@ public final class MyNode extends NodeBase {
 //        this.sent.add(sent);
 //    }
 //
-//    public void addReceived(Transaction received) {
-//        this.received.add(received);
-//    }
-//
-//    public ArrayList<Transaction> getReceived() {
-//        return received;
-//    }
-       
+    public void addReceived(Transaction received) {
+        this.received.add(received);
+    }
+
+    public ArrayList<Transaction> getReceived() {
+        return received;
+    }       
+
+    @Override
+    public void initDummies() {
+        int count = 0;
+        while (count < Config.instance().getMaxNumberDummies()) {
+            MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
+            if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
+                dummies.add(v.getId());
+            }
+            count++;
+        }
+    }
 }

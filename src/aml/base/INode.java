@@ -23,6 +23,8 @@ public interface INode {
 
     void initParents();
     
+    void initDummies();
+    
     double getRevenues(int month);
 
     void setRevenues(double revenue, int month);

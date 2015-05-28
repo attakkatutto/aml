@@ -218,6 +218,13 @@ public abstract class NodeBase extends AdjacencyListNode implements INode,Compar
      */
     @Override
     public abstract void initPartners();
+    
+    
+    /**
+     * Initialize the partners of the current node
+     */
+    @Override
+    public abstract void initDummies();
 
     private void initScore() {
         switch (Config.instance().getScoreWindowType()) {

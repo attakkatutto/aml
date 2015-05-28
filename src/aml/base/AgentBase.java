@@ -30,17 +30,8 @@ public abstract class AgentBase extends Agent {
     @Override
     public void setup() {
         SequentialBehaviour seq = new SequentialBehaviour(this);
-        seq.addSubBehaviour(new Sender(this));
-        seq.addSubBehaviour(new Receiver(this));
+        seq.addSubBehaviour(new Sender(this,n));
+        seq.addSubBehaviour(new Receiver(this,n));
         this.addBehaviour(seq);        
-    }
-    
-    public abstract MyNode getNode();
-
-    @Override
-    public void takeDown() {
-        System.out.println(" - "
-                + this.getLocalName()
-                + " terminated! ");        
-    }
+    }   
 }

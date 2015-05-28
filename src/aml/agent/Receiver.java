@@ -7,30 +7,29 @@ package aml.agent;
 
 import aml.entity.Transaction;
 import aml.base.AgentBase;
-import aml.entity.SynthDB;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This behavoiur handle message from other agents
+ * 
  * @author Davide
  */
 public class Receiver extends CyclicBehaviour {
 
     MyNode n;
     Random random = new Random();
-    boolean finished = false;  
-    SynthDB db = new SynthDB();
+    boolean finished = false;
 
-    public Receiver(AgentBase agent) {
+    public Receiver(AgentBase agent, MyNode n) {
         super(agent);
-        this.n = agent.getNode();
+        this.n = n;
     }
 
     @Override
@@ -39,43 +38,79 @@ public class Receiver extends CyclicBehaviour {
         ACLMessage msg = base.receive();
         if (msg != null) {
             switch (msg.getPerformative()) {
-                case ACLMessage.INFORM:
-                    try {
-                        Transaction t = (Transaction) msg.getContentObject();
-                        db.writeFile(t);
-                        n.setRevenues(t.getAmount(), t.getMonth());
-                        System.out.println(" - "
-                                + t.getIdTarget()
-                                + " receive from "
-                                + t.getIdSource() + " -> "
-                                + t.getAmount()
-                                + " month: "
-                                + (t.getMonth() + 1)
-                                + " revenues: " + n.getRevenues(t.getMonth())
-                                + " costs: " + n.getCosts(t.getMonth())
-                                + " budget: " + n.getBudget(t.getMonth()));
-                    } catch (UnreadableException ex) {
-                        Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                case ACLMessage.REQUEST:
+                    base.addBehaviour(new HandleTransactionReceived(base, n, msg));
                     break;
                 case ACLMessage.PROPAGATE:
-                    base.addEND();
-                    System.out.println(" - "
-                            + base.getLocalName()
-                            + " receive finish message from "
-                            + msg.getSender().getLocalName()
-                            + " node degree: "
-                            + n.getDegree()
-                            + " END count: "
-                            + base.getEND());
-                    if (base.getEND() == n.getDegree()) {
-                        System.out.println(" - KILL " + base.getId());
-                        base.doDelete();
-                    }
+                    base.addBehaviour(new HandleFinished(base, n, msg));
                     break;
             }
         } else {
             this.block();
+        }
+    }
+}
+
+class HandleTransactionReceived extends OneShotBehaviour {
+
+    private final ACLMessage msg;
+    private final MyNode n;
+
+    HandleTransactionReceived(MyAgent a, MyNode n, ACLMessage msg) {
+        super(a);
+        this.n = n;
+        this.msg = msg;
+    }
+
+    @Override
+    public void action() {
+        try {
+            Transaction t = (Transaction) msg.getContentObject();
+            n.setRevenues(t.getAmount(), t.getMonth());
+            n.addReceived(t);
+            System.out.println(" - "
+                    + t.getIdTarget()
+                    + " receive from "
+                    + t.getIdSource());
+//                    + " -> "
+//                    + t.getAmount()
+//                    + " month: "
+//                    + (t.getMonth() + 1)
+//                    + " revenues: " + n.getRevenues(t.getMonth())
+//                    + " costs: " + n.getCosts(t.getMonth())
+//                    + " budget: " + n.getBudget(t.getMonth()));
+        } catch (UnreadableException ex) {
+            Logger.getLogger(HandleTransactionReceived.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+
+class HandleFinished extends OneShotBehaviour {
+
+    private final ACLMessage msg;
+    private final MyNode n;
+
+    HandleFinished(MyAgent a, MyNode n, ACLMessage msg) {
+        super(a);
+        this.n = n;
+        this.msg = msg;
+    }
+
+    @Override
+    public void action() {
+        MyAgent base = (MyAgent) myAgent;
+        base.addEND();
+        System.out.println(" - "
+                + base.getLocalName()
+                + " receive finish message from "
+                + msg.getSender().getLocalName());
+//                + " node degree: "
+//                + n.getDegree()
+//                + " END count: "
+//                + base.getEND());
+        if (base.getEND() == n.getDegree()) {
+            System.out.println(" - KILL " + base.getId());
+            base.doDelete();
         }
     }
 }
