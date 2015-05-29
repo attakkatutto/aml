@@ -35,7 +35,7 @@ public interface INode {
 
     double getBudget(int month);
 
-    double getGlobalCosts();
-
-    double getGlobalRevenues();    
+//    double getGlobalCosts();
+//
+//    double getGlobalRevenues();    
 }

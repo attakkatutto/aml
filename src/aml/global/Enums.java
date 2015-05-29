@@ -26,13 +26,13 @@ public enum PersistenceMode{
     DATABASE
 };
 
-public enum WindowType {
-    @XmlEnumValue("1")
-    THREEMONTHS,
-    @XmlEnumValue("2")
-    FOURMONTHS,   
-    @XmlEnumValue("3")
-    SIXMONTHS
-};
+//public enum WindowType {
+//    @XmlEnumValue("1")
+//    THREEMONTHS,
+//    @XmlEnumValue("2")
+//    FOURMONTHS,   
+//    @XmlEnumValue("3")
+//    SIXMONTHS
+//};
 
 }

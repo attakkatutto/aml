@@ -5,7 +5,7 @@
  */
 package aml.global;
 
-import aml.global.Enums.WindowType;
+//import aml.global.Enums.WindowType;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class Config {
             bigCompanyMean, bigCompanyStdDev,
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
-    private WindowType windowType;
+    //private WindowType windowType;
 
     private Config() {}
 
@@ -261,12 +261,12 @@ public class Config {
         this.laundererPercentage = laundererPercentage;
     }        
     
-    @XmlElement
-    public WindowType getScoreWindowType() {
-        return windowType;
-    }
-
-    public void setScoreWindowType(WindowType type) {
-        windowType = type;
-    }
+//    @XmlElement
+//    public WindowType getScoreWindowType() {
+//        return windowType;
+//    }
+//
+//    public void setScoreWindowType(WindowType type) {
+//        windowType = type;
+//    }
 }

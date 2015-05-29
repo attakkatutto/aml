@@ -125,25 +125,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     @Override
     public double getBudget(int month) {
         return revenues[month] - costs[month];
-    }
-
-    @Override
-    public double getGlobalCosts() {
-        double _global = 0;
-        for (double d : costs) {
-            _global += d;
-        }
-        return _global;
-    }
-
-    @Override
-    public double getGlobalRevenues() {
-        double _global = 0;
-        for (double d : revenues) {
-            _global += d;
-        }
-        return _global;
-    }
+    }    
 
     /**
      * Are you honest?

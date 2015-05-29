@@ -33,6 +33,6 @@ and open the template in the editor.
     <smallCompanyStdDevLaunderer>10</smallCompanyStdDevLaunderer>
     <bigCompanyMeanLaunderer>300</bigCompanyMeanLaunderer>
     <bigCompanyStdDevLaunderer>20</bigCompanyStdDevLaunderer>
-    /*TYPE OF WINDOW*/
-    <scoreWindowType>1</scoreWindowType> 
+    /*TYPE OF WINDOW*/ 
+    <!--<scoreWindowType>1</scoreWindowType>-->
 </config>
