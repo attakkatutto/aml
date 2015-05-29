@@ -70,4 +70,8 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-compile">
+        <copy file="res/config.xml" flatten="true" todir="${dist.dir}/res"/>
+        <copy file="res/mystyle.css" flatten="true" todir="${dist.dir}/res"/>
+    </target>
 </project>

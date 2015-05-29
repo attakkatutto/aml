@@ -80,8 +80,8 @@ public final class Network extends SingleGraph {
                 -> new Connection(id1, (NodeBase) src, (NodeBase) dst));
     }
 
-    public String readStylesheet() throws IOException {
-        File file = new File("res\\MyStyle.css");
+    public String readStylesheet() throws IOException {        
+        File file = new File(".\\res\\MyStyle.css");
         StringBuilder fileContents = new StringBuilder((int) file.length());
         Scanner scanner = new Scanner(file);
         String lineSeparator = System.getProperty("line.separator");

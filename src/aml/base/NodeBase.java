@@ -31,13 +31,15 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     protected ArrayList<String> dummies;
 
     protected Random random = new Random();
-    protected double[] revenues, costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    protected double[] revenues, costs;
     //, fraudScore, suspectedScore, deficitScore
 
     // *** Constructor ***
     public NodeBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
         this.type = type;
+        costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; 
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
