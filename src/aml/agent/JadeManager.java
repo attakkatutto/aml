@@ -101,6 +101,7 @@ public class JadeManager {
             db.closeFile();
             exit();
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error simulation!", "AML Ranking", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
