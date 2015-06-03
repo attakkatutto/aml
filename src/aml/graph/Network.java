@@ -86,7 +86,7 @@ public final class Network extends SingleGraph {
         String lineSeparator = System.getProperty("line.separator");
         try {
             while (scanner.hasNextLine()) {
-                fileContents.append(scanner.nextLine() + lineSeparator);
+                fileContents.append(scanner.nextLine()).append(lineSeparator);
             }
             return fileContents.toString();
         } finally {
