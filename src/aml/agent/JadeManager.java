@@ -18,8 +18,6 @@ import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.ControllerException;
-import jade.wrapper.PlatformController;
-import jade.wrapper.PlatformEvent;
 import jade.wrapper.StaleProxyException;
 import java.io.IOException;
 import java.util.ArrayList;
