@@ -78,57 +78,7 @@ public class JadeManager {
 
     private void agentsHandler() {
         try {
-            mainContainer.addPlatformListener(new PlatformController.Listener() {
-                List<String> agents = new ArrayList<>();
-
-                @Override
-                public void deadAgent(PlatformEvent anEvent) {
-                    // WORKS 
-                    String name = anEvent.getAgentGUID();
-                    System.out.println(" - "
-                            + name
-                            + " dead ");
-                    agents.remove(name);
-                    if (agents.isEmpty()) {
-                        System.out.println(" - "
-                                + " JADE end! ");
-                        persistData();
-                    }
-                }
-
-                @Override
-                public void bornAgent(PlatformEvent anEvent) {
-                    // WORKS
-                    String name = anEvent.getAgentGUID();
-                    System.out.println(" - "
-                            + name
-                            + " born ");
-                    agents.add(name);
-                }
-
-                @Override
-                public void startedPlatform(PlatformEvent pe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void suspendedPlatform(PlatformEvent pe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void resumedPlatform(PlatformEvent pe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void killedPlatform(PlatformEvent pe) {
-                    System.out.println(" - "
-                            + pe.getPlatformName()
-                            + " killed ");
-                }
-
-            });
+            mainContainer.addPlatformListener(new JadeListener(this));
         } catch (ControllerException ex) {
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -139,7 +89,7 @@ public class JadeManager {
         System.exit(1);
     }
 
-    private void persistData() {
+    public void persistData() {
         try {
             SynthDB db = new SynthDB(PersistenceMode.FILE);
             for (Node node : graph) {

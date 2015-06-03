@@ -75,6 +75,7 @@ public class Sender extends SimpleBehaviour {
                 ACLMessage msg = createSendMessage(n);
                 base.send(msg);
                 count++;
+                block(50);
             } //this agent wait MAX_WAITING ms and then declares FINISH
             catch (Exception ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
