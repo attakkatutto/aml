@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aml.test;
+package aml.main;
 
 import aml.agent.JadeManager;
 import aml.graph.Network;
@@ -14,7 +14,7 @@ import org.graphstream.graph.Graph;
  *
  * @author ddefalco
  */
-public class Test {
+public class Main {
     
     public static void main(String[] args) throws InterruptedException {
         Graph graph = new Network("AML Test");

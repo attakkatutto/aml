@@ -7,7 +7,6 @@ package aml.graph;
 
 import aml.global.Enums.*;
 import aml.base.NodeBase;
-import aml.test.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -100,7 +99,7 @@ public final class Network extends SingleGraph {
         try {
             ss = readStylesheet();
         } catch (IOException ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             ss = "";
         }
         setAttribute("stylesheet", ss);
