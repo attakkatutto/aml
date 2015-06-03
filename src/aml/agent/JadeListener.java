@@ -35,7 +35,7 @@ implements PlatformController.Listener {
                     if (agents.isEmpty()) {
                         System.out.println(" - "
                                 + " JADE end! ");
-                        manager.persistData();
+                        manager.writeData();
                     }
                 }
 

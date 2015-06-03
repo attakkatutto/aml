@@ -89,7 +89,7 @@ public class JadeManager {
         System.exit(1);
     }
 
-    public void persistData() {
+    public void writeData() {
         try {
             SynthDB db = new SynthDB(PersistenceMode.FILE);
             for (Node node : graph) {
