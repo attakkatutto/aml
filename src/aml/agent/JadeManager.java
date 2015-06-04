@@ -88,8 +88,9 @@ public class JadeManager {
     }
 
     public void writeData() {
+        System.out.println(" - Start writing DB..... ");
         try {
-            SynthDB db = new SynthDB(PersistenceMode.FILE);
+            SynthDB db = new SynthDB(PersistenceMode.DATABASE);
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 for (Transaction trans : mynode.getReceived()) {
@@ -99,9 +100,11 @@ public class JadeManager {
             db.close();
             exit();
         } catch (Exception ex) {
+            System.out.println(" - Error writing DB..... ");
             JOptionPane.showMessageDialog(null, "Error simulation!", "AML Ranking", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);            
         }
+        System.out.println(" - End writing DB..... ");
     }
 //    private void calculatePageRank() {
 //        for (Node node : graph) {

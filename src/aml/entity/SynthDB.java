@@ -52,7 +52,7 @@ public class SynthDB {
                 }
                 break;
             case DATABASE:
-                dbConnection = getDBConnection();
+                dbConnection = initDBConnection();
                 break;
         }
     }
@@ -86,9 +86,9 @@ public class SynthDB {
                 + "(?,?,?,?,?,?,?)";
         try {
 
-            dbConnection = getDBConnection();
-            dbConnection.setAutoCommit(false);
-            dbConnection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            //dbConnection = getDBConnection();
+            dbConnection.setAutoCommit(true);
+            //dbConnection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
             preparedStatement = dbConnection.prepareStatement(insertTableSQL);
             preparedStatement.setString(1, t.getId());
             preparedStatement.setString(2, t.getIdSource());
@@ -97,7 +97,7 @@ public class SynthDB {
             preparedStatement.setDouble(5, t.getAmount());
             preparedStatement.setString(6, t.getSourceType());
             preparedStatement.setString(7, t.getTargetType());
-            dbConnection.commit();
+            //dbConnection.commit();
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -155,16 +155,14 @@ public class SynthDB {
         }
     }
 
-    private Connection getDBConnection() {
-        if (dbConnection == null) {
-            try {
-                Class.forName(DB_DRIVER);
-                dbConnection = DriverManager.getConnection(
-                        DB_CONNECTION, DB_USER, DB_PASSWORD);
-                return dbConnection;
-            } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private Connection initDBConnection() {
+        try {
+            Class.forName(DB_DRIVER);
+            dbConnection = DriverManager.getConnection(
+                    DB_CONNECTION, DB_USER, DB_PASSWORD);
+            return dbConnection;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dbConnection;
     }
