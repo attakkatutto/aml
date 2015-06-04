@@ -5,7 +5,7 @@
  */
 package aml.global;
 
-//import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlEnumValue;
 
 
 public class Enums{
@@ -22,8 +22,11 @@ public enum NodeType {
 };
 
 public enum PersistenceMode{
+    @XmlEnumValue("1")
     FILE,
+    @XmlEnumValue("2")
     DATABASE,
+    @XmlEnumValue("3")
     ALL
 };
 

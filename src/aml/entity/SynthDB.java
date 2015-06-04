@@ -5,6 +5,7 @@
  */
 package aml.entity;
 
+import aml.global.Config;
 import aml.global.Enums.PersistenceMode;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,8 +45,8 @@ public class SynthDB {
     PersistenceMode mode;
     Connection dbConnection;
 
-    public SynthDB(PersistenceMode mode) {
-        this.mode = mode;
+    public SynthDB() {
+        this.mode = Config.instance().getPersistenceMode();
         switch (mode) {
             case FILE:
                 try {

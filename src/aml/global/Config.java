@@ -6,6 +6,7 @@
 package aml.global;
 
 //import aml.global.Enums.WindowType;
+import aml.global.Enums.PersistenceMode;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class Config {
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
     //private WindowType windowType;
+    private PersistenceMode persistenceMode;
 
     private Config() {}
 
@@ -270,4 +272,13 @@ public class Config {
 //    public void setScoreWindowType(WindowType type) {
 //        windowType = type;
 //    }
+    
+    @XmlElement
+    public PersistenceMode getPersistenceMode() {
+        return this.persistenceMode;
+    }
+
+    public void setPersistenceMode(PersistenceMode mode) {
+        this.persistenceMode = mode;
+    }
 }

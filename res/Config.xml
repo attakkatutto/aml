@@ -35,4 +35,6 @@ and open the template in the editor.
     <bigCompanyStdDevLaunderer>20</bigCompanyStdDevLaunderer>
     /*TYPE OF WINDOW*/ 
     <!--<scoreWindowType>1</scoreWindowType>-->
+    /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
+    <writeType>1</writeType>
 </config>

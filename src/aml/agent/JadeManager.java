@@ -10,7 +10,6 @@ import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
-import aml.global.Enums.PersistenceMode;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
@@ -95,7 +94,7 @@ public class JadeManager {
 
         try {
             System.out.println(" - Start writing DB..... ");
-            SynthDB db = new SynthDB(PersistenceMode.FILE);
+            SynthDB db = new SynthDB();
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 for (Transaction trans : mynode.getReceived()) {
