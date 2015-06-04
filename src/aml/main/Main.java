@@ -25,7 +25,7 @@ public class Main {
         Graph graph = new Network("AML Test");
         graph.display(true);
 
-        JFrame myFrame = new JFrame("Messages");
+        JFrame myFrame = new JFrame("SystemMessages");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setSize(500, 300);      
         
