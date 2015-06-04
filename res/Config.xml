@@ -9,12 +9,13 @@ and open the template in the editor.
 <config>
     /*NETWORK CONFIG*/
     <numberAgentMessage>10000</numberAgentMessage>
-    <numberOfEntity>800</numberOfEntity>
+    <numberOfEntity>1000</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
     <laundererPercentage>5</laundererPercentage>
+    <guiEnabled>false</guiEnabled>
     /*HONEST*/
     <employeeMeanHonest>1</employeeMeanHonest>
     <employeeStdDevHonest>0.5</employeeStdDevHonest>

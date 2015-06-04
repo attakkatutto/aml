@@ -31,6 +31,7 @@ public class Config {
             bigCompanyMean, bigCompanyStdDev,
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
+    private boolean guiEnabled;
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
 
@@ -281,4 +282,13 @@ public class Config {
     public void setPersistenceMode(PersistenceMode mode) {
         this.persistenceMode = mode;
     }
+
+    @XmlElement
+    public boolean isGuiEnabled() {
+        return guiEnabled;
+    }
+
+    public void setGuiEnabled(boolean guiEnabled) {
+        this.guiEnabled = guiEnabled;
+    }        
 }
