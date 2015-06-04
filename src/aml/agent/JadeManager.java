@@ -19,7 +19,7 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +41,7 @@ public class JadeManager {
 //    private final PageRank pageRank;
 
     public JadeManager(Graph graph) {
-        this.graph = graph;        
+        this.graph = graph;
         // Get a hold on JADE runtime
         // Create a default profile
         Profile p = new ProfileImpl();
@@ -83,14 +83,16 @@ public class JadeManager {
     }
 
     private void exit() {
+        System.out.println(" - Exit..... ");
         JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         System.exit(1);
     }
 
     public void writeData() {
-        System.out.println(" - Start writing DB..... ");
+
         try {
-            SynthDB db = new SynthDB(PersistenceMode.DATABASE);
+            System.out.println(" - Start writing DB..... ");
+            SynthDB db = new SynthDB(PersistenceMode.ALL);
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 for (Transaction trans : mynode.getReceived()) {
@@ -98,13 +100,13 @@ public class JadeManager {
                 }
             }
             db.close();
+            System.out.println(" - End writing DB..... ");
             exit();
         } catch (Exception ex) {
             System.out.println(" - Error writing DB..... ");
             JOptionPane.showMessageDialog(null, "Error simulation!", "AML Ranking", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);            
+            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(" - End writing DB..... ");
     }
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
