@@ -6,7 +6,7 @@
 package aml.base;
 
 /**
- * Interface TransactionBase
+ * Interface Transaction
  *
  * @author ddefalco
  */

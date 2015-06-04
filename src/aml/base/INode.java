@@ -7,7 +7,7 @@ package aml.base;
 
 
 /**
- * Interface EntityBase
+ * Interface Node
  *
  * @author ddefalco
  */

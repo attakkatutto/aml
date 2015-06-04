@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import org.graphstream.graph.implementations.*;
 
 /**
- * Vertex of the random graph
+ * Node of the graph
  *
  * @author ddefalco
  */

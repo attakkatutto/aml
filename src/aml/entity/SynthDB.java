@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
-import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,7 +23,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * 
+ * DB/File csv manager
+ * create synthetic database
+ * 
  * @author ddefalco
  */
 public class SynthDB {
@@ -54,6 +56,14 @@ public class SynthDB {
             case DATABASE:
                 dbConnection = initDBConnection();
                 break;
+            case ALL:
+                try {
+                    createFile();
+                    dbConnection = initDBConnection();
+                } catch (IOException ex) {
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
         }
     }
 
@@ -75,6 +85,14 @@ public class SynthDB {
                 }
             }
             break;
+            case ALL: {
+                try {
+                    writeFile(t);
+                    insertRecordIntoTable(t);
+                } catch (SQLException | IOException ex) {
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -148,6 +166,15 @@ public class SynthDB {
                 try {
                     closeDB();
                 } catch (SQLException ex) {
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            break;
+            case ALL: {
+                try {
+                    closeFile();
+                    closeDB();
+                } catch (IOException | SQLException ex) {
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

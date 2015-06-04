@@ -9,7 +9,7 @@ import aml.base.NodeBase;
 import org.graphstream.graph.implementations.AbstractEdge;
 
 /**
- * Connection of the network between two Vertex
+ * Connection of the network between two nodes
  *
  * @author DAVIDE
  */

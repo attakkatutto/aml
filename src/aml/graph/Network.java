@@ -19,7 +19,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.AbstractGraph;
 
 /**
- * Network of Vertex connected by Connection
+ * Network of Nodes connected by Edges
  *
  * @author DAVIDE
  */
