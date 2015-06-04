@@ -93,12 +93,12 @@ public class JadeManager {
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 for (Transaction trans : mynode.getReceived()) {
-                    db.writeFile(trans);
+                    db.write(trans);
                 }
             }
-            db.closeFile();
+            db.close();
             exit();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error simulation!", "AML Ranking", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -7,19 +7,41 @@ package aml.main;
 
 import aml.agent.JadeManager;
 import aml.graph.Network;
+import java.io.PrintStream;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import org.graphstream.graph.Graph;
 
 /**
- * Test class for the network
+ * Main class for the network
  *
  * @author ddefalco
  */
 public class Main {
-    
+
     public static void main(String[] args) throws InterruptedException {
         Graph graph = new Network("AML Test");
         graph.display(true);
-        JadeManager f = new JadeManager(graph);               
+
+        JFrame myFrame = new JFrame("Messages");
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setSize(500, 300);      
+        
+        JTextArea textArea = new JTextArea(450,250);
+        textArea.setEditable(false);
+        
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        myFrame.getContentPane().add(scroll);
+        myFrame.setVisible(true);
+
+        JadeManager f = new JadeManager(graph);
         f.exec();
     }
 }
