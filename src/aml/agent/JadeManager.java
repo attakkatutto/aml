@@ -18,6 +18,8 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
+import java.time.Duration;
+import java.time.Instant;
 //import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +39,13 @@ public class JadeManager {
 
     private final AgentContainer mainContainer;
     private final Graph graph;
+    private Instant start = null;
+    private Instant end = null;
 //    private final PageRank pageRank;
 
     public JadeManager(Graph graph) {
         this.graph = graph;
+        this.start = Instant.now();
         // Get a hold on JADE runtime
         // Create a default profile
         Profile p = new ProfileImpl();
@@ -52,7 +57,7 @@ public class JadeManager {
         agentsHandler();
     }
 
-    public void exec() {
+    public void exec() {        
         generateBarabasiGraph();
         setLaunderersAndHonests();
         for (Node n : graph.getEachNode()) {
@@ -86,6 +91,8 @@ public class JadeManager {
 
     private void exit() {
         System.out.println(" - Exit..... ");
+        this.end = Instant.now();
+        System.out.println(" - time elapsed (sec): " + Duration.between(this.end , this.start).getSeconds());
         JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         System.exit(1);
     }

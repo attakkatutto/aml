@@ -25,15 +25,16 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Graph graph = new Network("AML Test");
 
-        if (Config.instance().isGuiEnabled()) guiEnabled(graph);
-        
+        guiInit(graph);
+
         JadeManager f = new JadeManager(graph);
         f.exec();
     }
 
-    private static void guiEnabled(Graph graph) {
-        graph.display(true);
-
+    private static void guiInit(Graph graph) {
+        if (Config.instance().isGuiEnabled()) {
+            graph.display(true);
+        }
         JFrame myFrame = new JFrame("SystemMessages");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setSize(500, 300);
