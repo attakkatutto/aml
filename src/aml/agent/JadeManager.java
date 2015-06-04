@@ -61,6 +61,7 @@ public class JadeManager {
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
             } catch (StaleProxyException ex) {
+                System.out.println(ex.getMessage());
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -70,6 +71,7 @@ public class JadeManager {
         try {
             mainContainer.getPlatformController().kill();
         } catch (ControllerException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -78,6 +80,7 @@ public class JadeManager {
         try {
             mainContainer.addPlatformListener(new JadeListener(this));
         } catch (ControllerException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -103,7 +106,7 @@ public class JadeManager {
             System.out.println(" - End writing DB..... ");
             exit();
         } catch (Exception ex) {
-            System.out.println(" - Error writing DB..... ");
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error simulation!", "AML Ranking", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -140,6 +143,7 @@ public class JadeManager {
                 }
                 Thread.currentThread().sleep(200);
             } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
                 Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

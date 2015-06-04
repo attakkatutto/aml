@@ -48,8 +48,9 @@ public class Config {
             JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             return _instance = (Config) jaxbUnmarshaller.unmarshal(file);
-        } catch (JAXBException e) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, e);
+        } catch (JAXBException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
             return new Config();
         }
     }

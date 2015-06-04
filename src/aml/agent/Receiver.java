@@ -80,6 +80,7 @@ class HandleTransactionReceived extends OneShotBehaviour {
 //                    + " costs: " + n.getCosts(t.getMonth())
 //                    + " budget: " + n.getBudget(t.getMonth()));
         } catch (UnreadableException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(HandleTransactionReceived.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

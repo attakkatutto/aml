@@ -78,6 +78,7 @@ public class Sender extends SimpleBehaviour {
                 block(50);
             } //this agent wait MAX_WAITING ms and then declares FINISH
             catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {            
@@ -129,6 +130,7 @@ public class Sender extends SimpleBehaviour {
             msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
             msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));            
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
         }
         return msg;

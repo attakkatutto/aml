@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 //import java.sql.Connection;
 //import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 //import java.sql.DriverManager;
@@ -50,17 +51,20 @@ public class SynthDB {
                 try {
                     createFile();
                 } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case DATABASE:
                 dbConnection = initDBConnection();
+                cleanTable();
                 break;
             case ALL:
                 try {
                     createFile();
                     dbConnection = initDBConnection();
                 } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
@@ -73,6 +77,7 @@ public class SynthDB {
                 try {
                     writeFile(t);
                 } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -81,6 +86,7 @@ public class SynthDB {
                 try {
                     insertRecordIntoTable(t);
                 } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -90,6 +96,7 @@ public class SynthDB {
                     writeFile(t);
                     insertRecordIntoTable(t);
                 } catch (SQLException | IOException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -118,12 +125,23 @@ public class SynthDB {
             //dbConnection.commit();
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+           Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
+        }
+    }
+    
+    private void cleanTable(){
+        try {
+            Statement stTruncate = dbConnection.createStatement();
+            stTruncate.executeUpdate("TRUNCATE TABLE TRANSACTIONS");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -158,6 +176,7 @@ public class SynthDB {
                 try {
                     closeFile();
                 } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -166,6 +185,7 @@ public class SynthDB {
                 try {
                     closeDB();
                 } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -175,6 +195,7 @@ public class SynthDB {
                     closeFile();
                     closeDB();
                 } catch (IOException | SQLException ex) {
+                    System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -186,9 +207,9 @@ public class SynthDB {
         try {
             Class.forName(DB_DRIVER);
             dbConnection = DriverManager.getConnection(
-                    DB_CONNECTION, DB_USER, DB_PASSWORD);
-            return dbConnection;
+                    DB_CONNECTION, DB_USER, DB_PASSWORD);       
         } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dbConnection;

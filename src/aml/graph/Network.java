@@ -99,6 +99,7 @@ public final class Network extends SingleGraph {
         try {
             ss = readStylesheet();
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             ss = "";
         }
