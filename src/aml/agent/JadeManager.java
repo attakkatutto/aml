@@ -95,7 +95,7 @@ public class JadeManager {
 
         try {
             System.out.println(" - Start writing DB..... ");
-            SynthDB db = new SynthDB(PersistenceMode.ALL);
+            SynthDB db = new SynthDB(PersistenceMode.FILE);
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 for (Transaction trans : mynode.getReceived()) {
