@@ -13,8 +13,7 @@ import javax.swing.SwingUtilities;
  */
 public class MyOutputStream extends OutputStream {
 
-    private final JTextArea textArea;
-    private final Object LOCK = new Object();
+    private final JTextArea textArea;    
 
     public MyOutputStream(JTextArea textArea) {
         this.textArea = textArea;

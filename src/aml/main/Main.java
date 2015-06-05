@@ -31,24 +31,29 @@ public class Main {
         f.exec();
     }
 
+    /*
+    * if GUI is enabled then graph and system.output are rendered
+    * in a frame
+    */
     private static void guiInit(Graph graph) {
         if (Config.instance().isGuiEnabled()) {
             graph.display(true);
+
+            JFrame myFrame = new JFrame("SystemMessages");
+            myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            myFrame.setSize(700, 300);
+
+            JTextArea textArea = new JTextArea();
+            textArea.setEditable(false);
+
+            JScrollPane scroll = new JScrollPane(textArea);
+            scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+            PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
+            System.setOut(printStream);
+            System.setErr(printStream);
+            myFrame.getContentPane().add(scroll);
+            myFrame.setVisible(true);
         }
-        JFrame myFrame = new JFrame("SystemMessages");
-        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setSize(700, 300);
-
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
-        System.setOut(printStream);
-        System.setErr(printStream);
-        myFrame.getContentPane().add(scroll);
-        myFrame.setVisible(true);
     }
 }
