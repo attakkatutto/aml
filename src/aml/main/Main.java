@@ -37,9 +37,9 @@ public class Main {
         }
         JFrame myFrame = new JFrame("SystemMessages");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setSize(500, 300);
+        myFrame.setSize(700, 300);
 
-        JTextArea textArea = new JTextArea(450, 250);
+        JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
 
         JScrollPane scroll = new JScrollPane(textArea);
