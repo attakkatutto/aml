@@ -27,13 +27,13 @@ and open the template in the editor.
     <bigCompanyStdDevHonest>20</bigCompanyStdDevHonest>
     /*LAUNDERER*/
     <employeeMeanLaunderer>3</employeeMeanLaunderer>
-    <employeeStdDevLaunderer>0.8</employeeStdDevLaunderer>
-    <freelanceMeanLaunderer>10</freelanceMeanLaunderer>
-    <freelanceStdDevLaunderer>1</freelanceStdDevLaunderer>
-    <smallCompanyMeanLaunderer>80</smallCompanyMeanLaunderer>
-    <smallCompanyStdDevLaunderer>10</smallCompanyStdDevLaunderer>
-    <bigCompanyMeanLaunderer>300</bigCompanyMeanLaunderer>
-    <bigCompanyStdDevLaunderer>20</bigCompanyStdDevLaunderer>
+    <employeeStdDevLaunderer>0.3</employeeStdDevLaunderer>
+    <freelanceMeanLaunderer>8</freelanceMeanLaunderer>
+    <freelanceStdDevLaunderer>0.7</freelanceStdDevLaunderer>
+    <smallCompanyMeanLaunderer>90</smallCompanyMeanLaunderer>
+    <smallCompanyStdDevLaunderer>7</smallCompanyStdDevLaunderer>
+    <bigCompanyMeanLaunderer>400</bigCompanyMeanLaunderer>
+    <bigCompanyStdDevLaunderer>12</bigCompanyStdDevLaunderer>
     /*TYPE OF WINDOW*/ 
     <!--<scoreWindowType>1</scoreWindowType>-->
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
