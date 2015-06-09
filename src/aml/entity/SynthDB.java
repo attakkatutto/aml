@@ -64,6 +64,7 @@ public class SynthDB {
                 try {
                     createFile();
                     dbConnection = initDBConnection();
+                    cleanTable();
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
