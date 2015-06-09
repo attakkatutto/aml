@@ -129,7 +129,7 @@ public class Sender extends SimpleBehaviour {
         try {
             msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
             msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));            
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
         }

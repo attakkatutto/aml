@@ -11,7 +11,6 @@ import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +78,7 @@ class HandleTransactionReceived extends OneShotBehaviour {
 //                    + " revenues: " + n.getRevenues(t.getMonth())
 //                    + " costs: " + n.getCosts(t.getMonth())
 //                    + " budget: " + n.getBudget(t.getMonth()));
-        } catch (UnreadableException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(HandleTransactionReceived.class.getName()).log(Level.SEVERE, null, ex);
         }
