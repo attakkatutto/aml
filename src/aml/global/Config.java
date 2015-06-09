@@ -32,6 +32,7 @@ public class Config {
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
     private boolean guiEnabled;
+    private String fileName;
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
 
@@ -290,5 +291,14 @@ public class Config {
 
     public void setGuiEnabled(boolean guiEnabled) {
         this.guiEnabled = guiEnabled;
-    }        
+    }  
+
+    @XmlElement
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }       
 }

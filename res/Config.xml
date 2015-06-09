@@ -8,14 +8,14 @@ and open the template in the editor.
 
 <config>
     /*NETWORK CONFIG*/
-    <numberAgentMessage>10000</numberAgentMessage>
-    <numberOfEntity>1000</numberOfEntity>
+    <numberAgentMessage>1500</numberAgentMessage>
+    <numberOfEntity>1500</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
     <laundererPercentage>15</laundererPercentage>
-    <guiEnabled>false</guiEnabled>
+    <guiEnabled>true</guiEnabled>
     /*HONEST*/
     <employeeMeanHonest>1</employeeMeanHonest>
     <employeeStdDevHonest>0.5</employeeStdDevHonest>
@@ -37,5 +37,6 @@ and open the template in the editor.
     /*TYPE OF WINDOW*/ 
     <!--<scoreWindowType>1</scoreWindowType>-->
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
-    <persistenceMode>1</persistenceMode>
+    <persistenceMode>3</persistenceMode>
+    <fileName>C:\\SYNTHETIC_%s.csv</fileName>
 </config>

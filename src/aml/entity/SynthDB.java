@@ -37,7 +37,7 @@ public class SynthDB {
     private final String DB_CONNECTION = "jdbc:derby://localhost:1527/synthetic";
     private final String DB_USER = "sa";
     private final String DB_PASSWORD = "password";
-    private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
+    //private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
     private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE \n";
     private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, %s \n";
 //    
@@ -148,7 +148,7 @@ public class SynthDB {
     }
 
     private void createFile() throws IOException {
-        File file = new File(String.format(FILE_NAME, System.currentTimeMillis()));
+        File file = new File(String.format(Config.instance().getFileName(), System.currentTimeMillis()));
         FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
         bw = new BufferedWriter(fw);
         bw.write(HEADER_FILE);
