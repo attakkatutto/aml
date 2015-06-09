@@ -14,7 +14,6 @@ import aml.graph.MyNode;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
-import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,16 +26,19 @@ import org.graphstream.graph.Edge;
  */
 public class Sender extends SimpleBehaviour {
 
-    MyNode n;
-    Random random = new Random();
-    int count = 0;
-    boolean finished = false;
+    MyNode n; /*Rapresent the node of the netowrk*/
+    Random random = new Random(); /*Random class generate number*/
+    int count = 0; /*Number of sent messages*/
+    boolean finished = false; /*Have you finish?*/
 
     public Sender(AgentBase agent, MyNode n) {
         super(agent);
         this.n = n;
     }
 
+    /*
+    * Get the next Gaussian amount for this type of node
+    */
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
@@ -76,7 +78,7 @@ public class Sender extends SimpleBehaviour {
                 base.send(msg);
                 count++;
                 block(50);
-            } //this agent wait MAX_WAITING ms and then declares FINISH
+            } //this agent wait 50 ms before send a new message
             catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,6 +95,10 @@ public class Sender extends SimpleBehaviour {
         return finished;
     }
 
+    /*
+    * Create finish message for neighbours nodes 
+    * connected by entering or leaving edges
+    */
     private ACLMessage createFinishMessage() {        
         ACLMessage msg = new ACLMessage(ACLMessage.PROPAGATE);
         msg.setContent("FINISH");
@@ -107,6 +113,9 @@ public class Sender extends SimpleBehaviour {
         return msg;
     }
 
+    /*
+    * Create a new send message - target node n connected by leaving edge
+    */
     private ACLMessage createSendMessage(MyNode n) {
         //this agent send messages
         MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();

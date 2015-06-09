@@ -50,6 +50,9 @@ public class Receiver extends CyclicBehaviour {
     }
 }
 
+/*
+* Class to handle a received transaction from another node
+*/
 class HandleTransactionReceived extends OneShotBehaviour {
 
     private final ACLMessage msg;
@@ -85,6 +88,9 @@ class HandleTransactionReceived extends OneShotBehaviour {
     }
 }
 
+/*
+* Class to handle a received finish message from another node
+*/
 class HandleFinished extends OneShotBehaviour {
 
     private final ACLMessage msg;
