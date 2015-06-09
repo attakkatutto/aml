@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.entity.SynthDB;
-import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
@@ -135,9 +134,9 @@ public class JadeManager {
             SynthDB db = new SynthDB();
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
-                for (Transaction trans : mynode.getReceived()) {
+                mynode.getReceived().stream().forEach((trans) -> {
                     db.write(trans);
-                }
+                });
             }
             db.close();
             System.out.println(" - End writing DB..... ");
@@ -180,8 +179,8 @@ public class JadeManager {
                         node.addAttribute("ui.class", "company");
                     }
                 }
-                Thread.currentThread().sleep(100);
-            } catch (InterruptedException ex) {
+                Thread.sleep(100);
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
             }
