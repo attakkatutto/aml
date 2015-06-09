@@ -5,11 +5,8 @@
  */
 package aml.base;
 
-import aml.agent.Receiver;
-import aml.agent.Sender;
 import aml.graph.MyNode;
 import jade.core.Agent;
-import jade.core.behaviours.SequentialBehaviour;
 import java.util.Random;
 
 /**
@@ -25,13 +22,5 @@ public abstract class AgentBase extends Agent {
     public AgentBase(MyNode n) {
         super();
         this.n = n;
-    }
-
-    @Override
-    public void setup() {
-        SequentialBehaviour seq = new SequentialBehaviour(this);
-        seq.addSubBehaviour(new Sender(this,n));
-        seq.addSubBehaviour(new Receiver(this,n));
-        this.addBehaviour(seq);        
-    }   
+    }     
 }
