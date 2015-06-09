@@ -7,6 +7,7 @@ package aml.graph;
 
 import aml.global.Enums.*;
 import aml.base.NodeBase;
+import aml.global.Config;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -27,7 +28,6 @@ public final class Network extends SingleGraph {
 
     private final Random random;
 
-
     //**** Constructor
     /**
      * Create new instance of Network
@@ -38,11 +38,11 @@ public final class Network extends SingleGraph {
      */
     public Network(String id, boolean strictChecking, boolean autoCreate) {
         super(id, strictChecking, autoCreate);
-        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         random = new Random();
-
-
-        initStyle();
+        if (Config.instance().isGuiEnabled()) {
+            System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+            initStyle();
+        }
         initFactories();
     }
 
@@ -54,32 +54,32 @@ public final class Network extends SingleGraph {
      * Initialize the factories of EntityBase and TransactionBase
      */
     private void initFactories() {
-        setNodeFactory((String id1, Graph graph) -> {            
-                NodeBase base;
-                switch (random.nextInt(3)) {
-                    case 0:
-                        base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                        return base;
-                    case 1:
-                        base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
-                        return base;
-                    case 2:
-                        base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
-                        return base;
-                    case 3:
-                        base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
-                        return base;
-                    default:
-                        base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                        return base;
-                }            
+        setNodeFactory((String id1, Graph graph) -> {
+            NodeBase base;
+            switch (random.nextInt(3)) {
+                case 0:
+                    base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
+                    return base;
+                case 1:
+                    base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
+                    return base;
+                case 2:
+                    base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
+                    return base;
+                case 3:
+                    base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
+                    return base;
+                default:
+                    base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
+                    return base;
+            }
         });
 
         setEdgeFactory((String id1, Node src, Node dst, boolean directed)
                 -> new Connection(id1, (NodeBase) src, (NodeBase) dst));
     }
 
-    public String readStylesheet() throws IOException {        
+    public String readStylesheet() throws IOException {
         File file = new File(".\\res\\MyStyle.css");
         StringBuilder fileContents = new StringBuilder((int) file.length());
         Scanner scanner = new Scanner(file);
