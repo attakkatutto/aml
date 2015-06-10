@@ -203,7 +203,7 @@ public class JadeManager {
         for (int index = 0; index < nodes.size(); index++) {
             MyNode n = nodes.get(index);
             n.setHonest(index >= numberLaunderer);
-            if (index >= numberLaunderer) {
+            if (index >= numberLaunderer && Config.instance().isGuiEnabled()) {
                 n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
             }
         }
