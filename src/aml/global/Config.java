@@ -32,7 +32,8 @@ public class Config {
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
     private boolean guiEnabled;
-    private String fileName;
+    private String fileName,dataBaseUsername,dataBasePassword,
+            dataBaseConnection,dataBaseDriver;
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
 
@@ -300,5 +301,43 @@ public class Config {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }       
+    }  
+
+    @XmlElement
+    public String getDataBaseUsername() {
+        return dataBaseUsername;
+    }
+
+    public void setDataBaseUsername(String dataBaseUsername) {
+        this.dataBaseUsername = dataBaseUsername;
+    }
+
+    @XmlElement
+    public String getDataBasePassword() {
+        return dataBasePassword;
+    }
+
+    public void setDataBasePassword(String dataBasePassword) {
+        this.dataBasePassword = dataBasePassword;
+    }
+
+    @XmlElement
+    public String getDataBaseConnection() {
+        return dataBaseConnection;
+    }
+
+    public void setDataBaseConnection(String dataBaseConnection) {
+        this.dataBaseConnection = dataBaseConnection;
+    }
+
+    @XmlElement
+    public String getDataBaseDriver() {
+        return dataBaseDriver;
+    }
+
+    public void setDataBaseDriver(String dataBaseDriver) {
+        this.dataBaseDriver = dataBaseDriver;
+    }
+    
+    
 }

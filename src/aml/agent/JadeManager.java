@@ -52,9 +52,7 @@ public class JadeManager {
         Profile p = new ProfileImpl();
         // Create a new main container (i.e. on this host, port 1099) 
         mainContainer = Runtime.instance().createMainContainer(p);
-        // Create a new non-main container, connecting to the default
-        // main container (i.e. on this host, port 1099) 
-        //agentContainer = jade.core.Runtime.instance().createAgentContainer(p);     
+            
         agentsHandler();
     }
 
@@ -183,7 +181,7 @@ public class JadeManager {
                             node.addAttribute("ui.class", "company");
                         }
                     }
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());

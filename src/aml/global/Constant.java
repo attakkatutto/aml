@@ -15,11 +15,7 @@ public final class Constant {
     /*    
     * Number of months    
     */
-    public static final int MONTHS = 12;   
-    
-    
-    
-    public static final String WRITER_FILENAME = "C:/dbsynthetic_%s.csv";
+    public static final int MONTHS = 12;          
 
     /**
      * Default damping factor

@@ -6,6 +6,7 @@
 package aml.entity;
 
 import aml.global.Config;
+import static aml.global.Constant.*;
 import aml.global.Enums.PersistenceMode;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,18 +26,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * 
- * DB/File csv manager
- * create synthetic database
- * 
+ *
+ * DB/File csv manager create synthetic database
+ *
  * @author ddefalco
  */
 public class SynthDB {
 
-    private final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private final String DB_CONNECTION = "jdbc:derby://localhost:1527/synthetic";
-    private final String DB_USER = "sa";
-    private final String DB_PASSWORD = "password";
+    public final String DB_DRIVER;
+    public final String DB_CONNECTION;
+    public final String DB_USER;
+    public final String DB_PASSWORD;
     //private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
     private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE \n";
     private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, %s \n";
@@ -47,6 +47,10 @@ public class SynthDB {
 
     public SynthDB() {
         this.mode = Config.instance().getPersistenceMode();
+        DB_DRIVER = Config.instance().getDataBaseDriver();
+        DB_CONNECTION = Config.instance().getDataBaseConnection();
+        DB_USER = Config.instance().getDataBaseUsername();
+        DB_PASSWORD = Config.instance().getDataBasePassword();
         switch (mode) {
             case FILE:
                 try {
@@ -129,15 +133,15 @@ public class SynthDB {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-           Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
         }
     }
-    
-    private void cleanTable(){
+
+    private void cleanTable() {
         try {
             Statement stTruncate = dbConnection.createStatement();
             stTruncate.executeUpdate("TRUNCATE TABLE TRANSACTIONS");
@@ -209,7 +213,7 @@ public class SynthDB {
         try {
             Class.forName(DB_DRIVER);
             dbConnection = DriverManager.getConnection(
-                    DB_CONNECTION, DB_USER, DB_PASSWORD);       
+                    DB_CONNECTION, DB_USER, DB_PASSWORD);
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
