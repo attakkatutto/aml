@@ -120,7 +120,7 @@ public class JadeManager {
     private void exit() {
         System.out.println(" - Exit..... ");
         this.end = Instant.now();
-        System.out.println(" - time elapsed (sec): " + Duration.between( this.start,this.end).getSeconds());
+        System.out.println(" - time elapsed (sec): " + Duration.between(this.start, this.end).getSeconds());
         if (Config.instance().isGuiEnabled()) {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -173,16 +173,18 @@ public class JadeManager {
         while (graph.getNodeCount() < Config.instance().getNumberOfEntity()) {
             try {
                 b.nextEvents();
-                for (Node node : graph) {
-                    node.addAttribute("ui.label", String.format("%s", node.getId()));
-                    if (((MyNode) node).getType() == EMPLOYEE
-                            || ((MyNode) node).getType() == FREELANCE) {
-                        node.addAttribute("ui.class", "person");
-                    } else {
-                        node.addAttribute("ui.class", "company");
+                if (Config.instance().isGuiEnabled()) {
+                    for (Node node : graph) {
+                        node.addAttribute("ui.label", String.format("%s", node.getId()));
+                        if (((MyNode) node).getType() == EMPLOYEE
+                                || ((MyNode) node).getType() == FREELANCE) {
+                            node.addAttribute("ui.class", "person");
+                        } else {
+                            node.addAttribute("ui.class", "company");
+                        }
                     }
+                    Thread.sleep(100);
                 }
-                if (Config.instance().isGuiEnabled()) Thread.sleep(100);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
