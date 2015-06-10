@@ -8,8 +8,8 @@ and open the template in the editor.
 
 <config>
     /*NETWORK CONFIG*/
-    <numberAgentMessage>1500</numberAgentMessage>
-    <numberOfEntity>1500</numberOfEntity>
+    <numberAgentMessage>10</numberAgentMessage>
+    <numberOfEntity>2000</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
@@ -38,5 +38,11 @@ and open the template in the editor.
     <!--<scoreWindowType>1</scoreWindowType>-->
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
     <persistenceMode>3</persistenceMode>
+    /*FILE*/
     <fileName>C:\\SYNTHETIC_%s.csv</fileName>
+    /*DATABASE*/
+    <dataBaseUsername>sa</dataBaseUsername>
+    <dataBasePassword>password</dataBasePassword>
+    <dataBaseConnection>jdbc:derby://localhost:1527/synthetic</dataBaseConnection>
+    <dataBaseDriver>org.apache.derby.jdbc.ClientDriver</dataBaseDriver>
 </config>
