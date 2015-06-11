@@ -24,36 +24,36 @@ public class Main {
 
     public static void main(String[] args) {
         Graph graph = new Network("AML Test");
-
-        guiInit(graph);
-
+        if (Config.instance().isGuiEnabled()) {
+            guiInit(graph);
+        }
         JadeManager f = new JadeManager(graph);
         f.exec();
     }
 
     /*
-    * if GUI is enabled then graph and system.output are rendered
-    * in a frame
-    */
+     * if GUI is enabled then graph and system.output are rendered
+     * in a frame
+     */
     private static void guiInit(Graph graph) {
-        if (Config.instance().isGuiEnabled()) {
-            graph.display(true);
 
-            JFrame myFrame = new JFrame("SystemMessages");
-            myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            myFrame.setSize(700, 300);
+        graph.display(true);
 
-            JTextArea textArea = new JTextArea();
-            textArea.setEditable(false);
+        JFrame myFrame = new JFrame("SystemMessages");
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setSize(700, 300);
 
-            JScrollPane scroll = new JScrollPane(textArea);
-            scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
 
-            PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
-            System.setOut(printStream);
-            System.setErr(printStream);
-            myFrame.getContentPane().add(scroll);
-            myFrame.setVisible(true);
-        }
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        myFrame.getContentPane().add(scroll);
+        myFrame.setVisible(true);
     }
 }
+
