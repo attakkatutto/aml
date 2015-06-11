@@ -23,7 +23,6 @@ import java.time.Duration;
 import java.time.Instant;
 //import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -137,9 +136,10 @@ public class JadeManager {
             SynthDB db = new SynthDB();
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
+                db.writeEntity(mynode);
                 for (Transaction trans : mynode.getReceived()){
-                    db.write(trans);
-                }
+                    db.writeTransaction(trans);
+                }               
             }
             db.close();
             System.out.println(" - End writing DB..... ");

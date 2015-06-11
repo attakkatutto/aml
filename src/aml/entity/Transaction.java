@@ -21,7 +21,7 @@ public class Transaction implements Serializable {
     private short month;
     private String sourceType;
     private String targetType;
-    private double fraud;
+    private String fraud;
 
     public Transaction() {
     }
@@ -30,7 +30,7 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Transaction(String id, String idSource, String idTarget, double amount, short month,double fraud) {
+    public Transaction(String id, String idSource, String idTarget, double amount, short month,String fraud) {
         this.id = id;
         this.idSource = idSource;
         this.idTarget = idTarget;
@@ -95,11 +95,11 @@ public class Transaction implements Serializable {
         this.targetType = targetType;
     }
 
-    public double getFraud() {
+    public String getFraud() {
         return fraud;
     }
 
-    public void setFraud(double fraud) {
+    public void setFraud(String fraud) {
         this.fraud = fraud;
     }    
     

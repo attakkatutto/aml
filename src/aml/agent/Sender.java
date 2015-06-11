@@ -126,7 +126,7 @@ public class Sender extends SimpleBehaviour {
         short _time = (short) random.nextInt(MONTHS);
         double _amount = getRandomAmount(n.getType());
         n.setCosts(_amount, _time);
-        double _fraud = (n.isHonest()) ? 0 : 1;
+        String _fraud = (n.isHonest()) ? "YES" : "NO";
         Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
                 n.getId(), v.getId(), _amount, _time, _fraud);
         t.setSourceType(n.getType().name());

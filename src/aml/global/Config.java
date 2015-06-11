@@ -32,7 +32,8 @@ public class Config {
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
     private boolean guiEnabled;
-    private String fileName,dataBaseUsername,dataBasePassword,
+    private String fileNameTransaction,fileNameEntity,
+            dataBaseUsername,dataBasePassword,
             dataBaseConnection,dataBaseDriver;
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
@@ -267,15 +268,6 @@ public class Config {
         this.laundererPercentage = laundererPercentage;
     }        
     
-//    @XmlElement
-//    public WindowType getScoreWindowType() {
-//        return windowType;
-//    }
-//
-//    public void setScoreWindowType(WindowType type) {
-//        windowType = type;
-//    }
-    
     @XmlElement
     public PersistenceMode getPersistenceMode() {
         return this.persistenceMode;
@@ -295,13 +287,22 @@ public class Config {
     }  
 
     @XmlElement
-    public String getFileName() {
-        return fileName;
+    public String getFileNameTransaction() {
+        return fileNameTransaction;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }  
+    public void setFileNameTransaction(String fileNameTransaction) {
+        this.fileNameTransaction = fileNameTransaction;
+    }
+
+    @XmlElement
+    public String getFileNameEntity() {
+        return fileNameEntity;
+    }
+
+    public void setFileNameEntity(String fileNameEntity) {
+        this.fileNameEntity = fileNameEntity;
+    }       
 
     @XmlElement
     public String getDataBaseUsername() {

@@ -6,8 +6,8 @@
 package aml.entity;
 
 import aml.global.Config;
-import static aml.global.Constant.*;
 import aml.global.Enums.PersistenceMode;
+import aml.graph.MyNode;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,11 +17,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-//import java.sql.Connection;
-//import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,11 +32,13 @@ public class SynthDB {
     public final String DB_CONNECTION;
     public final String DB_USER;
     public final String DB_PASSWORD;
-    //private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
-    private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD \n";
-    private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, %s, %s \n";
+    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
+    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s \n";
+
+    private final String HEADER_ENTITY_FILE = " ID, TYPE, HONEST, FRAUD \n";
+    private final String ROW_ENTITY_FILE = " %s, %s, %s, %s \n";
 //    
-    BufferedWriter bw;
+    BufferedWriter bwt, bwp;
     PersistenceMode mode;
     Connection dbConnection;
 
@@ -54,7 +51,7 @@ public class SynthDB {
         switch (mode) {
             case FILE:
                 try {
-                    createFile();
+                    createFiles();
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,13 +59,13 @@ public class SynthDB {
                 break;
             case DATABASE:
                 dbConnection = initDBConnection();
-                cleanTable();
+                cleanTables();
                 break;
             case ALL:
                 try {
-                    createFile();
+                    createFiles();
                     dbConnection = initDBConnection();
-                    cleanTable();
+                    cleanTables();
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,11 +74,11 @@ public class SynthDB {
         }
     }
 
-    public void write(Transaction t) {
+    public void writeEntity(MyNode n) {
         switch (mode) {
             case FILE: {
                 try {
-                    writeFile(t);
+                    writeEntityFile(n);
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,7 +87,7 @@ public class SynthDB {
             break;
             case DATABASE: {
                 try {
-                    insertRecordIntoTable(t);
+                    insertEntityIntoTable(n);
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,8 +96,8 @@ public class SynthDB {
             break;
             case ALL: {
                 try {
-                    writeFile(t);
-                    insertRecordIntoTable(t);
+                    writeEntityFile(n);
+                    insertEntityIntoTable(n);
                 } catch (SQLException | IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,17 +106,45 @@ public class SynthDB {
         }
     }
 
-    public void insertRecordIntoTable(Transaction t) throws SQLException {
-//        Connection dbConnection = null;
+    public void writeTransaction(Transaction t) {
+        switch (mode) {
+            case FILE: {
+                try {
+                    writeTransactionFile(t);
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            break;
+            case DATABASE: {
+                try {
+                    insertTransactionIntoTable(t);
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            break;
+            case ALL: {
+                try {
+                    writeTransactionFile(t);
+                    insertTransactionIntoTable(t);
+                } catch (SQLException | IOException ex) {
+                    System.out.println(ex.getMessage());
+                    Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE) VALUES"
+                + "(ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
                 + "(?,?,?,?,?,?,?)";
         try {
-
-            //dbConnection = getDBConnection();
             dbConnection.setAutoCommit(true);
-            //dbConnection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
             preparedStatement = dbConnection.prepareStatement(insertTableSQL);
             preparedStatement.setString(1, t.getId());
             preparedStatement.setString(2, t.getIdSource());
@@ -128,7 +153,6 @@ public class SynthDB {
             preparedStatement.setDouble(5, t.getAmount());
             preparedStatement.setString(6, t.getSourceType());
             preparedStatement.setString(7, t.getTargetType());
-            //dbConnection.commit();
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -141,32 +165,74 @@ public class SynthDB {
         }
     }
 
-    private void cleanTable() {
+    private void cleanTables() {
         try {
-            Statement stTruncate = dbConnection.createStatement();
-            stTruncate.executeUpdate("TRUNCATE TABLE TRANSACTIONS");
+            Statement stTruncate1 = dbConnection.createStatement();
+            stTruncate1.executeUpdate("TRUNCATE TABLE TRANSACTIONS");
+
+            Statement stTruncate2 = dbConnection.createStatement();
+            stTruncate2.executeUpdate("TRUNCATE TABLE ENTITIES");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void createFile() throws IOException {
-        File file = new File(String.format(Config.instance().getFileName(), System.currentTimeMillis()));
-        FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
-        bw = new BufferedWriter(fw);
-        bw.write(HEADER_FILE);
+    private void createFiles() throws IOException {
+        /*Create the entities file*/
+        File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), System.currentTimeMillis()));
+        FileWriter fwp = new FileWriter(filep.getAbsoluteFile(), true);
+        bwt = new BufferedWriter(fwp);
+        bwt.write(HEADER_ENTITY_FILE);
+        /*Create the transaction file*/
+        File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(), System.currentTimeMillis()));
+        FileWriter fwt = new FileWriter(filet.getAbsoluteFile(), true);
+        bwt = new BufferedWriter(fwt);
+        bwt.write(HEADER_TRANSACTION_FILE);
     }
 
-    private void writeFile(Transaction t) throws IOException {
-        if (bw != null) {
-            bw.write(String.format(ROW_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getAmount(), t.getSourceType(), t.getTargetType(),t.getFraud()));
+    private void writeTransactionFile(Transaction t) throws IOException {
+        if (bwt != null) {
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
         }
     }
 
-    private void closeFile() throws IOException {
-        if (bw != null) {
-            bw.close();
+    private void writeEntityFile(MyNode n) throws IOException {
+        if (bwp != null) {
+            bwp.write(String.format(ROW_ENTITY_FILE, n.getId(), n.getType(), (n.isHonest()) ? "YES" : "NO", "0"));
+        }
+    }
+
+    private void insertEntityIntoTable(MyNode n) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String insertTableSQL = "INSERT INTO ENTITIES"
+                + "(ID, TYPE, HONEST, FRAUD) VALUES"
+                + "(?,?,?,?)";
+        try {
+            dbConnection.setAutoCommit(true);
+            preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+            preparedStatement.setString(1, n.getId());
+            preparedStatement.setString(2, n.getType().name());
+            preparedStatement.setString(3, (n.isHonest()) ? "YES" : "NO");
+            preparedStatement.setDouble(4, 0);            
+            // execute insert SQL stetement
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+        }
+    }
+
+    private void closeFiles() throws IOException {
+        if (bwt != null) {
+            bwt.close();
+        }
+        if (bwp != null) {
+            bwp.close();
         }
     }
 
@@ -180,7 +246,7 @@ public class SynthDB {
         switch (mode) {
             case FILE: {
                 try {
-                    closeFile();
+                    closeFiles();
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     Logger.getLogger(SynthDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,7 +264,7 @@ public class SynthDB {
             break;
             case ALL: {
                 try {
-                    closeFile();
+                    closeFiles();
                     closeDB();
                 } catch (IOException | SQLException ex) {
                     System.out.println(ex.getMessage());
