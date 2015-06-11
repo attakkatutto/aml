@@ -34,8 +34,8 @@ and open the template in the editor.
     <smallCompanyStdDevLaunderer>7</smallCompanyStdDevLaunderer>
     <bigCompanyMeanLaunderer>400</bigCompanyMeanLaunderer>
     <bigCompanyStdDevLaunderer>12</bigCompanyStdDevLaunderer>
-    /*TYPE OF WINDOW*/ 
-    <!--<scoreWindowType>1</scoreWindowType>-->
+    /*YEARS NUMBER*/ 
+    <yearsNumber>5</yearsNumber>
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
     <persistenceMode>1</persistenceMode>
     /*FILE*/

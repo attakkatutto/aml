@@ -32,8 +32,8 @@ public class SynthDB {
     public final String DB_CONNECTION;
     public final String DB_USER;
     public final String DB_PASSWORD;
-    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
-    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s \n";
+    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
+    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
 
     private final String HEADER_ENTITY_FILE = " ID, TYPE, HONEST, FRAUD \n";
     private final String ROW_ENTITY_FILE = " %s, %s, %s, %s \n";
@@ -141,8 +141,8 @@ public class SynthDB {
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
-                + "(?,?,?,?,?,?,?)";
+                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
+                + "(?,?,?,?,?,?,?,?)";
         try {
             dbConnection.setAutoCommit(true);
             preparedStatement = dbConnection.prepareStatement(insertTableSQL);
@@ -150,9 +150,10 @@ public class SynthDB {
             preparedStatement.setString(2, t.getIdSource());
             preparedStatement.setString(3, t.getIdTarget());
             preparedStatement.setInt(4, t.getMonth() + 1);
-            preparedStatement.setDouble(5, t.getAmount());
-            preparedStatement.setString(6, t.getSourceType());
-            preparedStatement.setString(7, t.getTargetType());
+            preparedStatement.setInt(5, t.getYear());
+            preparedStatement.setDouble(6, t.getAmount());
+            preparedStatement.setString(7, t.getSourceType());
+            preparedStatement.setString(8, t.getTargetType());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -182,8 +183,8 @@ public class SynthDB {
         /*Create the entities file*/
         File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), System.currentTimeMillis()));
         FileWriter fwp = new FileWriter(filep.getAbsoluteFile(), true);
-        bwt = new BufferedWriter(fwp);
-        bwt.write(HEADER_ENTITY_FILE);
+        bwp = new BufferedWriter(fwp);
+        bwp.write(HEADER_ENTITY_FILE);
         /*Create the transaction file*/
         File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(), System.currentTimeMillis()));
         FileWriter fwt = new FileWriter(filet.getAbsoluteFile(), true);
@@ -193,7 +194,7 @@ public class SynthDB {
 
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
         }
     }
 

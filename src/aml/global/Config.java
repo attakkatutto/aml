@@ -31,6 +31,7 @@ public class Config {
             bigCompanyMean, bigCompanyStdDev,
             smallCompanyMean, smallCompanyStdDev;
     private int laundererPercentage;
+    private int yearsNumber;
     private boolean guiEnabled;
     private String fileNameTransaction,fileNameEntity,
             dataBaseUsername,dataBasePassword,
@@ -286,6 +287,15 @@ public class Config {
         this.guiEnabled = guiEnabled;
     }  
 
+    @XmlElement
+    public int getYearsNumber() {
+        return yearsNumber;
+    }
+
+    public void setYearsNumber(int yearsNumber) {
+        this.yearsNumber = yearsNumber;
+    }    
+    
     @XmlElement
     public String getFileNameTransaction() {
         return fileNameTransaction;

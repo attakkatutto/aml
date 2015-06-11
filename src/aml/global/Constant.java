@@ -15,7 +15,12 @@ public final class Constant {
     /*    
     * Number of months    
     */
-    public static final int MONTHS = 12;          
+    public static final int MONTHS = 12;
+    
+    /*    
+    * Start year    
+    */
+    public static final short START_YEAR = 2005;
 
     /**
      * Default damping factor

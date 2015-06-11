@@ -8,7 +8,7 @@ package aml.agent;
 import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
-import static aml.global.Constant.MONTHS;
+import static aml.global.Constant.*;
 import aml.global.Enums.NodeType;
 import aml.graph.MyNode;
 import jade.core.AID;
@@ -46,29 +46,29 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextGaussian()
                         + Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        : Config.instance().getEmployeeMeanLaunderer() * random.nextGaussian()
                         + Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
-                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() * random.nextDouble()
+                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() * random.nextGaussian()
                         + Config.instance().getFreelanceStdDevHonest()
-                        : Config.instance().getFreelanceMeanLaunderer() * random.nextDouble()
+                        : Config.instance().getFreelanceMeanLaunderer() * random.nextGaussian()
                         + Config.instance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
-                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() * random.nextDouble()
+                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() * random.nextGaussian()
                         + Config.instance().getBigCompanyStdDevHonest()
-                        : Config.instance().getBigCompanyMeanLaunderer() * random.nextDouble()
+                        : Config.instance().getBigCompanyMeanLaunderer() * random.nextGaussian()
                         + Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
-                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() * random.nextDouble()
+                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() * random.nextGaussian()
                         + Config.instance().getSmallCompanyStdDevHonest()
-                        : Config.instance().getSmallCompanyMeanLaunderer() * random.nextDouble()
+                        : Config.instance().getSmallCompanyMeanLaunderer() * random.nextGaussian()
                         + Config.instance().getSmallCompanyStdDevLaunderer();
             default:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextDouble()
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextGaussian()
                         + Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() * random.nextDouble()
+                        : Config.instance().getEmployeeMeanLaunderer() * random.nextGaussian()
                         + Config.instance().getEmployeeStdDevLaunderer();
         }
     }
@@ -123,12 +123,13 @@ public class Sender extends SimpleBehaviour {
     private ACLMessage createSendMessage(MyNode n) {
         //this agent send messages
         MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
-        short _time = (short) random.nextInt(MONTHS);
+        short _month = (short) random.nextInt(MONTHS);
+        short _year = (short)(random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
         double _amount = getRandomAmount(n.getType());
-        n.setCosts(_amount, _time);
+        n.setCosts(_amount, _month);
         String _fraud = (n.isHonest()) ? "YES" : "NO";
         Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                n.getId(), v.getId(), _amount, _time, _fraud);
+                n.getId(), v.getId(), _amount, _month, _year, _fraud);
         t.setSourceType(n.getType().name());
         t.setTargetType(v.getType().name());
         System.out.println(" - "
