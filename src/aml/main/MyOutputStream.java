@@ -13,24 +13,25 @@ import javax.swing.SwingUtilities;
  */
 public class MyOutputStream extends OutputStream {
 
-    private final JTextArea textArea;    
+    private final JTextArea textArea;
 
     public MyOutputStream(JTextArea textArea) {
         this.textArea = textArea;
     }
 
     @Override
-    public void write(byte[] buffer, int offset, int length) throws IOException
-    {
-        final String text = new String (buffer, offset, length);
-        SwingUtilities.invokeLater(() -> {
-            textArea.append (text);
+    public void write(byte[] buffer, int offset, int length) throws IOException {
+        final String text = new String(buffer, offset, length);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                textArea.append(text);
+            }
         });
     }
 
     @Override
     public void write(int i) throws IOException {
-        write (new byte [] {(byte)i}, 0, 1);
+        write(new byte[]{(byte) i}, 0, 1);
     }
-       
+
 }

@@ -49,7 +49,7 @@ public class Config {
 
     private static Config unmashall() {
         try {
-            File file = new File(".\\res\\Config.xml");
+            File file = new File("." + File.separator + "res" + File.separator + "Config.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             return _instance = (Config) jaxbUnmarshaller.unmarshal(file);

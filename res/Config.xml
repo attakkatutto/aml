@@ -8,8 +8,8 @@ and open the template in the editor.
 
 <config>
     /*NETWORK CONFIG*/
-    <numberAgentMessage>100</numberAgentMessage>
-    <numberOfEntity>3500</numberOfEntity>
+    <numberAgentMessage>10</numberAgentMessage>
+    <numberOfEntity>50</numberOfEntity>
     <maxEdgesPerEntity>7</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
@@ -37,9 +37,9 @@ and open the template in the editor.
     /*TYPE OF WINDOW*/ 
     <!--<scoreWindowType>1</scoreWindowType>-->
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
-    <persistenceMode>3</persistenceMode>
+    <persistenceMode>1</persistenceMode>
     /*FILE*/
-    <fileName>C:\\SYNTHETIC_%s.csv</fileName>
+    <fileName>SYNTHETIC_%s.csv</fileName>
     /*DATABASE*/
     <dataBaseUsername>sa</dataBaseUsername>
     <dataBasePassword>password</dataBasePassword>

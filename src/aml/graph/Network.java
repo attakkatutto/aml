@@ -14,8 +14,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.graphstream.graph.EdgeFactory;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.NodeFactory;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.AbstractGraph;
 
@@ -54,33 +56,41 @@ public final class Network extends SingleGraph {
      * Initialize the factories of EntityBase and TransactionBase
      */
     private void initFactories() {
-        setNodeFactory((String id1, Graph graph) -> {
-            NodeBase base;
-            switch (random.nextInt(3)) {
-                case 0:
-                    base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                    return base;
-                case 1:
-                    base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
-                    return base;
-                case 2:
-                    base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
-                    return base;
-                case 3:
-                    base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
-                    return base;
-                default:
-                    base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
-                    return base;
+        setNodeFactory(new NodeFactory() {
+            @Override
+            public MyNode newInstance(String id1, Graph graph) {
+                MyNode base;
+                switch (random.nextInt(3)) {
+                    case 0:
+                        base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
+                        return base;
+                    case 1:
+                        base = new MyNode((AbstractGraph) graph, id1, NodeType.SMALLCOMPANY);
+                        return base;
+                    case 2:
+                        base = new MyNode((AbstractGraph) graph, id1, NodeType.FREELANCE);
+                        return base;
+                    case 3:
+                        base = new MyNode((AbstractGraph) graph, id1, NodeType.BIGCOMPANY);
+                        return base;
+                    default:
+                        base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
+                        return base;
+                }
             }
         });
 
-        setEdgeFactory((String id1, Node src, Node dst, boolean directed)
-                -> new Connection(id1, (NodeBase) src, (NodeBase) dst));
+        setEdgeFactory(new EdgeFactory() {
+            @Override
+            public Connection newInstance(String id1, Node src, Node dst, boolean directed) {
+                return new Connection(id1, (NodeBase) src, (NodeBase) dst);
+            }
+        });
+
     }
 
     public String readStylesheet() throws IOException {
-        File file = new File(".\\res\\MyStyle.css");
+        File file = new File("." + File.separator + "res" + File.separator + "MyStyle.css");
         StringBuilder fileContents = new StringBuilder((int) file.length());
         Scanner scanner = new Scanner(file);
         String lineSeparator = System.getProperty("line.separator");

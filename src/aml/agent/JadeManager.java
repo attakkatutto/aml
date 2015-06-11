@@ -6,6 +6,7 @@
 package aml.agent;
 
 import aml.entity.SynthDB;
+import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Enums.NodeType.EMPLOYEE;
 import static aml.global.Enums.NodeType.FREELANCE;
@@ -22,6 +23,7 @@ import java.time.Duration;
 import java.time.Instant;
 //import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -83,12 +85,12 @@ public class JadeManager {
          * After all agents of the network starts in the JADE container
          * an agent can send a message to their neighbour nodes
          */
-        agents.stream().forEach((a) -> {
+        for(MyAgent a : agents){
             SequentialBehaviour seq = new SequentialBehaviour(a);
             seq.addSubBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
             seq.addSubBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
             a.addBehaviour(seq);
-        });
+        }
     }
 
     public void halt() {
@@ -135,9 +137,9 @@ public class JadeManager {
             SynthDB db = new SynthDB();
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
-                mynode.getReceived().stream().forEach((trans) -> {
+                for (Transaction trans : mynode.getReceived()){
                     db.write(trans);
-                });
+                }
             }
             db.close();
             System.out.println(" - End writing DB..... ");
@@ -195,8 +197,8 @@ public class JadeManager {
      * Set the number of honests and launderers agents in the network
      */
     private void setLaunderersAndHonests() {
-        int numberLaunderer = (Config.instance().getNumberOfEntity() * Config.instance().getLaundererPercentage()) / 100;
-        List<MyNode> nodes = new ArrayList<>(graph.getNodeSet());
+        int numberLaunderer = (Config.instance().getNumberOfEntity() * Config.instance().getLaundererPercentage()) / 100;      
+        List<MyNode> nodes = new ArrayList(graph.getNodeSet());
         Collections.sort(nodes);
         for (int index = 0; index < nodes.size(); index++) {
             MyNode n = nodes.get(index);

@@ -38,8 +38,8 @@ public class SynthDB {
     public final String DB_USER;
     public final String DB_PASSWORD;
     //private final String FILE_NAME = "C:\\SYNTHETIC_%s.csv";
-    private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE \n";
-    private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, %s \n";
+    private final String HEADER_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD \n";
+    private final String ROW_FILE = " %s, %s, %s, %s, %s, %s, %s, %s \n";
 //    
     BufferedWriter bw;
     PersistenceMode mode;
@@ -160,7 +160,7 @@ public class SynthDB {
 
     private void writeFile(Transaction t) throws IOException {
         if (bw != null) {
-            bw.write(String.format(ROW_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getAmount(), t.getSourceType(), t.getTargetType()));
+            bw.write(String.format(ROW_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getAmount(), t.getSourceType(), t.getTargetType(),t.getFraud()));
         }
     }
 
