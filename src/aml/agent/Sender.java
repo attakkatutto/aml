@@ -47,29 +47,29 @@ public class Sender extends SimpleBehaviour {
         switch (type) {
             case EMPLOYEE:
                 return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextGaussian()
-                        + Config.instance().getEmployeeStdDevHonest()
+                        * Config.instance().getEmployeeStdDevHonest()
                         : Config.instance().getEmployeeMeanLaunderer() * random.nextGaussian()
-                        + Config.instance().getEmployeeStdDevLaunderer();
+                        * Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
-                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() * random.nextGaussian()
-                        + Config.instance().getFreelanceStdDevHonest()
-                        : Config.instance().getFreelanceMeanLaunderer() * random.nextGaussian()
-                        + Config.instance().getFreelanceStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
+                        * Config.instance().getFreelanceStdDevHonest()
+                        : Config.instance().getFreelanceMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
-                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() * random.nextGaussian()
-                        + Config.instance().getBigCompanyStdDevHonest()
+                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
+                        * Config.instance().getBigCompanyStdDevHonest()
                         : Config.instance().getBigCompanyMeanLaunderer() * random.nextGaussian()
-                        + Config.instance().getBigCompanyStdDevLaunderer();
+                        * Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
-                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() * random.nextGaussian()
-                        + Config.instance().getSmallCompanyStdDevHonest()
-                        : Config.instance().getSmallCompanyMeanLaunderer() * random.nextGaussian()
-                        + Config.instance().getSmallCompanyStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
+                        * Config.instance().getSmallCompanyStdDevHonest()
+                        : Config.instance().getSmallCompanyMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getSmallCompanyStdDevLaunderer();
             default:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextGaussian()
-                        + Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() * random.nextGaussian()
-                        + Config.instance().getEmployeeStdDevLaunderer();
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevHonest()
+                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevLaunderer();
         }
     }
 
