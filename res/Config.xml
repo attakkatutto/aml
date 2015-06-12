@@ -17,23 +17,23 @@ and open the template in the editor.
     <laundererPercentage>5</laundererPercentage>
     <guiEnabled>false</guiEnabled>
     /*HONEST*/
-    <employeeMeanHonest>1</employeeMeanHonest>
-    <employeeStdDevHonest>0.5</employeeStdDevHonest>
-    <freelanceMeanHonest>5</freelanceMeanHonest>
-    <freelanceStdDevHonest>1</freelanceStdDevHonest>
-    <smallCompanyMeanHonest>80</smallCompanyMeanHonest>
-    <smallCompanyStdDevHonest>10</smallCompanyStdDevHonest>
-    <bigCompanyMeanHonest>300</bigCompanyMeanHonest>
-    <bigCompanyStdDevHonest>20</bigCompanyStdDevHonest>
+    <employeeMeanHonest>500</employeeMeanHonest>
+    <employeeStdDevHonest>50</employeeStdDevHonest>
+    <freelanceMeanHonest>900</freelanceMeanHonest>
+    <freelanceStdDevHonest>150</freelanceStdDevHonest>
+    <smallCompanyMeanHonest>2500</smallCompanyMeanHonest>
+    <smallCompanyStdDevHonest>250</smallCompanyStdDevHonest>
+    <bigCompanyMeanHonest>4100</bigCompanyMeanHonest>
+    <bigCompanyStdDevHonest>300</bigCompanyStdDevHonest>
     /*LAUNDERER*/
-    <employeeMeanLaunderer>3</employeeMeanLaunderer>
-    <employeeStdDevLaunderer>0.3</employeeStdDevLaunderer>
-    <freelanceMeanLaunderer>8</freelanceMeanLaunderer>
-    <freelanceStdDevLaunderer>0.7</freelanceStdDevLaunderer>
-    <smallCompanyMeanLaunderer>90</smallCompanyMeanLaunderer>
-    <smallCompanyStdDevLaunderer>7</smallCompanyStdDevLaunderer>
-    <bigCompanyMeanLaunderer>400</bigCompanyMeanLaunderer>
-    <bigCompanyStdDevLaunderer>12</bigCompanyStdDevLaunderer>
+    <employeeMeanLaunderer>900</employeeMeanLaunderer>
+    <employeeStdDevLaunderer>20</employeeStdDevLaunderer>
+    <freelanceMeanLaunderer>1500</freelanceMeanLaunderer>
+    <freelanceStdDevLaunderer>90</freelanceStdDevLaunderer>
+    <smallCompanyMeanLaunderer>3200</smallCompanyMeanLaunderer>
+    <smallCompanyStdDevLaunderer>180</smallCompanyStdDevLaunderer>
+    <bigCompanyMeanLaunderer>5000</bigCompanyMeanLaunderer>
+    <bigCompanyStdDevLaunderer>230</bigCompanyStdDevLaunderer>
     /*YEARS NUMBER*/ 
     <yearsNumber>5</yearsNumber>
     /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
