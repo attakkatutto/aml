@@ -74,13 +74,6 @@ class HandleTransactionReceived extends OneShotBehaviour {
                     + t.getIdTarget()
                     + " receive from "
                     + t.getIdSource());
-//                    + " -> "
-//                    + t.getAmount()
-//                    + " month: "
-//                    + (t.getMonth() + 1)
-//                    + " revenues: " + n.getRevenues(t.getMonth())
-//                    + " costs: " + n.getCosts(t.getMonth())
-//                    + " budget: " + n.getBudget(t.getMonth()));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(HandleTransactionReceived.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,10 +103,6 @@ class HandleFinished extends OneShotBehaviour {
                 + base.getLocalName()
                 + " receive finish message from "
                 + msg.getSender().getLocalName());
-//                + " node degree: "
-//                + n.getDegree()
-//                + " END count: "
-//                + base.getEND());
         if (base.getEND() == n.getDegree()) {
             System.out.println(" - KILL " + base.getId());
             base.doDelete();

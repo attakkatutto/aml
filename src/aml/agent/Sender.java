@@ -46,9 +46,9 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() * random.nextGaussian()
+                return  (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
                         * Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() * random.nextGaussian()
+                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
                         * Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
                 return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
@@ -58,7 +58,7 @@ public class Sender extends SimpleBehaviour {
             case BIGCOMPANY:
                 return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
                         * Config.instance().getBigCompanyStdDevHonest()
-                        : Config.instance().getBigCompanyMeanLaunderer() * random.nextGaussian()
+                        : Config.instance().getBigCompanyMeanLaunderer() + random.nextGaussian()
                         * Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
                 return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
@@ -136,10 +136,6 @@ public class Sender extends SimpleBehaviour {
                 + n.getId()
                 + " send to "
                 + v.getId());
-//                + " ->  month "
-//                + (_time + 1)
-//                + " amount "
-//                + _amount);
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         try {
             msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
