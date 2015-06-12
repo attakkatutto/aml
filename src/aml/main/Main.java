@@ -41,7 +41,7 @@ public class Main {
 
         JFrame myFrame = new JFrame("SystemMessages");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setSize(700, 600);
+        myFrame.setSize(700, 400);
 
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);

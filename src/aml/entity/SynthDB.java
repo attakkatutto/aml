@@ -42,6 +42,9 @@ public class SynthDB {
     PersistenceMode mode;
     Connection dbConnection;
 
+    /*
+    * Synthetic DataBase constructor
+    */
     public SynthDB() {
         this.mode = Config.instance().getPersistenceMode();
         DB_DRIVER = Config.instance().getDataBaseDriver();
@@ -74,6 +77,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    *  Write an Entity (person or factory)
+    */
     public void writeEntity(MyNode n) {
         switch (mode) {
             case FILE: {
@@ -106,6 +112,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    *  Write a Transaction 
+    */
     public void writeTransaction(Transaction t) {
         switch (mode) {
             case FILE: {
@@ -138,6 +147,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Insert a Transaction in DB table
+    */
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
@@ -166,6 +178,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Cancel DB tables before begin to insert record
+    */
     private void cleanTables() {
         try {
             Statement stTruncate1 = dbConnection.createStatement();
@@ -179,6 +194,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Create files for writing
+    */
     private void createFiles() throws IOException {
         /*Create the entities file*/
         File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), System.currentTimeMillis()));
@@ -192,18 +210,27 @@ public class SynthDB {
         bwt.write(HEADER_TRANSACTION_FILE);
     }
 
+    /*
+    * Write Transaction to file
+    */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
             bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
         }
     }
 
+    /*
+    * Write Entity to file
+    */
     private void writeEntityFile(MyNode n) throws IOException {
         if (bwp != null) {
             bwp.write(String.format(ROW_ENTITY_FILE, n.getId(), n.getType(), (n.isHonest()) ? "YES" : "NO", "0"));
         }
     }
 
+    /*
+    * Insert Entity in DB table 
+    */
     private void insertEntityIntoTable(MyNode n) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO ENTITIES"
@@ -228,6 +255,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Close files
+    */
     private void closeFiles() throws IOException {
         if (bwt != null) {
             bwt.close();
@@ -237,12 +267,18 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Close DataBase Connection
+    */
     private void closeDB() throws SQLException {
         if (dbConnection != null) {
             dbConnection.close();
         }
     }
 
+    /*
+    * Close the Synthetic write
+    */
     public void close() {
         switch (mode) {
             case FILE: {
@@ -276,6 +312,9 @@ public class SynthDB {
         }
     }
 
+    /*
+    * Initialize the DataBase Connection
+    */
     private Connection initDBConnection() {
         try {
             Class.forName(DB_DRIVER);
