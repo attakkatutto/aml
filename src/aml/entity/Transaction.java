@@ -8,7 +8,7 @@ package aml.entity;
 import java.io.Serializable;
 
 /**
- *
+ * Class rapresents a bank transaction in the network
  * @author ddefalco
  */
 public class Transaction implements Serializable {

@@ -43,8 +43,8 @@ public class SynthDB {
     Connection dbConnection;
 
     /*
-    * Synthetic DataBase constructor
-    */
+     * Synthetic DataBase constructor
+     */
     public SynthDB() {
         this.mode = Config.instance().getPersistenceMode();
         DB_DRIVER = Config.instance().getDataBaseDriver();
@@ -78,8 +78,8 @@ public class SynthDB {
     }
 
     /*
-    *  Write an Entity (person or factory)
-    */
+     *  Write an Entity (person or factory)
+     */
     public void writeEntity(MyNode n) {
         switch (mode) {
             case FILE: {
@@ -112,9 +112,11 @@ public class SynthDB {
         }
     }
 
-    /*
-    *  Write a Transaction 
-    */
+    /**
+     * Write a Transaction
+     *
+     * @param t Transaction to write
+     */
     public void writeTransaction(Transaction t) {
         switch (mode) {
             case FILE: {
@@ -147,9 +149,10 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Insert a Transaction in DB table
-    */
+    /**
+     * Insert a Transaction in DB table
+     * @param t Transaction
+     */
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
@@ -178,9 +181,9 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Cancel DB tables before begin to insert record
-    */
+    /**
+     * Cancel DB tables before begin to insert record
+     */
     private void cleanTables() {
         try {
             Statement stTruncate1 = dbConnection.createStatement();
@@ -194,9 +197,9 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Create files for writing
-    */
+    /**
+     * Create files for writing
+     */
     private void createFiles() throws IOException {
         /*Create the entities file*/
         File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), System.currentTimeMillis()));
@@ -210,27 +213,30 @@ public class SynthDB {
         bwt.write(HEADER_TRANSACTION_FILE);
     }
 
-    /*
-    * Write Transaction to file
-    */
+    /**
+     * Write Transaction to file
+     * @param t Transaction
+     */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
             bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
         }
     }
 
-    /*
-    * Write Entity to file
-    */
+    /**
+     * Write Entity to file
+     * @param n Node rapresents the Entity
+     */
     private void writeEntityFile(MyNode n) throws IOException {
         if (bwp != null) {
             bwp.write(String.format(ROW_ENTITY_FILE, n.getId(), n.getType(), (n.isHonest()) ? "YES" : "NO", "0"));
         }
     }
 
-    /*
-    * Insert Entity in DB table 
-    */
+    /**
+     * Insert Entity in DB table 
+     * @param n Node rapresents the Entity
+     */
     private void insertEntityIntoTable(MyNode n) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO ENTITIES"
@@ -242,7 +248,7 @@ public class SynthDB {
             preparedStatement.setString(1, n.getId());
             preparedStatement.setString(2, n.getType().name());
             preparedStatement.setString(3, (n.isHonest()) ? "YES" : "NO");
-            preparedStatement.setDouble(4, 0);            
+            preparedStatement.setDouble(4, 0);
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -255,9 +261,9 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Close files
-    */
+    /**
+     * Close files
+     */
     private void closeFiles() throws IOException {
         if (bwt != null) {
             bwt.close();
@@ -267,18 +273,18 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Close DataBase Connection
-    */
+    /**
+     * Close DataBase Connection
+     */
     private void closeDB() throws SQLException {
         if (dbConnection != null) {
             dbConnection.close();
         }
     }
 
-    /*
-    * Close the Synthetic write
-    */
+    /**
+     * Close the Synthetic write
+     */
     public void close() {
         switch (mode) {
             case FILE: {
@@ -312,9 +318,9 @@ public class SynthDB {
         }
     }
 
-    /*
-    * Initialize the DataBase Connection
-    */
+    /**
+     * Initialize the DataBase Connection
+     */
     private Connection initDBConnection() {
         try {
             Class.forName(DB_DRIVER);
