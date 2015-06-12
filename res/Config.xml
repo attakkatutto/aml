@@ -14,7 +14,7 @@ and open the template in the editor.
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
-    <laundererPercentage>15</laundererPercentage>
+    <laundererPercentage>5</laundererPercentage>
     <guiEnabled>false</guiEnabled>
     /*HONEST*/
     <employeeMeanHonest>1</employeeMeanHonest>
