@@ -46,30 +46,30 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return (n.isHonest()) ? Math.round(Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevHonest() * 100.0) / 100.0
-                        : Math.round(Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
-                                * Config.instance().getEmployeeStdDevLaunderer() * 100.0) / 100.0;
+                return  (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevHonest()
+                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevLaunderer();
             case FREELANCE:
-                return (n.isHonest()) ? Math.round(Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
-                        * Config.instance().getFreelanceStdDevHonest() * 100.0) / 100.0
-                        : Math.round(Config.instance().getFreelanceMeanLaunderer() + random.nextGaussian()
-                                * Config.instance().getFreelanceStdDevLaunderer() * 100.0) / 100.0;
+                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
+                        * Config.instance().getFreelanceStdDevHonest()
+                        : Config.instance().getFreelanceMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getFreelanceStdDevLaunderer();
             case BIGCOMPANY:
-                return (n.isHonest()) ? Math.round(Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
-                        * Config.instance().getBigCompanyStdDevHonest() * 100.0) / 100.0
-                        : Math.round(Config.instance().getBigCompanyMeanLaunderer() + random.nextGaussian()
-                                * Config.instance().getBigCompanyStdDevLaunderer() * 100.0) / 100.0;
+                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
+                        * Config.instance().getBigCompanyStdDevHonest()
+                        : Config.instance().getBigCompanyMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getBigCompanyStdDevLaunderer();
             case SMALLCOMPANY:
-                return (n.isHonest()) ? Math.round(Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
-                        * Config.instance().getSmallCompanyStdDevHonest() * 100.0) / 100.0
-                        : Math.round(Config.instance().getSmallCompanyMeanLaunderer() + random.nextGaussian()
-                                * Config.instance().getSmallCompanyStdDevLaunderer() * 100.0) / 100.0;
+                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
+                        * Config.instance().getSmallCompanyStdDevHonest()
+                        : Config.instance().getSmallCompanyMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getSmallCompanyStdDevLaunderer();
             default:
-                return (n.isHonest()) ? Math.round(Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevHonest() * 100.0) / 100.0
-                        : Math.round(Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
-                                * Config.instance().getEmployeeStdDevLaunderer() * 100.0) / 100.0;
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevHonest()
+                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
+                        * Config.instance().getEmployeeStdDevLaunderer();
         }
     }
 
@@ -124,7 +124,7 @@ public class Sender extends SimpleBehaviour {
         //this agent send messages
         MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
         short _month = (short) random.nextInt(MONTHS);
-        short _year = (short) (random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
+        short _year = (short)(random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
         double _amount = getRandomAmount(n.getType());
         n.setCosts(_amount, _month);
         String _fraud = (n.isHonest()) ? "YES" : "NO";
