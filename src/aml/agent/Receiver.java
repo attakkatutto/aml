@@ -105,7 +105,7 @@ class HandleFinished extends OneShotBehaviour {
                 + msg.getSender().getLocalName());
         if (base.getEND() == n.getDegree()) {
             System.out.println(" - KILL " + base.getId());
-            //base.doDelete();
+            base.doDelete();
         }
     }
 }
