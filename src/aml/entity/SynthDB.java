@@ -152,6 +152,7 @@ public class SynthDB {
     /**
      * Insert a Transaction in DB table
      * @param t Transaction
+     * @throws java.sql.SQLException
      */
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
