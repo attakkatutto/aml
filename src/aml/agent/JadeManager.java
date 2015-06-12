@@ -85,10 +85,12 @@ public class JadeManager {
          * an agent can send a message to their neighbour nodes
          */
         for(MyAgent a : agents){
-            SequentialBehaviour seq = new SequentialBehaviour(a);
-            seq.addSubBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
-            seq.addSubBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
-            a.addBehaviour(seq);
+//            SequentialBehaviour seq = new SequentialBehaviour(a);
+//            seq.addSubBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
+//            seq.addSubBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
+//            a.addBehaviour(seq);            
+            a.addBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
+            a.addBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
         }
     }
 
