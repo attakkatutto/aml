@@ -157,7 +157,7 @@ public class SynthDB {
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
+                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST) VALUES"
                 + "(?,?,?,?,?,?,?,?)";
         try {
             dbConnection.setAutoCommit(true);
@@ -170,6 +170,7 @@ public class SynthDB {
             preparedStatement.setDouble(6, t.getAmount());
             preparedStatement.setString(7, t.getSourceType());
             preparedStatement.setString(8, t.getTargetType());
+            preparedStatement.setString(9, t.getHonest());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -220,7 +221,7 @@ public class SynthDB {
      */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getFraud()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getHonest()));
         }
     }
 

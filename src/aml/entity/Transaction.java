@@ -22,7 +22,7 @@ public class Transaction implements Serializable {
     private short year;
     private String sourceType;
     private String targetType;
-    private String fraud;
+    private String honest;
 
     public Transaction() {
     }
@@ -31,16 +31,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Transaction(String id, String idSource, String idTarget, double amount, short month,short year,String fraud) {
+    public Transaction(String id, String idSource, String idTarget, double amount, short month,short year,String honest) {
         this.id = id;
         this.idSource = idSource;
         this.idTarget = idTarget;
         this.amount = amount;
         this.month = month;
         this.year = year;
-        this.fraud = fraud;
+        this.honest = honest;
     }
 
+    /**
+     * Identifier of the transaction
+     * @return 
+     */
     public String getId() {
         return id;
     }
@@ -49,6 +53,10 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
+    /**
+     * Source of the transaction
+     * @return 
+     */
     public String getIdSource() {
         return idSource;
     }
@@ -57,6 +65,10 @@ public class Transaction implements Serializable {
         this.idSource = idSource;
     }
 
+    /**
+     * Target of the transaction
+     * @return 
+     */
     public String getIdTarget() {
         return idTarget;
     }
@@ -65,6 +77,10 @@ public class Transaction implements Serializable {
         this.idTarget = idTarget;
     }
 
+    /**
+     * Amount of the transaction
+     * @return 
+     */
     public double getAmount() {
         return amount;
     }
@@ -73,6 +89,10 @@ public class Transaction implements Serializable {
         this.amount = amount;
     }
 
+    /**
+     * Month of the transaction
+     * @return 
+     */
     public short getMonth() {
         return month;
     }
@@ -81,6 +101,10 @@ public class Transaction implements Serializable {
         this.month = month;
     }
 
+    /**
+     * Year of the transaction
+     * @return 
+     */
     public short getYear() {
         return year;
     }
@@ -89,6 +113,11 @@ public class Transaction implements Serializable {
         this.year = year;
     }    
     
+    /**
+     * Category of source agent
+     * of the transaction
+     * @return 
+     */
     public String getSourceType() {
         return sourceType;
     }
@@ -97,6 +126,11 @@ public class Transaction implements Serializable {
         this.sourceType = sourceType;
     }
 
+    /**
+     * Category of target agent
+     * of the transaction
+     * @return 
+     */
     public String getTargetType() {
         return targetType;
     }
@@ -105,12 +139,16 @@ public class Transaction implements Serializable {
         this.targetType = targetType;
     }
 
-    public String getFraud() {
-        return fraud;
+    /**
+     * Is honest? YES or NO
+     * @return 
+     */
+    public String getHonest() {
+        return honest;
     }
 
-    public void setFraud(String fraud) {
-        this.fraud = fraud;
+    public void setHonest(String honest) {
+        this.honest = honest;
     }    
     
     @Override
