@@ -46,7 +46,7 @@ public class Sender extends SimpleBehaviour {
     private double getRandomAmount(NodeType type) {
         switch (type) {
             case EMPLOYEE:
-                return  (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
                         * Config.instance().getEmployeeStdDevHonest()
                         : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
                         * Config.instance().getEmployeeStdDevLaunderer();
@@ -124,9 +124,9 @@ public class Sender extends SimpleBehaviour {
         //this agent send messages
         MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
         short _month = (short) random.nextInt(MONTHS);
-        short _year = (short)(random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
+        short _year = (short) (random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
         double _amount = getRandomAmount(n.getType());
-        n.setCosts(_amount, _month);
+        n.setCosts(_amount, _month, _year);
         String _fraud = (n.isHonest()) ? "YES" : "NO";
         Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
                 n.getId(), v.getId(), _amount, _month, _year, _fraud);

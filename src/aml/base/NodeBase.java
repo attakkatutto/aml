@@ -39,7 +39,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         super(graph, id);
         this.type = type;
         costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; 
+        revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
@@ -78,10 +78,11 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Get revenues of the EntityBase
      *
      * @param month
+     * @param year
      * @return revenues
      */
     @Override
-    public double getRevenues(int month) {
+    public double getRevenues(short month, short year) {
         return revenues[month];
     }
 
@@ -90,9 +91,10 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @param revenue of the EntityBase
      * @param month
+     * @param year
      */
     @Override
-    public void setRevenues(double revenue, int month) {
+    public void setRevenues(double revenue, short month, short year) {
         revenues[month] += revenue;
     }
 
@@ -101,9 +103,10 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @param cost of the EntityBase
      * @param month
+     * @param year
      */
     @Override
-    public void setCosts(double cost, int month) {
+    public void setCosts(double cost, short month, short year) {
         costs[month] += cost;
     }
 
@@ -111,10 +114,11 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Get costs of the EntityBase
      *
      * @param month
+     * @param year
      * @return costs
      */
     @Override
-    public double getCosts(int month) {
+    public double getCosts(short month, short year) {
         return costs[month];
     }
 
@@ -122,12 +126,13 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Get budget of the EntityBase
      *
      * @param month
+     * @param year
      * @return revenues - costs
      */
     @Override
-    public double getBudget(int month) {
+    public double getBudget(short month, short year) {
         return revenues[month] - costs[month];
-    }    
+    }
 
     /**
      * Are you honest?
@@ -179,7 +184,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public abstract void initDummies();
-
 
     @Override
     public int compareTo(Object o) {

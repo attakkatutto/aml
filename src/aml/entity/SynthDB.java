@@ -157,7 +157,7 @@ public class SynthDB {
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
+                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, AMOUNT, SOURCE_TYPE, TARGET_TYPE, FRAUD) VALUES"
                 + "(?,?,?,?,?,?,?,?)";
         try {
             dbConnection.setAutoCommit(true);
@@ -165,8 +165,8 @@ public class SynthDB {
             preparedStatement.setString(1, t.getId());
             preparedStatement.setString(2, t.getIdSource());
             preparedStatement.setString(3, t.getIdTarget());
-            preparedStatement.setInt(4, t.getMonth() + 1);
-            preparedStatement.setInt(5, t.getYear());
+            preparedStatement.setShort(4, (short)(t.getMonth() + 1));
+            preparedStatement.setShort(5, t.getYear());
             preparedStatement.setDouble(6, t.getAmount());
             preparedStatement.setString(7, t.getSourceType());
             preparedStatement.setString(8, t.getTargetType());

@@ -5,7 +5,6 @@
  */
 package aml.base;
 
-
 /**
  * Interface Node
  *
@@ -22,18 +21,18 @@ public interface INode {
     void initPartners();
 
     void initParents();
-    
+
     void initDummies();
-    
-    double getRevenues(int month);
 
-    void setRevenues(double revenue, int month);
+    double getRevenues(short month, short year);
 
-    void setCosts(double cost, int month);
+    void setRevenues(double revenue, short month, short year);
 
-    double getCosts(int month);
+    void setCosts(double cost, short month, short year);
 
-    double getBudget(int month);
+    double getCosts(short month, short year);
+
+    double getBudget(short month, short year);
 
 //    double getGlobalCosts();
 //

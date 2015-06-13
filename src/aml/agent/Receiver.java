@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * This behavoiur handle message from other agents
- * 
+ *
  * @author Davide
  */
 public class Receiver extends CyclicBehaviour {
@@ -51,8 +51,8 @@ public class Receiver extends CyclicBehaviour {
 }
 
 /*
-* Class to handle a received transaction from another node
-*/
+ * Class to handle a received transaction from another node
+ */
 class HandleTransactionReceived extends OneShotBehaviour {
 
     private final ACLMessage msg;
@@ -68,7 +68,7 @@ class HandleTransactionReceived extends OneShotBehaviour {
     public void action() {
         try {
             Transaction t = (Transaction) msg.getContentObject();
-            n.setRevenues(t.getAmount(), t.getMonth());
+            n.setRevenues(t.getAmount(), t.getMonth(), t.getYear());
             n.addReceived(t);
             System.out.println(" - "
                     + t.getIdTarget()
@@ -82,8 +82,8 @@ class HandleTransactionReceived extends OneShotBehaviour {
 }
 
 /*
-* Class to handle a received finish message from another node
-*/
+ * Class to handle a received finish message from another node
+ */
 class HandleFinished extends OneShotBehaviour {
 
     private final ACLMessage msg;
