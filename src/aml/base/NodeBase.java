@@ -6,8 +6,12 @@
 package aml.base;
 
 //import aml.global.Config;
+import aml.global.Config;
+import static aml.global.Constant.START_YEAR;
 import aml.global.Enums.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import org.graphstream.graph.implementations.AbstractGraph;
 import org.graphstream.graph.implementations.AdjacencyListNode;
@@ -31,18 +35,26 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     protected ArrayList<String> dummies;
 
     protected Random random = new Random();
-    protected double[] revenues, costs;
+    protected Map<Short, double[]> revenues, costs;
     //, fraudScore, suspectedScore, deficitScore
 
     // *** Constructor ***
     public NodeBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
         this.type = type;
-        costs = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        revenues = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
+        initMaps();
+    }
+
+    private void initMaps() {
+        revenues = new HashMap<>();
+        costs = new HashMap<>();
+        for (int index = 0; index < Config.instance().getYearsNumber(); index++) {
+            revenues.put((short) (START_YEAR + index), new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+            costs.put((short) (START_YEAR + index), new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        }
     }
 
     public ArrayList<String> getPartners() {
@@ -83,7 +95,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public double getRevenues(short month, short year) {
-        return revenues[month];
+        double[] _tmp = revenues.get(year);
+        return _tmp[month];
     }
 
     /**
@@ -95,7 +108,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public void setRevenues(double revenue, short month, short year) {
-        revenues[month] += revenue;
+        double[] _tmp = revenues.get(year);
+        _tmp[month] += revenue;
     }
 
     /**
@@ -107,7 +121,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public void setCosts(double cost, short month, short year) {
-        costs[month] += cost;
+        double[] _tmp = costs.get(year);
+        _tmp[month] += cost;
     }
 
     /**
@@ -119,19 +134,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public double getCosts(short month, short year) {
-        return costs[month];
-    }
-
-    /**
-     * Get budget of the EntityBase
-     *
-     * @param month
-     * @param year
-     * @return revenues - costs
-     */
-    @Override
-    public double getBudget(short month, short year) {
-        return revenues[month] - costs[month];
+        double[] _tmp = costs.get(year);
+        return _tmp[month];
     }
 
     /**

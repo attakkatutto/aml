@@ -30,11 +30,5 @@ public interface INode {
 
     void setCosts(double cost, short month, short year);
 
-    double getCosts(short month, short year);
-
-    double getBudget(short month, short year);
-
-//    double getGlobalCosts();
-//
-//    double getGlobalRevenues();    
+    double getCosts(short month, short year); 
 }
