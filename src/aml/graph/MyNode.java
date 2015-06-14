@@ -12,6 +12,8 @@ import aml.global.Enums.*;
 import aml.base.NodeBase;
 import aml.entity.Transaction;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 //import java.util.ArrayList;
 import org.graphstream.graph.implementations.*;
 
@@ -23,7 +25,7 @@ import org.graphstream.graph.implementations.*;
 public final class MyNode extends NodeBase {
 
 //    protected ArrayList<Transaction> sent;
-    protected ArrayList<Transaction> received;
+    protected List<Transaction> received;
 
     /**
      * @param graph Network
@@ -33,7 +35,7 @@ public final class MyNode extends NodeBase {
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
 //        this.sent = new ArrayList<>();
-        this.received = new ArrayList<>();
+        this.received = Collections.synchronizedList(new ArrayList<Transaction>());
     }
 
     @Override
@@ -85,7 +87,7 @@ public final class MyNode extends NodeBase {
         this.received.add(received);
     }
 
-    public ArrayList<Transaction> getReceived() {
+    public List<Transaction> getReceived() {
         return received;
     }       
 

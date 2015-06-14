@@ -23,7 +23,7 @@ implements PlatformController.Listener {
     }
 
     JadeManager manager;
-    List<Object> agents = Collections.synchronizedList(new ArrayList<>());
+    List<String> agents = Collections.synchronizedList(new ArrayList<String>());
 
                 @Override
                 public void deadAgent(PlatformEvent anEvent) {
