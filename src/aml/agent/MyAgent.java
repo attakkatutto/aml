@@ -33,11 +33,11 @@ public final class MyAgent extends AgentBase {
         return id;
     }
    
-    public int getEND() {
+    public synchronized int getEND() {
         return END;
     }
     
-    public int addEND() {
+    public synchronized int addEND() {
         return END++;
     }
    
