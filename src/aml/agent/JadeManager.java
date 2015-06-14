@@ -8,20 +8,17 @@ package aml.agent;
 import aml.entity.SynthDB;
 import aml.entity.Transaction;
 import aml.global.Config;
-import static aml.global.Enums.NodeType.EMPLOYEE;
-import static aml.global.Enums.NodeType.FREELANCE;
+import aml.global.Enums.*;
 import aml.graph.Network;
 import aml.graph.MyNode;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
-import jade.core.behaviours.SequentialBehaviour;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 import java.time.Duration;
 import java.time.Instant;
-//import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -84,11 +81,9 @@ public class JadeManager {
          * After all agents of the network starts in the JADE container
          * an agent can send a message to their neighbour nodes
          */
-        for(MyAgent a : agents){
-            SequentialBehaviour seq = new SequentialBehaviour(a);
-            seq.addSubBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
-            seq.addSubBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
-            a.addBehaviour(seq);
+        for(MyAgent a : agents){            
+            a.addBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
+            a.addBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
         }
     }
 
@@ -176,8 +171,8 @@ public class JadeManager {
                 if (Config.instance().isGuiEnabled()) {
                     for (Node node : graph) {
                         node.addAttribute("ui.label", String.format("%s", node.getId()));
-                        if (((MyNode) node).getType() == EMPLOYEE
-                                || ((MyNode) node).getType() == FREELANCE) {
+                        if (((MyNode) node).getType() == NodeType.EMPLOYEE
+                                || ((MyNode) node).getType() == NodeType.FREELANCE) {
                             node.addAttribute("ui.class", "person");
                         } else {
                             node.addAttribute("ui.class", "company");

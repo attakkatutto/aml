@@ -6,7 +6,7 @@
 package aml.agent;
 
 import aml.base.AgentBase;
-import aml.global.Enums.NodeType;
+import aml.global.Enums.*;
 import aml.graph.MyNode;
 
 /**
@@ -18,11 +18,13 @@ public final class MyAgent extends AgentBase {
     protected NodeType type;
     protected String id;
     protected int END;
+    protected MyAgentState state;
 
     public MyAgent(MyNode node) {
         super(node);
         this.type = node.getType();
         this.id = node.getId();
+        this.state = MyAgentState.START;
     }
     
     public NodeType getType() {
@@ -40,5 +42,12 @@ public final class MyAgent extends AgentBase {
     public synchronized int addEND() {
         return END++;
     }
-   
+
+    public synchronized MyAgentState getCurrentState() {
+        return state;
+    }
+
+    public synchronized void setState(MyAgentState state) {
+        this.state = state;
+    }       
 }

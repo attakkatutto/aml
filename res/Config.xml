@@ -9,8 +9,8 @@ and open the template in the editor.
 <config>
     /*NETWORK CONFIG*/
     <numberAgentMessage>3000</numberAgentMessage>
-    <numberOfEntity>2000</numberOfEntity>
-    <maxEdgesPerEntity>7</maxEdgesPerEntity>
+    <numberOfEntity>1000</numberOfEntity>
+    <maxEdgesPerEntity>20</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>

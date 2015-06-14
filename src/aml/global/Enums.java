@@ -30,6 +30,12 @@ public enum PersistenceMode{
     ALL
 };
 
+public enum MyAgentState {
+    START,
+    SEND_FINISH,
+    RECEIVE_FINISH
+};
+
 //public enum WindowType {
 //    @XmlEnumValue("1")
 //    THREEMONTHS,

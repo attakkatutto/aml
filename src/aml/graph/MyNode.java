@@ -5,7 +5,6 @@
  */
 package aml.graph;
 
-//import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
@@ -14,7 +13,6 @@ import aml.entity.Transaction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-//import java.util.ArrayList;
 import org.graphstream.graph.implementations.*;
 
 /**
@@ -24,8 +22,9 @@ import org.graphstream.graph.implementations.*;
  */
 public final class MyNode extends NodeBase {
 
-//    protected ArrayList<Transaction> sent;
     protected List<Transaction> received;
+    /**/
+    protected double fraudPotential;
 
     /**
      * @param graph Network
@@ -79,10 +78,6 @@ public final class MyNode extends NodeBase {
         }
     }
     
-//     public void addSent(Transaction sent) {
-//        this.sent.add(sent);
-//    }
-//
     public void addReceived(Transaction received) {
         this.received.add(received);
     }

@@ -7,6 +7,7 @@ package aml.agent;
 
 import aml.entity.Transaction;
 import aml.base.AgentBase;
+import aml.global.Enums.*;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -24,7 +25,6 @@ public class Receiver extends CyclicBehaviour {
 
     MyNode n;
     Random random = new Random();
-    boolean finished = false;
 
     public Receiver(AgentBase agent, MyNode n) {
         super(agent);
@@ -104,8 +104,12 @@ class HandleFinished extends OneShotBehaviour {
                 + " receive finish message from "
                 + msg.getSender().getLocalName());
         if (base.getEND() == n.getDegree()) {
-            System.out.println(" - KILL " + base.getId());
-            base.doDelete();
+            if (base.getCurrentState() == MyAgentState.SEND_FINISH) {
+                System.out.println(" - KILL " + base.getId());
+                base.doDelete();
+            } else {
+                base.setState(MyAgentState.RECEIVE_FINISH);
+            }
         }
     }
 }

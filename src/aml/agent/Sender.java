@@ -9,7 +9,7 @@ import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.*;
-import aml.global.Enums.NodeType;
+import aml.global.Enums.*;
 import aml.graph.MyNode;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
@@ -91,6 +91,11 @@ public class Sender extends SimpleBehaviour {
             ACLMessage msg = createFinishMessage();
             base.send(msg);
             finished = true;
+            if (base.getCurrentState() == MyAgentState.RECEIVE_FINISH) {
+                base.doDelete();
+            } else {
+                base.setState(MyAgentState.SEND_FINISH);
+            }
         }
     }
 
