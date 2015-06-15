@@ -71,8 +71,8 @@
 
     -->
     <target name="-post-compile">
-        <copy file="res/config.xml" flatten="true" todir="${dist.dir}/res"/>
-        <copy file="res/mystyle.css" flatten="true" todir="${dist.dir}/res"/>
+        <copy file="res/Config.xml" flatten="true" todir="${dist.dir}/res"/>
+        <copy file="res/MyStyle.css" flatten="true" todir="${dist.dir}/res"/>
 	<copy todir="${dist.dir}/dbfiles">
             <fileset dir="dbfiles">
             </fileset>

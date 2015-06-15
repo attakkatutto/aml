@@ -17,8 +17,6 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,13 +36,13 @@ public class JadeManager {
 
     private final AgentContainer mainContainer;
     private final Graph graph;
-    private Instant start = null;
-    private Instant end = null;
+    private long start;
+    private long end;
 //    private final PageRank pageRank;
 
     public JadeManager(Graph graph) {
         this.graph = graph;
-        this.start = Instant.now();
+        this.start = System.currentTimeMillis();
         // Get a hold on JADE runtime
         // Create a default profile
         Profile p = new ProfileImpl();
@@ -113,8 +111,8 @@ public class JadeManager {
      */
     private void exit() {
         System.out.println(" - Exit..... ");
-        this.end = Instant.now();
-        System.out.println(" - time elapsed (sec): " + Duration.between(this.start, this.end).getSeconds());
+        this.end = System.currentTimeMillis();        
+        System.out.println(" - time elapsed (sec): " + ((end - start) / 1000 % 60));
         if (Config.instance().isGuiEnabled()) {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
