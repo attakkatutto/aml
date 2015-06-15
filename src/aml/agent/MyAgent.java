@@ -10,31 +10,27 @@ import aml.global.Enums.*;
 import aml.graph.MyNode;
 
 /**
- *
+ * Custom JADE Agent 
  * @author DAVIDE
  */
 public final class MyAgent extends AgentBase {
 
-    protected NodeType type;
-    protected String id;
     protected int END;
     protected MyAgentState state;
-
+    
+    /**
+     * Constructor of the agent
+     * @param node every agent is related with a node in the network 
+     */
     public MyAgent(MyNode node) {
         super(node);
-        this.type = node.getType();
-        this.id = node.getId();
         this.state = MyAgentState.START;
-    }
-    
-    public NodeType getType() {
-        return type;
-    }
-
-    public String getId() {
-        return id;
-    }
+    }    
    
+    /**
+     * Count the finish message received from this agent
+     * @return END: number of finish message received
+     */
     public synchronized int getEND() {
         return END;
     }
@@ -43,6 +39,13 @@ public final class MyAgent extends AgentBase {
         return END++;
     }
 
+    /**
+     * Rapresent the current state of the agent:
+     * - START the agent is started
+     * - SEND_FINISH the agent has been sent all messages
+     * - RECEIVE_FINISH the agent has been received all messages
+     * @return MyAgentState current state of the agent
+     */
     public synchronized MyAgentState getCurrentState() {
         return state;
     }

@@ -18,9 +18,19 @@ public abstract class AgentBase extends Agent {
 
     protected MyNode n;
     protected final Random random = new Random();
+    protected String id;
 
     public AgentBase(MyNode n) {
         super();
         this.n = n;
-    }     
+        this.id = n.getId();
+    } 
+    
+    /**
+     * Type of the agent
+     * @return type of the agent
+     */
+    public String getId() {
+        return id;
+    }
 }
