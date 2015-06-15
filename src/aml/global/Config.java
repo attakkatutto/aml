@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Manager of the simulator's XML configuration file
  * @author ddefalco
  */
 @XmlRootElement
@@ -39,6 +39,9 @@ public class Config {
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
 
+    /**
+     * Singleton instance of the class
+     */
     private Config() {}
 
     public static Config instance() {
@@ -49,6 +52,10 @@ public class Config {
         return _instance;
     }
 
+    /**
+     * Unmarshalling of the XML
+     * @return 
+     */
     private static Config unmashall() {
         try {
             File file = new File("." + File.separator + "res" + File.separator + "Config.xml");
@@ -62,6 +69,7 @@ public class Config {
         }
     }
 
+    /* Properties listed in configuration file */
     @XmlElement
     public int getNumberAgentMessage() {
         return numberAgentMessage;
