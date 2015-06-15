@@ -7,16 +7,24 @@ and open the template in the editor.
 
 
 <config>
-    /*NETWORK CONFIG*/
-    <numberAgentMessage>1000</numberAgentMessage>
-    <numberOfEntity>1000</numberOfEntity>
+    /*NETWORK CONFIG*/    
+    <numberOfEntity>10</numberOfEntity>
     <maxEdgesPerEntity>20</maxEdgesPerEntity>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
     <laundererPercentage>5</laundererPercentage>
     <guiEnabled>false</guiEnabled>
-    /*HONEST*/
+    /*NUMBER OF MESSAGES TO OTHER NODES*/
+    <employeeMessageMean>100</employeeMessageMean>
+    <employeeMessageStdDev>1</employeeMessageStdDev>
+    <freelanceMessageMean>100</freelanceMessageMean>
+    <freelanceMessageStdDev>1</freelanceMessageStdDev>
+    <smallCompanyMessageMean>100</smallCompanyMessageMean>
+    <smallCompanyMessageStdDev>1</smallCompanyMessageStdDev>
+    <bigCompanyMessageMean>100</bigCompanyMessageMean>
+    <bigCompanyMessageStdDev>1</bigCompanyMessageStdDev>
+    /*HONEST*/    
     <employeeMeanHonest>500</employeeMeanHonest>
     <employeeStdDevHonest>50</employeeStdDevHonest>
     <freelanceMeanHonest>900</freelanceMeanHonest>

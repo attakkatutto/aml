@@ -76,7 +76,7 @@ public class Sender extends SimpleBehaviour {
     @Override
     public void action() {
         MyAgent base = (MyAgent) myAgent;
-        if (n.getOutDegree() > 0 && count < Config.instance().getNumberAgentMessage()) {
+        if (n.getOutDegree() > 0 && count < base.getMESSAGE_NUMBER()) {
             try {
                 ACLMessage msg = createSendMessage(n);
                 base.send(msg);

@@ -24,12 +24,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
 
     private static Config _instance;
-    private int numberAgentMessage, numberOfEntity, maxEdgesPerEntity;
+    private int numberOfEntity, maxEdgesPerEntity;
     private int numberParents, numberPartners,numberDummies;
-    private double employeeMean, employeeStdDev,
-            freelanceMean, freelanceStdDev,
-            bigCompanyMean, bigCompanyStdDev,
-            smallCompanyMean, smallCompanyStdDev;
+    private double employeeMeanHonest, employeeStdDevHonest,
+            freelanceMeanHonest, freelanceStdDevHonest,
+            bigCompanyMeanHonest, bigCompanyStdDevHonest,
+            smallCompanyMeanHonest, smallCompanyStdDevHonest;
+    private double employeeMeanLaunderer, employeeStdDevLaunderer,
+            freelanceMeanLaunderer, freelanceStdDevLaunderer,
+            bigCompanyMeanLaunderer, bigCompanyStdDevLaunderer,
+            smallCompanyMeanLaunderer, smallCompanyStdDevLaunderer;
+    private double employeeMessageMean,employeeMessageStdDev,
+            freelanceMessageMean,freelanceMessageStdDev,
+            smallCompanyMessageMean,smallCompanyMessageStdDev,
+            bigCompanyMessageMean,bigCompanyMessageStdDev;
     private int laundererPercentage;
     private int yearsNumber;
     private boolean guiEnabled;
@@ -70,15 +78,6 @@ public class Config {
     }
 
     /* Properties listed in configuration file */
-    @XmlElement
-    public int getNumberAgentMessage() {
-        return numberAgentMessage;
-    }
-
-    public void setNumberAgentMessage(int num) {
-        numberAgentMessage = num;
-    }
-
     @XmlElement
     public int getMaxNumberDummies() {
         return numberDummies;
@@ -125,147 +124,228 @@ public class Config {
     }
 
     @XmlElement
+    public int getNumberDummies() {
+        return numberDummies;
+    }
+
+    public void setNumberDummies(int numberDummies) {
+        this.numberDummies = numberDummies;
+    }
+
+    @XmlElement
+    public double getEmployeeMessageMean() {
+        return employeeMessageMean;
+    }
+
+    public void setEmployeeMessageMean(double employeeMessageMean) {
+        this.employeeMessageMean = employeeMessageMean;
+    }
+
+    @XmlElement
+    public double getEmployeeMessageStdDev() {
+        return employeeMessageStdDev;
+    }
+
+    public void setEmployeeMessageStdDev(double employeeMessageStdDev) {
+        this.employeeMessageStdDev = employeeMessageStdDev;
+    }
+
+    @XmlElement
+    public double getFreelanceMessageMean() {
+        return freelanceMessageMean;
+    }
+
+    public void setFreelanceMessageMean(double freelanceMessageMean) {
+        this.freelanceMessageMean = freelanceMessageMean;
+    }
+
+    @XmlElement
+    public double getFreelanceMessageStdDev() {
+        return freelanceMessageStdDev;
+    }
+
+    public void setFreelanceMessageStdDev(double freelanceMessageStdDev) {
+        this.freelanceMessageStdDev = freelanceMessageStdDev;
+    }
+
+    @XmlElement
+    public double getSmallCompanyMessageMean() {
+        return smallCompanyMessageMean;
+    }
+
+    public void setSmallCompanyMessageMean(double smallCompanyMessageMean) {
+        this.smallCompanyMessageMean = smallCompanyMessageMean;
+    }
+
+    @XmlElement
+    public double getSmallCompanyMessageStdDev() {
+        return smallCompanyMessageStdDev;
+    }
+
+    public void setSmallCompanyMessageStdDev(double smallCompanyMessageStdDev) {
+        this.smallCompanyMessageStdDev = smallCompanyMessageStdDev;
+    }
+
+    @XmlElement
+    public double getBigCompanyMessageMean() {
+        return bigCompanyMessageMean;
+    }
+
+    public void setBigCompanyMessageMean(double bigCompanyMessageMean) {
+        this.bigCompanyMessageMean = bigCompanyMessageMean;
+    }
+
+    @XmlElement
+    public double getBigCompanyMessageStdDev() {
+        return bigCompanyMessageStdDev;
+    }
+
+    public void setBigCompanyMessageStdDev(double bigCompanyMessageStdDev) {
+        this.bigCompanyMessageStdDev = bigCompanyMessageStdDev;
+    }
+        
+    @XmlElement
     public double getEmployeeMeanHonest() {
-        return employeeMean;
+        return employeeMeanHonest;
     }
 
     public void setEmployeeMeanHonest(double num) {
-        employeeMean = num;
+        employeeMeanHonest = num;
     }
     
     @XmlElement
     public double getEmployeeStdDevHonest() {
-        return employeeStdDev;
+        return employeeStdDevHonest;
     }
 
     public void setEmployeeStdDevHonest(double num) {
-        employeeStdDev = num;
+        employeeStdDevHonest = num;
     }
     
     @XmlElement
     public double getFreelanceMeanHonest() {
-        return freelanceMean;
+        return freelanceMeanHonest;
     }
 
     public void setFreelanceMeanHonest(double num) {
-        freelanceMean = num;
+        freelanceMeanHonest = num;
     }
 
     @XmlElement
     public double getFreelanceStdDevHonest() {
-        return freelanceStdDev;
+        return freelanceStdDevHonest;
     }
 
     public void setFreelanceStdDevHonest(double num) {
-        freelanceStdDev = num;
+        freelanceStdDevHonest = num;
     }
     
     @XmlElement
     public double getSmallCompanyMeanHonest() {
-        return smallCompanyMean;
+        return smallCompanyMeanHonest;
     }
 
     public void setSmallCompanyMeanHonest(double num) {
-        smallCompanyMean = num;
+        smallCompanyMeanHonest = num;
     }
 
     @XmlElement
     public double getSmallCompanyStdDevHonest() {
-        return smallCompanyStdDev;
+        return smallCompanyStdDevHonest;
     }
 
     public void setSmallCompanyStdDevHonest(double num) {
-        smallCompanyStdDev = num;
+        smallCompanyStdDevHonest = num;
     }
     
     @XmlElement
     public double getBigCompanyMeanHonest() {
-        return bigCompanyMean;
+        return bigCompanyMeanHonest;
     }
 
     public void setBigCompanyMeanHonest(double num) {
-        bigCompanyMean = num;
+        bigCompanyMeanHonest = num;
     }
     
     @XmlElement
     public double getBigCompanyStdDevHonest() {
-        return bigCompanyStdDev;
+        return bigCompanyStdDevHonest;
     }
 
     public void setBigCompanyStdDevHonest(double num) {
-        bigCompanyStdDev = num;
+        bigCompanyStdDevHonest = num;
     }
             
     @XmlElement
     public double getEmployeeMeanLaunderer() {
-        return employeeMean;
+        return employeeMeanLaunderer;
     }
 
     public void setEmployeeMeanLaunderer(double num) {
-        employeeMean = num;
+        employeeMeanLaunderer = num;
     }
     
     @XmlElement
     public double getEmployeeStdDevLaunderer() {
-        return employeeStdDev;
+        return employeeStdDevLaunderer;
     }
 
     public void setEmployeeStdDevLaunderer(double num) {
-        employeeStdDev = num;
+        employeeStdDevLaunderer = num;
     }
     
     @XmlElement
     public double getFreelanceMeanLaunderer() {
-        return freelanceMean;
+        return freelanceMeanLaunderer;
     }
 
     public void setFreelanceMeanLaunderer(double num) {
-        freelanceMean = num;
+        freelanceMeanLaunderer = num;
     }
 
     @XmlElement
     public double getFreelanceStdDevLaunderer() {
-        return freelanceStdDev;
+        return freelanceStdDevLaunderer;
     }
 
     public void setFreelanceStdDevLaunderer(double num) {
-        freelanceStdDev = num;
+        freelanceStdDevLaunderer = num;
     }
     
     @XmlElement
     public double getSmallCompanyMeanLaunderer() {
-        return smallCompanyMean;
+        return smallCompanyMeanLaunderer;
     }
 
     public void setSmallCompanyMeanLaunderer(double num) {
-        smallCompanyMean = num;
+        smallCompanyMeanLaunderer = num;
     }
 
     @XmlElement
     public double getSmallCompanyStdDevLaunderer() {
-        return smallCompanyStdDev;
+        return smallCompanyStdDevLaunderer;
     }
 
     public void setSmallCompanyStdDevLaunderer(double num) {
-        smallCompanyStdDev = num;
+        smallCompanyStdDevLaunderer = num;
     }
     
     @XmlElement
     public double getBigCompanyMeanLaunderer() {
-        return bigCompanyMean;
+        return bigCompanyMeanLaunderer;
     }
 
     public void setBigCompanyMeanLaunderer(double num) {
-        bigCompanyMean = num;
+        bigCompanyMeanLaunderer = num;
     }
     
     @XmlElement
     public double getBigCompanyStdDevLaunderer() {
-        return bigCompanyStdDev;
+        return bigCompanyStdDevLaunderer;
     }
 
     public void setBigCompanyStdDevLaunderer(double num) {
-        bigCompanyStdDev = num;
+        bigCompanyStdDevLaunderer = num;
     }
 
     @XmlElement

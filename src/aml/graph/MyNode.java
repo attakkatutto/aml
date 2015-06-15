@@ -34,7 +34,7 @@ public final class MyNode extends NodeBase {
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
 //        this.sent = new ArrayList<>();
-        this.received = Collections.synchronizedList(new ArrayList<Transaction>());
+        this.received = Collections.synchronizedList(new ArrayList<Transaction>());        
     }
 
     @Override
@@ -86,6 +86,14 @@ public final class MyNode extends NodeBase {
         return received;
     }       
 
+    public double getFraudPotential() {
+        return (isHonest()) ? 0 : 1;
+    }
+
+    public void setFraudPotential(double fraudPotential) {
+        this.fraudPotential = fraudPotential;
+    }    
+    
     @Override
     public void initDummies() {
         int count = 0;
@@ -96,5 +104,5 @@ public final class MyNode extends NodeBase {
             }
             count++;
         }
-    }
+    }    
 }

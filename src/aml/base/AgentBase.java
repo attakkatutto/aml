@@ -5,6 +5,7 @@
  */
 package aml.base;
 
+import aml.global.Enums.*;
 import aml.graph.MyNode;
 import jade.core.Agent;
 import java.util.Random;
@@ -22,6 +23,7 @@ public abstract class AgentBase extends Agent {
 
     public AgentBase(MyNode n) {
         super();
+        initMessageNumber(n.getType());
         this.n = n;
         this.id = n.getId();
     } 
@@ -33,4 +35,6 @@ public abstract class AgentBase extends Agent {
     public String getId() {
         return id;
     }
+    
+    public abstract void initMessageNumber(NodeType type);
 }
