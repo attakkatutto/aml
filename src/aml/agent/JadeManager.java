@@ -34,8 +34,8 @@ import org.graphstream.graph.Node;
  */
 public class JadeManager {
 
-    private final AgentContainer mainContainer;
-    private final Graph graph;
+    private AgentContainer mainContainer;
+    private Graph graph;
     private long start;
     private long end;
 //    private final PageRank pageRank;
@@ -48,11 +48,10 @@ public class JadeManager {
         Profile p = new ProfileImpl();
         // Create a new main container (i.e. on this host, port 1099) 
         mainContainer = Runtime.instance().createMainContainer(p);
-            
         agentsHandler();
     }
 
-    /*
+    /**
      * Execute the JADE containers and starts all agents of the network
      */
     public void exec() {
@@ -79,7 +78,7 @@ public class JadeManager {
          * After all agents of the network starts in the JADE container
          * an agent can send a message to their neighbour nodes
          */
-        for(MyAgent a : agents){            
+        for (MyAgent a : agents) {
             a.addBehaviour(new Sender(a, (MyNode) graph.getNode(a.getLocalName())));
             a.addBehaviour(new Receiver(a, (MyNode) graph.getNode(a.getLocalName())));
         }
@@ -94,7 +93,7 @@ public class JadeManager {
         }
     }
 
-    /*
+    /**
      * Custom listener of the platform for handle agents life
      */
     private void agentsHandler() {
@@ -106,12 +105,12 @@ public class JadeManager {
         }
     }
 
-    /*
+    /**
      * Exit from prototype
      */
     private void exit() {
         System.out.println(" - Exit..... ");
-        this.end = System.currentTimeMillis();        
+        this.end = System.currentTimeMillis();
         System.out.println(" - time elapsed (sec): " + ((end - start) / 1000 % 60));
         if (Config.instance().isGuiEnabled()) {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
@@ -119,7 +118,7 @@ public class JadeManager {
         System.exit(1);
     }
 
-    /*
+    /*^
      * Write data to DB or Filesystem
      */
     public void writeData() {
@@ -130,9 +129,9 @@ public class JadeManager {
             for (Node node : graph) {
                 MyNode mynode = (MyNode) node;
                 db.writeEntity(mynode);
-                for (Transaction trans : mynode.getReceived()){
+                for (Transaction trans : mynode.getReceived()) {
                     db.writeTransaction(trans);
-                }               
+                }
             }
             db.close();
             System.out.println(" - End writing DB..... ");
@@ -142,6 +141,7 @@ public class JadeManager {
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
 //            double rank = pageRank.getRank(node);
@@ -154,7 +154,7 @@ public class JadeManager {
 //        }
 //    }
 
-    /*
+    /**
      * Generate random Barabasi Graph for the prototype
      */
     private void generateBarabasiGraph() {
@@ -186,11 +186,11 @@ public class JadeManager {
         b.end();
     }
 
-    /*
+    /**
      * Set the number of honests and launderers agents in the network
      */
     private void setLaunderersAndHonests() {
-        int numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;      
+        int numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;
         List<MyNode> nodes = new ArrayList(graph.getNodeSet());
         Collections.sort(nodes);
         for (int index = 0; index < nodes.size(); index++) {

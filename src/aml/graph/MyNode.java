@@ -27,7 +27,7 @@ public final class MyNode extends NodeBase {
 
     /**
      * Node of the network
-     * 
+     *
      * @param graph Network
      * @param id identifier of the Person
      * @param type type of the vertex
@@ -68,19 +68,19 @@ public final class MyNode extends NodeBase {
             count++;
         }
     }
-    
+
     public void addReceived(Transaction received) {
         this.received.add(received);
     }
 
     public List<Transaction> getReceived() {
         return received;
-    }       
+    }
 
     public double getFraudPotential() {
         return (isHonest()) ? 0 : fraudPotential;
-    }     
-    
+    }
+
     @Override
     public void initDummies() {
         int count = 0;
@@ -91,5 +91,5 @@ public final class MyNode extends NodeBase {
             }
             count++;
         }
-    }    
+    }
 }

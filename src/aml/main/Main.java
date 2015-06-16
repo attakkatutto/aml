@@ -23,7 +23,7 @@ import org.graphstream.graph.Graph;
 public class Main {
 
     public static void main(String[] args) {
-        Graph graph = new Network("AML Test");
+        Graph graph = new Network("AML Synthetic DB");
         if (Config.instance().isGuiEnabled()) {
             guiInit(graph);
         }

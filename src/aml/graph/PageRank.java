@@ -260,10 +260,10 @@ public final class PageRank implements DynamicAlgorithm, ElementSink {
     public void init(Graph graph) {
         this.graph = graph;
         graph.addElementSink(this);
-        //double initialRank = 1.0 / graph.getNodeCount();
-        for (int i = 0; i < graph.getNodeCount(); i++) {
-            NodeBase node = graph.getNode(i);
-            //node.addAttribute(rankAttribute, node.getScore());
+        double initialRank = 1.0 / graph.getNodeCount();
+        for (Node node : graph) {
+            //NodeBase node = graph.getNode(i);
+            node.addAttribute(rankAttribute, initialRank);
         }
         newRanks = new ArrayList<>(graph.getNodeCount());
         upToDate = false;
