@@ -5,7 +5,6 @@
  */
 package aml.graph;
 
-import aml.base.AgentBase;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
@@ -46,16 +45,6 @@ public final class MyNode extends NodeBase {
         } else {
             this.addAttribute("ui.style", "fill-color: rgb(255,0,0);");
         }
-    }
-
-    @Override
-    public AgentBase getAgent() {
-        return agent;
-    }
-
-    @Override
-    public void setAgent(AgentBase a) {
-        agent = a;
     }
 
     @Override

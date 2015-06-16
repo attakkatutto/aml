@@ -23,7 +23,6 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
  */
 public abstract class NodeBase extends AdjacencyListNode implements INode, Comparable {
 
-    protected AgentBase agent;
     protected NodeType type;
     protected boolean honest;
 

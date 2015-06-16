@@ -14,10 +14,6 @@ public interface INode {
 
     void setColor();
 
-    AgentBase getAgent();
-
-    void setAgent(AgentBase a);
-
     void initPartners();
 
     void initParents();
