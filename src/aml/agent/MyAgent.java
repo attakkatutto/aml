@@ -37,7 +37,7 @@ public final class MyAgent extends AgentBase {
      */
     @Override
     public void initMessageNumber(NodeType type) {
-        int _messagenumber = 0;
+        int _messagenumber;
         switch (type) {
             case EMPLOYEE:
                 _messagenumber = (int) (Config.instance().getEmployeeMessageMean() + random.nextGaussian() * Config.instance().getEmployeeMessageStdDev());

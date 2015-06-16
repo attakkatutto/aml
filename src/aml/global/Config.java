@@ -18,14 +18,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Manager of the simulator's XML configuration file
+ *
  * @author ddefalco
  */
 @XmlRootElement
 public class Config {
 
     private static Config _instance;
-    private int numberOfEntity, maxEdgesPerEntity;
-    private int numberParents, numberPartners,numberDummies;
+    private int fraudPotential;
+    private int numberOfNode, maxEdgesNode;
+    private int numberParents, numberPartners, numberDummies;
     private double employeeMeanHonest, employeeStdDevHonest,
             freelanceMeanHonest, freelanceStdDevHonest,
             bigCompanyMeanHonest, bigCompanyStdDevHonest,
@@ -34,23 +36,26 @@ public class Config {
             freelanceMeanLaunderer, freelanceStdDevLaunderer,
             bigCompanyMeanLaunderer, bigCompanyStdDevLaunderer,
             smallCompanyMeanLaunderer, smallCompanyStdDevLaunderer;
-    private double employeeMessageMean,employeeMessageStdDev,
-            freelanceMessageMean,freelanceMessageStdDev,
-            smallCompanyMessageMean,smallCompanyMessageStdDev,
-            bigCompanyMessageMean,bigCompanyMessageStdDev;
+    private double employeeMessageMean, employeeMessageStdDev,
+            freelanceMessageMean, freelanceMessageStdDev,
+            smallCompanyMessageMean, smallCompanyMessageStdDev,
+            bigCompanyMessageMean, bigCompanyMessageStdDev;
     private int laundererPercentage;
     private int yearsNumber;
     private boolean guiEnabled;
-    private String fileNameTransaction,fileNameEntity,
-            dataBaseUsername,dataBasePassword,
-            dataBaseConnection,dataBaseDriver;
+    private String fileNameTransaction, fileNameEntity,
+            dataBaseUsername, dataBasePassword,
+            dataBaseConnection, dataBaseDriver;
     //private WindowType windowType;
     private PersistenceMode persistenceMode;
 
     /**
-     * Singleton instance of the class
+     * Singleton instance of the class Config rapresents the configuration of
+     * the application
+     *
      */
-    private Config() {}
+    private Config() {
+    }
 
     public static Config instance() {
         if (_instance == null) {
@@ -62,7 +67,8 @@ public class Config {
 
     /**
      * Unmarshalling of the XML
-     * @return 
+     *
+     * @return
      */
     private static Config unmashall() {
         try {
@@ -86,23 +92,23 @@ public class Config {
     public void setMaxNumberDummies(int num) {
         numberDummies = num;
     }
-    
-    @XmlElement
-    public int getNumberOfEntity() {
-        return numberOfEntity;
-    }
-
-    public void setNumberOfEntity(int num) {
-        numberOfEntity = num;
-    }
 
     @XmlElement
-    public int getMaxEdgesPerEntity() {
-        return maxEdgesPerEntity;
+    public int getNumberOfNode() {
+        return numberOfNode;
     }
 
-    public void setMaxEdgesPerEntity(int num) {
-        maxEdgesPerEntity = num;
+    public void setNumberOfNode(int num) {
+        numberOfNode = num;
+    }
+
+    @XmlElement
+    public int getMaxEdgesNode() {
+        return maxEdgesNode;
+    }
+
+    public void setMaxEdgesNode(int num) {
+        maxEdgesNode = num;
     }
 
     @XmlElement
@@ -130,6 +136,33 @@ public class Config {
 
     public void setNumberDummies(int numberDummies) {
         this.numberDummies = numberDummies;
+    }
+    
+    @XmlElement
+    public int getLaundererPercentage() {
+        return laundererPercentage;
+    }
+
+    public void setLaundererPercentage(int laundererPercentage) {
+        this.laundererPercentage = laundererPercentage;
+    }
+
+    @XmlElement
+    public int getFraudPotential() {
+        return fraudPotential;
+    }
+
+    public void setFraudPotential(int fraudPotential) {
+        this.fraudPotential = fraudPotential;
+    }
+
+    @XmlElement
+    public boolean isGuiEnabled() {
+        return guiEnabled;
+    }
+
+    public void setGuiEnabled(boolean guiEnabled) {
+        this.guiEnabled = guiEnabled;
     }
 
     @XmlElement
@@ -203,7 +236,7 @@ public class Config {
     public void setBigCompanyMessageStdDev(double bigCompanyMessageStdDev) {
         this.bigCompanyMessageStdDev = bigCompanyMessageStdDev;
     }
-        
+
     @XmlElement
     public double getEmployeeMeanHonest() {
         return employeeMeanHonest;
@@ -212,7 +245,7 @@ public class Config {
     public void setEmployeeMeanHonest(double num) {
         employeeMeanHonest = num;
     }
-    
+
     @XmlElement
     public double getEmployeeStdDevHonest() {
         return employeeStdDevHonest;
@@ -221,7 +254,7 @@ public class Config {
     public void setEmployeeStdDevHonest(double num) {
         employeeStdDevHonest = num;
     }
-    
+
     @XmlElement
     public double getFreelanceMeanHonest() {
         return freelanceMeanHonest;
@@ -239,7 +272,7 @@ public class Config {
     public void setFreelanceStdDevHonest(double num) {
         freelanceStdDevHonest = num;
     }
-    
+
     @XmlElement
     public double getSmallCompanyMeanHonest() {
         return smallCompanyMeanHonest;
@@ -257,7 +290,7 @@ public class Config {
     public void setSmallCompanyStdDevHonest(double num) {
         smallCompanyStdDevHonest = num;
     }
-    
+
     @XmlElement
     public double getBigCompanyMeanHonest() {
         return bigCompanyMeanHonest;
@@ -266,7 +299,7 @@ public class Config {
     public void setBigCompanyMeanHonest(double num) {
         bigCompanyMeanHonest = num;
     }
-    
+
     @XmlElement
     public double getBigCompanyStdDevHonest() {
         return bigCompanyStdDevHonest;
@@ -275,7 +308,7 @@ public class Config {
     public void setBigCompanyStdDevHonest(double num) {
         bigCompanyStdDevHonest = num;
     }
-            
+
     @XmlElement
     public double getEmployeeMeanLaunderer() {
         return employeeMeanLaunderer;
@@ -284,7 +317,7 @@ public class Config {
     public void setEmployeeMeanLaunderer(double num) {
         employeeMeanLaunderer = num;
     }
-    
+
     @XmlElement
     public double getEmployeeStdDevLaunderer() {
         return employeeStdDevLaunderer;
@@ -293,7 +326,7 @@ public class Config {
     public void setEmployeeStdDevLaunderer(double num) {
         employeeStdDevLaunderer = num;
     }
-    
+
     @XmlElement
     public double getFreelanceMeanLaunderer() {
         return freelanceMeanLaunderer;
@@ -311,7 +344,7 @@ public class Config {
     public void setFreelanceStdDevLaunderer(double num) {
         freelanceStdDevLaunderer = num;
     }
-    
+
     @XmlElement
     public double getSmallCompanyMeanLaunderer() {
         return smallCompanyMeanLaunderer;
@@ -329,7 +362,7 @@ public class Config {
     public void setSmallCompanyStdDevLaunderer(double num) {
         smallCompanyStdDevLaunderer = num;
     }
-    
+
     @XmlElement
     public double getBigCompanyMeanLaunderer() {
         return bigCompanyMeanLaunderer;
@@ -338,7 +371,7 @@ public class Config {
     public void setBigCompanyMeanLaunderer(double num) {
         bigCompanyMeanLaunderer = num;
     }
-    
+
     @XmlElement
     public double getBigCompanyStdDevLaunderer() {
         return bigCompanyStdDevLaunderer;
@@ -347,15 +380,6 @@ public class Config {
     public void setBigCompanyStdDevLaunderer(double num) {
         bigCompanyStdDevLaunderer = num;
     }
-
-    @XmlElement
-    public int getLaundererPercentage() {
-        return laundererPercentage;
-    }
-
-    public void setLaundererPercentage(int laundererPercentage) {
-        this.laundererPercentage = laundererPercentage;
-    }        
     
     @XmlElement
     public PersistenceMode getPersistenceMode() {
@@ -367,23 +391,14 @@ public class Config {
     }
 
     @XmlElement
-    public boolean isGuiEnabled() {
-        return guiEnabled;
-    }
-
-    public void setGuiEnabled(boolean guiEnabled) {
-        this.guiEnabled = guiEnabled;
-    }  
-
-    @XmlElement
     public int getYearsNumber() {
         return yearsNumber;
     }
 
     public void setYearsNumber(int yearsNumber) {
         this.yearsNumber = yearsNumber;
-    }    
-    
+    }
+
     @XmlElement
     public String getFileNameTransaction() {
         return fileNameTransaction;
@@ -400,7 +415,7 @@ public class Config {
 
     public void setFileNameEntity(String fileNameEntity) {
         this.fileNameEntity = fileNameEntity;
-    }       
+    }
 
     @XmlElement
     public String getDataBaseUsername() {
@@ -437,6 +452,5 @@ public class Config {
     public void setDataBaseDriver(String dataBaseDriver) {
         this.dataBaseDriver = dataBaseDriver;
     }
-    
-    
+
 }

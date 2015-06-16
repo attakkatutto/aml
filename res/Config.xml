@@ -8,22 +8,25 @@ and open the template in the editor.
 
 <config>
     /*NETWORK CONFIG*/    
-    <numberOfEntity>10</numberOfEntity>
-    <maxEdgesPerEntity>20</maxEdgesPerEntity>
+    <numberOfNode>100</numberOfNode>
+    <maxEdgesNode>20</maxEdgesNode>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
     <laundererPercentage>5</laundererPercentage>
+    /*0:FIXED 1:VARIABLE/
+    <fraudPotential>0</fraudPotential>
+    /*ENABLE GUI true/false*/
     <guiEnabled>false</guiEnabled>
     /*NUMBER OF MESSAGES TO OTHER NODES*/
     <employeeMessageMean>100</employeeMessageMean>
-    <employeeMessageStdDev>1</employeeMessageStdDev>
+    <employeeMessageStdDev>0</employeeMessageStdDev>
     <freelanceMessageMean>100</freelanceMessageMean>
-    <freelanceMessageStdDev>1</freelanceMessageStdDev>
+    <freelanceMessageStdDev>0</freelanceMessageStdDev>
     <smallCompanyMessageMean>100</smallCompanyMessageMean>
-    <smallCompanyMessageStdDev>1</smallCompanyMessageStdDev>
+    <smallCompanyMessageStdDev>0</smallCompanyMessageStdDev>
     <bigCompanyMessageMean>100</bigCompanyMessageMean>
-    <bigCompanyMessageStdDev>1</bigCompanyMessageStdDev>
+    <bigCompanyMessageStdDev>0</bigCompanyMessageStdDev>
     /*HONEST*/    
     <employeeMeanHonest>500</employeeMeanHonest>
     <employeeStdDevHonest>50</employeeStdDevHonest>

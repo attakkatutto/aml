@@ -32,6 +32,7 @@ public class SynthDB {
     public final String DB_CONNECTION;
     public final String DB_USER;
     public final String DB_PASSWORD;
+    
     private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
     private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
 
@@ -77,8 +78,10 @@ public class SynthDB {
         }
     }
 
-    /*
+    /**
      *  Write an Entity (person or factory)
+     * 
+     * @param n node to write
      */
     public void writeEntity(MyNode n) {
         switch (mode) {
@@ -151,6 +154,7 @@ public class SynthDB {
 
     /**
      * Insert a Transaction in DB table
+     * 
      * @param t Transaction
      * @throws java.sql.SQLException
      */
@@ -231,7 +235,7 @@ public class SynthDB {
      */
     private void writeEntityFile(MyNode n) throws IOException {
         if (bwp != null) {
-            bwp.write(String.format(ROW_ENTITY_FILE, n.getId(), n.getType(), (n.isHonest()) ? "YES" : "NO", "0"));
+            bwp.write(String.format(ROW_ENTITY_FILE, n.getId(), n.getType(), (n.isHonest()) ? "YES" : "NO", n.getFraudPotential()));
         }
     }
 
@@ -250,7 +254,7 @@ public class SynthDB {
             preparedStatement.setString(1, n.getId());
             preparedStatement.setString(2, n.getType().name());
             preparedStatement.setString(3, (n.isHonest()) ? "YES" : "NO");
-            preparedStatement.setDouble(4, 0);
+            preparedStatement.setDouble(4, n.getFraudPotential());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {

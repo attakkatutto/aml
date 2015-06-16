@@ -158,12 +158,12 @@ public class JadeManager {
      * Generate random Barabasi Graph for the prototype
      */
     private void generateBarabasiGraph() {
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerEntity(),
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesNode(),
                 false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();
-        while (graph.getNodeCount() < Config.instance().getNumberOfEntity()) {
+        while (graph.getNodeCount() < Config.instance().getNumberOfNode()) {
             try {
                 b.nextEvents();
                 if (Config.instance().isGuiEnabled()) {
@@ -190,7 +190,7 @@ public class JadeManager {
      * Set the number of honests and launderers agents in the network
      */
     private void setLaunderersAndHonests() {
-        int numberLaunderer = (Config.instance().getNumberOfEntity() * Config.instance().getLaundererPercentage()) / 100;      
+        int numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;      
         List<MyNode> nodes = new ArrayList(graph.getNodeSet());
         Collections.sort(nodes);
         for (int index = 0; index < nodes.size(); index++) {

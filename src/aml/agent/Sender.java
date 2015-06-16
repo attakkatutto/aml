@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.entity.Transaction;
-import aml.base.AgentBase;
 import aml.global.Config;
 import static aml.global.Constant.*;
 import aml.global.Enums.*;
@@ -32,45 +31,75 @@ public class Sender extends SimpleBehaviour {
 
     int count = 0; /*Number of sent messages*/
 
+    int countFraud = 0; /*Number od fraud messages for launderer agent*/
+
     boolean finished = false; /*Have you finish?*/
 
 
-    public Sender(AgentBase agent, MyNode n) {
+    public Sender(MyAgent agent, MyNode n) {
         super(agent);
         this.n = n;
+        this.countFraud = (int) (n.getFraudPotential() * agent.getMESSAGE_NUMBER());
     }
 
-    /*
+    /**
      * Get the next Gaussian amount for this type of node
      */
     private double getRandomAmount(NodeType type) {
+        double _amount;
         switch (type) {
             case EMPLOYEE:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevLaunderer();
+                if (!n.isHonest() && count < countFraud) {
+                    _amount = Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
+                            * Config.instance().getEmployeeStdDevLaunderer();
+                    countFraud++;
+                } else {
+                    _amount = Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                            * Config.instance().getEmployeeStdDevHonest();
+                }
+                break;
             case FREELANCE:
-                return (n.isHonest()) ? Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
-                        * Config.instance().getFreelanceStdDevHonest()
-                        : Config.instance().getFreelanceMeanLaunderer() + random.nextGaussian()
-                        * Config.instance().getFreelanceStdDevLaunderer();
+                if (!n.isHonest() && count < countFraud) {
+                    _amount = Config.instance().getFreelanceMeanLaunderer() + random.nextGaussian()
+                            * Config.instance().getFreelanceStdDevLaunderer();
+                    countFraud++;
+                } else {
+                    _amount = Config.instance().getFreelanceMeanHonest() + random.nextGaussian()
+                            * Config.instance().getFreelanceStdDevHonest();
+                }
+                break;
             case BIGCOMPANY:
-                return (n.isHonest()) ? Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
-                        * Config.instance().getBigCompanyStdDevHonest()
-                        : Config.instance().getBigCompanyMeanLaunderer() + random.nextGaussian()
-                        * Config.instance().getBigCompanyStdDevLaunderer();
+                if (!n.isHonest() && count < countFraud) {
+                    _amount = Config.instance().getBigCompanyMeanLaunderer() + random.nextGaussian()
+                            * Config.instance().getBigCompanyStdDevLaunderer();
+                    countFraud++;
+                } else {
+                    _amount = Config.instance().getBigCompanyMeanHonest() + random.nextGaussian()
+                            * Config.instance().getBigCompanyStdDevHonest();
+                }
+                break;
             case SMALLCOMPANY:
-                return (n.isHonest()) ? Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
-                        * Config.instance().getSmallCompanyStdDevHonest()
-                        : Config.instance().getSmallCompanyMeanLaunderer() + random.nextGaussian()
-                        * Config.instance().getSmallCompanyStdDevLaunderer();
+                if (!n.isHonest() && count < countFraud) {
+                    _amount = Config.instance().getSmallCompanyMeanLaunderer() + random.nextGaussian()
+                            * Config.instance().getSmallCompanyStdDevLaunderer();
+                    countFraud++;
+                } else {
+                    _amount = Config.instance().getSmallCompanyMeanHonest() + random.nextGaussian()
+                            * Config.instance().getSmallCompanyStdDevHonest();
+                }
+                break;
             default:
-                return (n.isHonest()) ? Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevHonest()
-                        : Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
-                        * Config.instance().getEmployeeStdDevLaunderer();
+                if (!n.isHonest() && count < countFraud) {
+                    _amount = Config.instance().getEmployeeMeanLaunderer() + random.nextGaussian()
+                            * Config.instance().getEmployeeStdDevLaunderer();
+                    countFraud++;
+                } else {
+                    _amount = Config.instance().getEmployeeMeanHonest() + random.nextGaussian()
+                            * Config.instance().getEmployeeStdDevHonest();
+                }
+                break;
         }
+        return _amount;
     }
 
     @Override

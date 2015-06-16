@@ -27,14 +27,16 @@ public final class MyNode extends NodeBase {
     protected double fraudPotential;
 
     /**
+     * Node of the network
+     * 
      * @param graph Network
      * @param id identifier of the Person
      * @param type type of the vertex
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
-//        this.sent = new ArrayList<>();
-        this.received = Collections.synchronizedList(new ArrayList<Transaction>());        
+        this.received = Collections.synchronizedList(new ArrayList<Transaction>());
+        this.fraudPotential = (Config.instance().getFraudPotential() == 0) ? 1 : Math.random();
     }
 
     @Override
@@ -87,12 +89,8 @@ public final class MyNode extends NodeBase {
     }       
 
     public double getFraudPotential() {
-        return (isHonest()) ? 0 : 1;
-    }
-
-    public void setFraudPotential(double fraudPotential) {
-        this.fraudPotential = fraudPotential;
-    }    
+        return (isHonest()) ? 0 : fraudPotential;
+    }     
     
     @Override
     public void initDummies() {
