@@ -48,8 +48,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     }
 
     private void initMaps() {
-        revenues = new HashMap<>();
-        costs = new HashMap<>();
+        this.revenues = new HashMap<>();
+        this.costs = new HashMap<>();
         for (int index = 0; index < Config.instance().getYearsNumber(); index++) {
             revenues.put((short) (START_YEAR + index), new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
             costs.put((short) (START_YEAR + index), new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});

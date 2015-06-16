@@ -10,7 +10,6 @@ import aml.global.Enums.*;
 import aml.base.NodeBase;
 import aml.entity.Transaction;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.graphstream.graph.implementations.*;
 
@@ -34,16 +33,16 @@ public final class MyNode extends NodeBase {
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
-        this.received = Collections.synchronizedList(new ArrayList<Transaction>());
+        this.received = new ArrayList<>();
         this.fraudPotential = (Config.instance().getFraudPotential() == 0) ? 1 : Math.random();
     }
 
     @Override
     public void setColor() {
         if (isHonest()) {
-            this.addAttribute("ui.style", "fill-color: rgb(0,204,0);");
+            addAttribute("ui.style", "fill-color: rgb(0,204,0);");
         } else {
-            this.addAttribute("ui.style", "fill-color: rgb(255,0,0);");
+            addAttribute("ui.style", "fill-color: rgb(255,0,0);");
         }
     }
 
