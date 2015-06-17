@@ -111,7 +111,7 @@ public class JadeManager {
     private void exit() {
         System.out.println(" - Exit..... ");
         this.end = System.currentTimeMillis();
-        System.out.println(" - time elapsed (sec): " + ((end - start) / 1000 % 60));
+        System.out.println(" - time elapsed (msec): " + (end - start));
         if (Config.instance().isGuiEnabled()) {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
