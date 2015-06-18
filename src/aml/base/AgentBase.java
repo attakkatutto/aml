@@ -27,11 +27,6 @@ public abstract class AgentBase extends Agent {
         this.id = n.getId();
     }
 
-    @Override
-    public void setup() {
-        initMessageNumber(n.getType());
-    }
-
     /**
      * Type of the agent
      *

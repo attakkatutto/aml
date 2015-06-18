@@ -32,7 +32,7 @@ public class SynthDB {
     public final String DB_CONNECTION;
     public final String DB_USER;
     public final String DB_PASSWORD;
-    
+
     private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
     private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
 
@@ -79,8 +79,8 @@ public class SynthDB {
     }
 
     /**
-     *  Write an Entity (person or factory)
-     * 
+     * Write an Entity (person or factory)
+     *
      * @param n node to write
      */
     public void writeEntity(MyNode n) {
@@ -154,7 +154,7 @@ public class SynthDB {
 
     /**
      * Insert a Transaction in DB table
-     * 
+     *
      * @param t Transaction
      * @throws java.sql.SQLException
      */
@@ -169,7 +169,7 @@ public class SynthDB {
             preparedStatement.setString(1, t.getId());
             preparedStatement.setString(2, t.getIdSource());
             preparedStatement.setString(3, t.getIdTarget());
-            preparedStatement.setShort(4, (short)(t.getMonth() + 1));
+            preparedStatement.setShort(4, (short) (t.getMonth() + 1));
             preparedStatement.setShort(5, t.getYear());
             preparedStatement.setDouble(6, t.getAmount());
             preparedStatement.setString(7, t.getSourceType());
@@ -208,12 +208,13 @@ public class SynthDB {
      */
     private void createFiles() throws IOException {
         /*Create the entities file*/
-        File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), System.currentTimeMillis()));
+        long _time = System.currentTimeMillis();
+        File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(),_time));
         FileWriter fwp = new FileWriter(filep.getAbsoluteFile(), true);
         bwp = new BufferedWriter(fwp);
         bwp.write(HEADER_ENTITY_FILE);
         /*Create the transaction file*/
-        File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(), System.currentTimeMillis()));
+        File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(),_time));
         FileWriter fwt = new FileWriter(filet.getAbsoluteFile(), true);
         bwt = new BufferedWriter(fwt);
         bwt.write(HEADER_TRANSACTION_FILE);
@@ -221,6 +222,7 @@ public class SynthDB {
 
     /**
      * Write Transaction to file
+     *
      * @param t Transaction
      */
     private void writeTransactionFile(Transaction t) throws IOException {
@@ -231,6 +233,7 @@ public class SynthDB {
 
     /**
      * Write Entity to file
+     *
      * @param n Node rapresents the Entity
      */
     private void writeEntityFile(MyNode n) throws IOException {
@@ -240,7 +243,8 @@ public class SynthDB {
     }
 
     /**
-     * Insert Entity in DB table 
+     * Insert Entity in DB table
+     *
      * @param n Node rapresents the Entity
      */
     private void insertEntityIntoTable(MyNode n) throws SQLException {

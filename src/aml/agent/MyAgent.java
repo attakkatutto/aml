@@ -6,6 +6,8 @@
 package aml.agent;
 
 import aml.base.AgentBase;
+import aml.entity.SynthDB;
+import aml.entity.Transaction;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.graph.MyNode;
@@ -20,19 +22,29 @@ public final class MyAgent extends AgentBase {
     protected int END;
     protected MyAgentState state;
     protected int MESSAGE_NUMBER;
+    protected SynthDB writer;
 
     /**
      * Constructor of the agent
      *
      * @param node every agent is related with a node in the network
+     * @param writer
      */
-    public MyAgent(MyNode node) {
+    public MyAgent(MyNode node, SynthDB writer) {
         super(node);
+        this.writer = writer;
         this.state = MyAgentState.START;
+    }
+
+    @Override
+    public void setup() {
+        initMessageNumber(n.getType());
+        writer.writeEntity(n);
     }
 
     /**
      * Initialize the number of messages for each agent
+     *
      * @param type Type of node
      */
     @Override
@@ -88,5 +100,9 @@ public final class MyAgent extends AgentBase {
 
     public int getMESSAGE_NUMBER() {
         return this.MESSAGE_NUMBER;
+    }
+    
+    public synchronized void writeReceived(Transaction t){
+        this.writer.writeTransaction(t);
     }
 }

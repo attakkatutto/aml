@@ -59,7 +59,7 @@ class HandleTransactionReceived extends OneShotBehaviour {
     private final MyNode n;
 
     HandleTransactionReceived(MyAgent a, MyNode n, ACLMessage msg) {
-        super(a);
+        super(a);      
         this.n = n;
         this.msg = msg;
     }
@@ -67,9 +67,10 @@ class HandleTransactionReceived extends OneShotBehaviour {
     @Override
     public void action() {
         try {
+            MyAgent base = (MyAgent) myAgent;
             Transaction t = (Transaction) msg.getContentObject();
             n.setRevenues(t.getAmount(), t.getMonth(), t.getYear());
-            n.addReceived(t);
+            base.writeReceived(t);
             System.out.println(" - "
                     + t.getIdTarget()
                     + " receive from "

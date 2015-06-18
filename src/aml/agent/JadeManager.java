@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.entity.SynthDB;
-import aml.entity.Transaction;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.graph.Network;
@@ -34,28 +33,31 @@ import org.graphstream.graph.Node;
  */
 public class JadeManager {
 
-    private AgentContainer mainContainer;
-    private Graph graph;
-    private long start;
-    private long end;
+    protected AgentContainer mainContainer;
+    protected Graph graph;
+    protected long start;
+    protected long end;
+    protected SynthDB writer;
 //    private final PageRank pageRank;
 
     public JadeManager(Graph graph) {
         this.graph = graph;
+        this.writer = new SynthDB();
         this.start = System.currentTimeMillis();
         // Get a hold on JADE runtime
         // Create a default profile
         Profile p = new ProfileImpl();
-        // Create a new main container (i.e. on this host, port 1099) 
+        // Create a new main container (i.e. on this host, port 1099)      
         mainContainer = Runtime.instance().createMainContainer(p);
-        agentsHandler();
+        //initialize the platform handler
+        initHandler();
     }
 
     /**
      * Execute the JADE containers and starts all agents of the network
      */
     public void exec() {
-        generateBarabasiGraph();
+        generateBarabasiNetwork();
         setLaunderersAndHonests();
         /*
          * List of the agents of the JADE container
@@ -65,7 +67,7 @@ public class JadeManager {
          * Create an agent for each node of the network and start it       
          */
         for (Node n : graph.getEachNode()) {
-            MyAgent a = new MyAgent((MyNode) n);
+            MyAgent a = new MyAgent((MyNode) n,writer);
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
                 agents.add(a);
@@ -87,6 +89,8 @@ public class JadeManager {
     public void halt() {
         try {
             mainContainer.getPlatformController().kill();
+            this.writer.close();
+            exit();
         } catch (ControllerException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +100,7 @@ public class JadeManager {
     /**
      * Custom listener of the platform for handle agents life
      */
-    private void agentsHandler() {
+    private void initHandler() {
         try {
             mainContainer.addPlatformListener(new JadeListener(this));
         } catch (ControllerException ex) {
@@ -116,31 +120,7 @@ public class JadeManager {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
         System.exit(1);
-    }
-
-    /*^
-     * Write data to DB or Filesystem
-     */
-    public void writeData() {
-
-        try {
-            System.out.println(" - Start writing DB..... ");
-            SynthDB db = new SynthDB();
-            for (Node node : graph) {
-                MyNode mynode = (MyNode) node;
-                db.writeEntity(mynode);
-                for (Transaction trans : mynode.getReceived()) {
-                    db.writeTransaction(trans);
-                }
-            }
-            db.close();
-            System.out.println(" - End writing DB..... ");
-            exit();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(JadeManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    }    
 
 //    private void calculatePageRank() {
 //        for (Node node : graph) {
@@ -155,11 +135,10 @@ public class JadeManager {
 //    }
 
     /**
-     * Generate random Barabasi Graph for the prototype
+     * Generate random Barabasi Network for the prototype
      */
-    private void generateBarabasiGraph() {
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesNode(),
-                false);
+    private void generateBarabasiNetwork() {
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesNode(),false);
         b.setDirectedEdges(true, true);
         b.addSink(graph);
         b.begin();

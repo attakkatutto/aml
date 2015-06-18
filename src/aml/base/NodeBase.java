@@ -5,7 +5,6 @@
  */
 package aml.base;
 
-//import aml.global.Config;
 import aml.global.Config;
 import static aml.global.Constant.START_YEAR;
 import aml.global.Enums.*;

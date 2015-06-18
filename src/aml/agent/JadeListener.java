@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Custom JADE platform listener 
+ * implements interface Listener
+ * 
  * @author ddefalco
  */
 public class JadeListener 
@@ -36,7 +38,7 @@ implements PlatformController.Listener {
                     if (agents.isEmpty()) {
                         System.out.println(" - "
                                 + " JADE end! ");
-                        manager.writeData();
+                        manager.halt();
                     }
                 }
 

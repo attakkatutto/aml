@@ -8,9 +8,6 @@ package aml.graph;
 import aml.global.Config;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
-import aml.entity.Transaction;
-import java.util.ArrayList;
-import java.util.List;
 import org.graphstream.graph.implementations.*;
 
 /**
@@ -20,7 +17,6 @@ import org.graphstream.graph.implementations.*;
  */
 public final class MyNode extends NodeBase {
 
-    protected List<Transaction> received;
     /**/
     protected double fraudPotential;
 
@@ -33,7 +29,6 @@ public final class MyNode extends NodeBase {
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
-        this.received = new ArrayList<>();
         this.fraudPotential = (Config.instance().getFraudPotential() == 0) ? 1 : Math.random();
     }
 
@@ -66,14 +61,6 @@ public final class MyNode extends NodeBase {
             }
             count++;
         }
-    }
-
-    public void addReceived(Transaction received) {
-        this.received.add(received);
-    }
-
-    public List<Transaction> getReceived() {
-        return received;
     }
 
     public double getFraudPotential() {
