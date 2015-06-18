@@ -23,18 +23,23 @@ public abstract class AgentBase extends Agent {
 
     public AgentBase(MyNode n) {
         super();
-        initMessageNumber(n.getType());
         this.n = n;
         this.id = n.getId();
-    } 
-    
+    }
+
+    @Override
+    public void setup() {
+        initMessageNumber(n.getType());
+    }
+
     /**
      * Type of the agent
+     *
      * @return type of the agent
      */
     public String getId() {
         return id;
     }
-    
+
     public abstract void initMessageNumber(NodeType type);
 }
