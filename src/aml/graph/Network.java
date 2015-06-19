@@ -8,12 +8,24 @@ package aml.graph;
 import aml.global.Enums.*;
 import aml.base.NodeBase;
 import aml.global.Config;
+import aml.global.Enums;
+import aml.main.JadeSubject;
+import aml.main.MyOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 import org.graphstream.graph.EdgeFactory;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -44,6 +56,7 @@ public final class Network extends SingleGraph {
         if (Config.instance().isGuiEnabled()) {
             System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
             initStyle();
+            guiInit();
         }
         initFactories();
     }
@@ -116,5 +129,77 @@ public final class Network extends SingleGraph {
         setAttribute("stylesheet", ss);
         addAttribute("ui.quality");
         addAttribute("ui.antialias");
+    }
+    
+    /**
+     * Generate random Barabasi Network for the prototype
+     */
+    public void generateBarabasiNetwork() {
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesNode(),false);
+        b.setDirectedEdges(true, true);
+        b.addSink(this);
+        b.begin();
+        while (getNodeCount() < Config.instance().getNumberOfNode()) {
+            try {
+                b.nextEvents();
+                if (Config.instance().isGuiEnabled()) {
+                    for (Node node : getNodeSet()) {
+                        node.addAttribute("ui.label", String.format("%s", node.getId()));
+                        if (((MyNode) node).getType() == Enums.NodeType.EMPLOYEE
+                                || ((MyNode) node).getType() == Enums.NodeType.FREELANCE) {
+                            node.addAttribute("ui.class", "person");
+                        } else {
+                            node.addAttribute("ui.class", "company");
+                        }
+                    }
+                    Thread.sleep(50);
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                Logger.getLogger(JadeSubject.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        b.end();
+    }
+
+    /**
+     * Set the number of honests and launderers agents in the network
+     */
+    public void setLaunderersAndHonests() {
+        int numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;
+        List<MyNode> nodes = new ArrayList(getNodeSet());
+        Collections.sort(nodes);
+        for (int index = 0; index < nodes.size(); index++) {
+            MyNode n = nodes.get(index);
+            n.setHonest(index >= numberLaunderer);
+            if (index >= numberLaunderer && Config.instance().isGuiEnabled()) {
+                n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
+            }
+        }
+    }
+    
+    /*
+     * if GUI is enabled then graph and system.output are rendered
+     * in a frame
+     */
+    private void guiInit() {
+
+        display(true);
+
+        JFrame myFrame = new JFrame("SystemMessages");
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setSize(700, 400);
+
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        myFrame.getContentPane().add(scroll);
+        myFrame.setVisible(true);
     }
 }

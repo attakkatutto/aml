@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aml.agent;
+package aml.main;
 
 import jade.wrapper.PlatformController;
 import jade.wrapper.PlatformEvent;
@@ -17,14 +17,14 @@ import java.util.List;
  * 
  * @author ddefalco
  */
-public class JadeListener 
+public class JadeObserver 
 implements PlatformController.Listener {
     
-    public JadeListener(JadeManager manager){
-       this.manager = manager;
+    public JadeObserver(JadeSubject subject){
+       this.subject = subject;
     }
 
-    JadeManager manager;
+    JadeSubject subject;
     List<String> agents = Collections.synchronizedList(new ArrayList<String>());
 
                 @Override
@@ -38,7 +38,7 @@ implements PlatformController.Listener {
                     if (agents.isEmpty()) {
                         System.out.println(" - "
                                 + " JADE end! ");
-                        manager.halt();
+                        subject.halt();
                     }
                 }
 

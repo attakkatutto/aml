@@ -5,15 +5,7 @@
  */
 package aml.main;
 
-import aml.agent.JadeManager;
-import aml.global.Config;
 import aml.graph.Network;
-import java.io.PrintStream;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import org.graphstream.graph.Graph;
 
 /**
  * Main class for the network
@@ -23,37 +15,11 @@ import org.graphstream.graph.Graph;
 public class Main {
 
     public static void main(String[] args) {
-        Graph graph = new Network("AML Synthetic DB");
-        if (Config.instance().isGuiEnabled()) {
-            guiInit(graph);
-        }
-        JadeManager f = new JadeManager(graph);
+        Network graph = new Network("AML Synthetic DB");
+        graph.generateBarabasiNetwork();
+        graph.setLaunderersAndHonests();
+        JadeSubject f = new JadeSubject(graph);
         f.exec();
-    }
-
-    /*
-     * if GUI is enabled then graph and system.output are rendered
-     * in a frame
-     */
-    private static void guiInit(Graph graph) {
-
-        graph.display(true);
-
-        JFrame myFrame = new JFrame("SystemMessages");
-        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setSize(700, 400);
-
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
-        System.setOut(printStream);
-        System.setErr(printStream);
-        myFrame.getContentPane().add(scroll);
-        myFrame.setVisible(true);
-    }
+    }            
 }
 
