@@ -18,7 +18,7 @@ public class Main {
         Network graph = new Network("AML Synthetic DB");
         graph.generateBarabasiNetwork();
         graph.setLaunderersAndHonests();
-        JadeSubject f = new JadeSubject(graph);
+        MyPlatformManager f = new MyPlatformManager(graph);
         f.exec();
     }            
 }

@@ -17,14 +17,14 @@ import java.util.List;
  * 
  * @author ddefalco
  */
-public class JadeObserver 
+public class MyPlatformListener 
 implements PlatformController.Listener {
     
-    public JadeObserver(JadeSubject subject){
+    public MyPlatformListener(MyPlatformManager subject){
        this.subject = subject;
     }
 
-    JadeSubject subject;
+    MyPlatformManager subject;
     List<String> agents = Collections.synchronizedList(new ArrayList<String>());
 
                 @Override

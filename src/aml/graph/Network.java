@@ -9,7 +9,7 @@ import aml.global.Enums.*;
 import aml.base.NodeBase;
 import aml.global.Config;
 import aml.global.Enums;
-import aml.main.JadeSubject;
+import aml.main.MyPlatformManager;
 import aml.main.MyOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -156,7 +156,7 @@ public final class Network extends SingleGraph {
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
-                Logger.getLogger(JadeSubject.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         b.end();

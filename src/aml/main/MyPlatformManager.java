@@ -27,11 +27,11 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
 /**
- * Concrete subject of the JADE network
+ * Concrete subject of the JADE platform
  *
  * @author DAVIDE
  */
-public class JadeSubject {
+public class MyPlatformManager {
 
     protected AgentContainer mainContainer;
     protected Graph graph;
@@ -40,7 +40,7 @@ public class JadeSubject {
     protected SynthDB writer;
 //    private final PageRank pageRank;
 
-    public JadeSubject(Graph graph) {
+    public MyPlatformManager(Graph graph) {
         this.graph = graph;
         this.writer = new SynthDB();
         this.start = System.currentTimeMillis();
@@ -91,7 +91,7 @@ public class JadeSubject {
             exit();
         } catch (ControllerException ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(JadeSubject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -100,10 +100,10 @@ public class JadeSubject {
      */
     private void initHandler() {
         try {
-            mainContainer.addPlatformListener(new JadeObserver(this));
+            mainContainer.addPlatformListener(new MyPlatformListener(this));
         } catch (ControllerException ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(JadeSubject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
