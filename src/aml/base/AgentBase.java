@@ -18,7 +18,7 @@ import java.util.Random;
 public abstract class AgentBase extends Agent {
 
     protected MyNode n;
-    protected final Random random = new Random();
+    protected Random random = new Random();
     protected String id;
 
     public AgentBase(MyNode n) {
