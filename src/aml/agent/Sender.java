@@ -133,7 +133,8 @@ public class Sender extends SimpleBehaviour {
         return finished;
     }
 
-    /*
+    /**
+     * 
      * Create finish message for neighbours nodes 
      * connected by entering or leaving edges
      */
@@ -151,8 +152,9 @@ public class Sender extends SimpleBehaviour {
         return msg;
     }
 
-    /*
-     * Create a new send message - target node n connected by leaving edge
+    /**
+     * 
+     * Create a new send message for the target node n connected by leaving edge
      */
     private ACLMessage createSendMessage(MyNode n) {
         //this agent send messages

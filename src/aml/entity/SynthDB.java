@@ -43,7 +43,7 @@ public class SynthDB {
     PersistenceMode mode;
     Connection dbConnection;
 
-    /*
+    /**
      * Synthetic DataBase constructor
      */
     public SynthDB() {
