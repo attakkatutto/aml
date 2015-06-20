@@ -5,7 +5,6 @@
  */
 package aml.graph;
 
-import aml.base.NodeBase;
 import org.graphstream.graph.implementations.AbstractEdge;
 
 /**
@@ -13,16 +12,16 @@ import org.graphstream.graph.implementations.AbstractEdge;
  *
  * @author DAVIDE
  */
-public final class Connection extends AbstractEdge {
+public final class MyEdge extends AbstractEdge {
 
     /**
-     * New ConnectionBase
+     * New Edge of Network
      * 
      * @param id id transaction
      * @param sourceAgent node transaction source
      * @param targetAgent node transaction target
      */
-    public Connection(String id, MyNode sourceAgent, MyNode targetAgent) {
+    public MyEdge(String id, MyNode sourceAgent, MyNode targetAgent) {
         super(id, sourceAgent, targetAgent, true);
         this.directed = true;
     }

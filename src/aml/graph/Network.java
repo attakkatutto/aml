@@ -6,7 +6,6 @@
 package aml.graph;
 
 import aml.global.Enums.*;
-import aml.base.NodeBase;
 import aml.global.Config;
 import aml.global.Enums;
 import aml.main.MyPlatformManager;
@@ -95,8 +94,8 @@ public final class Network extends SingleGraph {
 
         setEdgeFactory(new EdgeFactory() {
             @Override
-            public Connection newInstance(String id1, Node src, Node dst, boolean directed) {
-                return new Connection(id1, (MyNode) src, (MyNode) dst);
+            public MyEdge newInstance(String id1, Node src, Node dst, boolean directed) {
+                return new MyEdge(id1, (MyNode) src, (MyNode) dst);
             }
         });
 
