@@ -8,7 +8,6 @@ package aml.main;
 import jade.wrapper.PlatformController;
 import jade.wrapper.PlatformEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ implements PlatformController.Listener {
     }
 
     MyPlatformManager subject;
-    List<String> agents = Collections.synchronizedList(new ArrayList<String>());
+    List<String> agents = new ArrayList<>();
 
                 @Override
                 public void deadAgent(PlatformEvent anEvent) {
