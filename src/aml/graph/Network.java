@@ -96,7 +96,7 @@ public final class Network extends SingleGraph {
         setEdgeFactory(new EdgeFactory() {
             @Override
             public Connection newInstance(String id1, Node src, Node dst, boolean directed) {
-                return new Connection(id1, (NodeBase) src, (NodeBase) dst);
+                return new Connection(id1, (MyNode) src, (MyNode) dst);
             }
         });
 

@@ -19,10 +19,10 @@ public final class Connection extends AbstractEdge {
      * New ConnectionBase
      * 
      * @param id id transaction
-     * @param sourceAgent EntityBase transaction source
-     * @param targetAgent EntityBase transaction target
+     * @param sourceAgent node transaction source
+     * @param targetAgent node transaction target
      */
-    public Connection(String id, NodeBase sourceAgent, NodeBase targetAgent) {
+    public Connection(String id, MyNode sourceAgent, MyNode targetAgent) {
         super(id, sourceAgent, targetAgent, true);
         this.directed = true;
     }
