@@ -83,7 +83,7 @@ public class SynthDB {
      *
      * @param n node to write
      */
-    public void writeEntity(MyNode n) {
+    public synchronized void writeEntity(MyNode n) {
         switch (mode) {
             case FILE: {
                 try {
@@ -120,7 +120,7 @@ public class SynthDB {
      *
      * @param t Transaction to write
      */
-    public void writeTransaction(Transaction t) {
+    public synchronized void writeTransaction(Transaction t) {
         switch (mode) {
             case FILE: {
                 try {
