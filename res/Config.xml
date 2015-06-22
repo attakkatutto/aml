@@ -9,7 +9,7 @@ and open the template in the editor.
 <config>
     /*NETWORK CONFIG*/    
     <numberOfNode>100</numberOfNode>
-    <maxEdgesNode>20</maxEdgesNode>
+    <maxEdgesPerStep>20</maxEdgesPerStep>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>

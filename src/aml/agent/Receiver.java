@@ -10,7 +10,6 @@ import aml.base.AgentBase;
 import aml.global.Enums.*;
 import aml.graph.MyNode;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.util.Random;
 import java.util.logging.Level;
@@ -38,34 +37,18 @@ public class Receiver extends CyclicBehaviour {
         if (msg != null) {
             switch (msg.getPerformative()) {
                 case ACLMessage.REQUEST:
-                    base.addBehaviour(new HandleTransactionReceived(base, n, msg));
+                    handleTransactionReceived(msg);
                     break;
                 case ACLMessage.PROPAGATE:
-                    base.addBehaviour(new HandleFinished(base, n, msg));
+                    handleFinished(msg);
                     break;
             }
         } else {
             this.block();
         }
     }
-}
-
-/**
- * Class to handle a received transaction from another node
- */
-class HandleTransactionReceived extends OneShotBehaviour {
-
-    private final ACLMessage msg;
-    private final MyNode n;
-
-    HandleTransactionReceived(MyAgent a, MyNode n, ACLMessage msg) {
-        super(a);      
-        this.n = n;
-        this.msg = msg;
-    }
-
-    @Override
-    public void action() {
+    
+    public void handleTransactionReceived(ACLMessage msg) {
         try {
             MyAgent base = (MyAgent) myAgent;
             Transaction t = (Transaction) msg.getContentObject();
@@ -77,27 +60,11 @@ class HandleTransactionReceived extends OneShotBehaviour {
                     + t.getIdSource());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(HandleTransactionReceived.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Receiver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-}
-
-/**
- * Class to handle a received finish message from another node
- */
-class HandleFinished extends OneShotBehaviour {
-
-    private final ACLMessage msg;
-    private final MyNode n;
-
-    HandleFinished(MyAgent a, MyNode n, ACLMessage msg) {
-        super(a);
-        this.n = n;
-        this.msg = msg;
-    }
-
-    @Override
-    public void action() {
+    
+    public void handleFinished(ACLMessage msg) {
         MyAgent base = (MyAgent) myAgent;
         base.addEND();
         System.out.println(" - "

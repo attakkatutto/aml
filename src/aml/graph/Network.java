@@ -134,7 +134,7 @@ public final class Network extends SingleGraph {
      * Generate random Barabasi Network for the prototype
      */
     public void generateBarabasiNetwork() {
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesNode(),false);
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerStep(),false);
         b.setDirectedEdges(true, true);
         b.addSink(this);
         b.begin();
