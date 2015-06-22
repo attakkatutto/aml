@@ -26,7 +26,7 @@ public class Config {
 
     private static Config _instance;
     private int fraudPotential;
-    private int numberOfNode, maxEdgesNode;
+    private int numberOfNode, maxEdgesPerStep;
     private int numberParents, numberPartners, numberDummies;
     private double employeeMeanHonest, employeeStdDevHonest,
             freelanceMeanHonest, freelanceStdDevHonest,
@@ -103,12 +103,12 @@ public class Config {
     }
 
     @XmlElement
-    public int getMaxEdgesNode() {
-        return maxEdgesNode;
+    public int getMaxEdgesPerStep() {
+        return maxEdgesPerStep;
     }
 
-    public void setMaxEdgesNode(int num) {
-        maxEdgesNode = num;
+    public void setMaxEdgesPerStep(int num) {
+        maxEdgesPerStep = num;
     }
 
     @XmlElement
