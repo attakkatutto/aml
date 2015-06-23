@@ -9,7 +9,7 @@ import aml.entity.Transaction;
 import aml.base.AgentBase;
 import aml.global.Enums.*;
 import aml.graph.MyNode;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.util.Random;
 import java.util.logging.Level;
@@ -20,10 +20,11 @@ import java.util.logging.Logger;
  *
  * @author Davide
  */
-public class Receiver extends CyclicBehaviour {
+public class Receiver extends SimpleBehaviour {
 
     MyNode n;
     Random random = new Random();
+    boolean finished = false;
 
     public Receiver(AgentBase agent, MyNode n) {
         super(agent);
@@ -72,6 +73,7 @@ public class Receiver extends CyclicBehaviour {
                 + " receive finish message from "
                 + msg.getSender().getLocalName());
         if (base.getEND() == n.getDegree()) {
+            finished = true;
             if (base.getCurrentState() == MyAgentState.SEND_FINISH) {
                 System.out.println(" - KILL " + base.getId());
                 base.doDelete();
@@ -79,5 +81,10 @@ public class Receiver extends CyclicBehaviour {
                 base.setState(MyAgentState.RECEIVE_FINISH);
             }
         }
+    }
+
+    @Override
+    public boolean done() {
+        return finished;
     }
 }
