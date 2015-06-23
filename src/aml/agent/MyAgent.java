@@ -75,11 +75,11 @@ public final class MyAgent extends AgentBase {
      *
      * @return END: number of finish message received
      */
-    public int getEND() {
+    public synchronized int getEND() {
         return END;
     }
 
-    public int addEND() {
+    public synchronized int addEND() {
         return END++;
     }
 
@@ -90,11 +90,11 @@ public final class MyAgent extends AgentBase {
      *
      * @return MyAgentState current state of the agent
      */
-    public MyAgentState getCurrentState() {
+    public synchronized MyAgentState getCurrentState() {
         return state;
     }
 
-    public void setState(MyAgentState state) {
+    public synchronized void setState(MyAgentState state) {
         this.state = state;
     }
 

@@ -227,7 +227,7 @@ public class SynthDB {
      */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), t.getMonth(), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getHonest()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getHonest()));
         }
     }
 

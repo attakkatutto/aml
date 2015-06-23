@@ -165,7 +165,7 @@ public class Sender extends SimpleBehaviour {
         n.setCosts(_amount, _month, _year);
         String _fraud = (n.isHonest()) ? "YES" : "NO";
         Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                n.getId(), v.getId(), _amount, _month, _year, _fraud);
+                n.getId(), v.getId(), _amount, _month , _year, _fraud);
         t.setSourceType(n.getType().name());
         t.setTargetType(v.getType().name());
         System.out.println(" - "
