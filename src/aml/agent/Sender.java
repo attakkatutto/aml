@@ -110,8 +110,8 @@ public class Sender extends SimpleBehaviour {
                 ACLMessage msg = createSendMessage(n);
                 base.send(msg);
                 count++;
-                block(50);
-            } //this agent wait 50 ms before send a new message
+                block(100);
+            } //this agent wait 100 ms before send a new message
             catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,9 +134,9 @@ public class Sender extends SimpleBehaviour {
     }
 
     /**
-     * 
-     * Create finish message for neighbours nodes 
-     * connected by entering or leaving edges
+     *
+     * Create finish message for neighbours nodes connected by entering or
+     * leaving edges
      */
     private ACLMessage createFinishMessage() {
         ACLMessage msg = new ACLMessage(ACLMessage.PROPAGATE);
@@ -153,7 +153,7 @@ public class Sender extends SimpleBehaviour {
     }
 
     /**
-     * 
+     *
      * Create a new send message for the target node n connected by leaving edge
      */
     private ACLMessage createSendMessage(MyNode n) {
@@ -165,7 +165,7 @@ public class Sender extends SimpleBehaviour {
         n.setCosts(_amount, _month, _year);
         String _fraud = (n.isHonest()) ? "YES" : "NO";
         Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                n.getId(), v.getId(), _amount, _month , _year, _fraud);
+                n.getId(), v.getId(), _amount, _month, _year, _fraud);
         t.setSourceType(n.getType().name());
         t.setTargetType(v.getType().name());
         System.out.println(" - "
