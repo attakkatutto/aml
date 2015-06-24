@@ -12,8 +12,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Custom JADE platform listener implements interface Listener
- *
+ * Custom JADE platform listener implements interface PlatformController.Listener
+ * 
+ * The collection agents is synchronized because the handler of bornAgent and deadAgent
+ * are not threadsafe
+ * 
  * @author ddefalco
  */
 public class MyPlatformListener
@@ -23,12 +26,14 @@ public class MyPlatformListener
         this.subject = subject;
     }
 
-    MyPlatformManager subject;
-    List<String> agents = Collections.synchronizedList(new ArrayList<String>());
+    MyPlatformManager subject; /* Instance of MyPlatformManager to be notified when all agents are dead */
+
+    List<String> agents = Collections.synchronizedList(new ArrayList<String>()); /* Synchronized collection of agents alive*/
+
 
     @Override
     public void deadAgent(PlatformEvent anEvent) {
-        // WORKS 
+        // invoked when an agent is born
         String name = anEvent.getAgentGUID();
         System.out.println(" - "
                 + name
@@ -43,7 +48,7 @@ public class MyPlatformListener
 
     @Override
     public void bornAgent(PlatformEvent anEvent) {
-        // WORKS
+        // invoked when an agent is dead
         String name = anEvent.getAgentGUID();
         System.out.println(" - "
                 + name
@@ -68,9 +73,7 @@ public class MyPlatformListener
 
     @Override
     public void killedPlatform(PlatformEvent pe) {
-        System.out.println(" - "
-                + pe.getPlatformName()
-                + " killed ");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
