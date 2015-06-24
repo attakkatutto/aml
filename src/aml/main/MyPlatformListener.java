@@ -15,7 +15,7 @@ import java.util.List;
  * Custom JADE platform listener implements interface PlatformController.Listener
  * 
  * The collection agents is synchronized because the handler of bornAgent and deadAgent
- * are not threadsafe
+ * are not thread-safe
  * 
  * @author ddefalco
  */
