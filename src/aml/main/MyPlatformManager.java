@@ -38,8 +38,11 @@ public class MyPlatformManager {
     protected long start;
     protected long end;
     protected SynthDB writer;
-//    private final PageRank pageRank;
 
+    /**
+     * Create new instance of MyPlatformManager
+     * @param graph instance of Network to manage
+     */
     public MyPlatformManager(Graph graph) {
         this.graph = graph;
         this.writer = new SynthDB();
@@ -84,6 +87,9 @@ public class MyPlatformManager {
         }
     }
 
+    /**
+     * Stop the execution of the JADE platform
+     */
     public void halt() {
         try {
             mainContainer.getPlatformController().kill();

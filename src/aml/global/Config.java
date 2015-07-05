@@ -41,12 +41,12 @@ public class Config {
             smallCompanyMessageMean, smallCompanyMessageStdDev,
             bigCompanyMessageMean, bigCompanyMessageStdDev;
     private int laundererPercentage;
-    private int yearsNumber;
+    private int yearsNumber,windowSize;
+    private double partnerProbability, dummyProbability, parentProbability;
     private boolean guiEnabled;
     private String fileNameTransaction, fileNameEntity,
             dataBaseUsername, dataBasePassword,
-            dataBaseConnection, dataBaseDriver;
-    //private WindowType windowType;
+            dataBaseConnection, dataBaseDriver;    
     private PersistenceMode persistenceMode;
 
     /**
@@ -380,7 +380,34 @@ public class Config {
     public void setBigCompanyStdDevLaunderer(double num) {
         bigCompanyStdDevLaunderer = num;
     }
-    
+
+    @XmlElement
+    public double getPartnerProbability() {
+        return partnerProbability;
+    }
+
+    public void setPartnerProbability(double partnerProbability) {
+        this.partnerProbability = partnerProbability;
+    }
+
+    @XmlElement
+    public double getDummyProbability() {
+        return dummyProbability;
+    }
+
+    public void setDummyProbability(double dummyProbability) {
+        this.dummyProbability = dummyProbability;
+    }
+
+    @XmlElement
+    public double getParentProbability() {
+        return parentProbability;
+    }
+
+    public void setParentProbability(double parentProbability) {
+        this.parentProbability = parentProbability;
+    }
+        
     @XmlElement
     public PersistenceMode getPersistenceMode() {
         return this.persistenceMode;
@@ -399,6 +426,15 @@ public class Config {
         this.yearsNumber = yearsNumber;
     }
 
+    @XmlElement
+    public int getWindowSize() {
+        return windowSize;
+    }
+
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }    
+    
     @XmlElement
     public String getFileNameTransaction() {
         return fileNameTransaction;

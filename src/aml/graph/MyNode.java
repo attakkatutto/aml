@@ -33,33 +33,24 @@ public final class MyNode extends NodeBase {
     }
 
     @Override
-    public void setColor() {
-        if (isHonest()) {
-            addAttribute("ui.style", "fill-color: rgb(0,204,0);");
-        } else {
-            addAttribute("ui.style", "fill-color: rgb(255,0,0);");
-        }
-    }
-
-    @Override
     public void initPartners() {
-        int count = 0;
-        while (count < Config.instance().getNumberPartners()) {
+        int _count = 0;
+        while (_count < Config.instance().getNumberPartners()) {
             String _id = String.valueOf(random.nextInt(graph.getNodeCount()));
             partners.add(_id);
-            count++;
+            _count++;
         }
     }
 
     @Override
     public void initParents() {
-        int count = 0;
-        while (count < Config.instance().getNumberParents()) {
+        int _count = 0;
+        while (_count < Config.instance().getNumberParents()) {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
             if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
                 parents.add(v.getId());
             }
-            count++;
+            _count++;
         }
     }
 
@@ -69,13 +60,11 @@ public final class MyNode extends NodeBase {
 
     @Override
     public void initDummies() {
-        int count = 0;
-        while (count < Config.instance().getMaxNumberDummies()) {
+        int _count = 0;
+        while (_count < Config.instance().getMaxNumberDummies()) {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
-            if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
-                dummies.add(v.getId());
-            }
-            count++;
+            dummies.add(v.getId());
+            _count++;
         }
     }
 }

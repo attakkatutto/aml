@@ -28,18 +28,20 @@ import java.util.logging.Logger;
  */
 public class SynthDB {
 
-    public final String DB_DRIVER;
-    public final String DB_CONNECTION;
-    public final String DB_USER;
-    public final String DB_PASSWORD;
+    private final String DB_DRIVER;
+    private final String DB_CONNECTION;
+    private final String DB_USER;
+    private final String DB_PASSWORD;
 
-    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST \n";
-    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
+    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, SOURCE_TYPE, TARGET_TYPE, ZSCORE_H, ZSCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST \n";
+    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
 
     private final String HEADER_ENTITY_FILE = " ID, TYPE, HONEST, FRAUD \n";
     private final String ROW_ENTITY_FILE = " %s, %s, %s, %s \n";
-//    
+
+    //Writer of transaction and nodes
     BufferedWriter bwt, bwp;
+    //Mode of persistence
     PersistenceMode mode;
     Connection dbConnection;
 
@@ -48,10 +50,10 @@ public class SynthDB {
      */
     public SynthDB() {
         this.mode = Config.instance().getPersistenceMode();
-        DB_DRIVER = Config.instance().getDataBaseDriver();
-        DB_CONNECTION = Config.instance().getDataBaseConnection();
-        DB_USER = Config.instance().getDataBaseUsername();
-        DB_PASSWORD = Config.instance().getDataBasePassword();
+        this.DB_DRIVER = Config.instance().getDataBaseDriver();
+        this.DB_CONNECTION = Config.instance().getDataBaseConnection();
+        this.DB_USER = Config.instance().getDataBaseUsername();
+        this.DB_PASSWORD = Config.instance().getDataBasePassword();
         switch (mode) {
             case FILE:
                 try {
@@ -81,7 +83,7 @@ public class SynthDB {
     /**
      * Write an Entity (person or factory)
      *
-     * @param n node to write
+     * @param n node to write an entity on file/data base/both
      */
     public synchronized void writeEntity(MyNode n) {
         switch (mode) {
@@ -118,7 +120,7 @@ public class SynthDB {
     /**
      * Write a Transaction
      *
-     * @param t Transaction to write
+     * @param t Transaction to write to file/data base/both
      */
     public synchronized void writeTransaction(Transaction t) {
         switch (mode) {
@@ -155,13 +157,13 @@ public class SynthDB {
     /**
      * Insert a Transaction in DB table
      *
-     * @param t Transaction
+     * @param t Transaction to write to data base
      * @throws java.sql.SQLException
      */
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, AMOUNT, SOURCE_TYPE, TARGET_TYPE, HONEST) VALUES"
+                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, SOURCE_TYPE, TARGET_TYPE, ZSCORE_H, Z_SCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST) VALUES"
                 + "(?,?,?,?,?,?,?,?)";
         try {
             dbConnection.setAutoCommit(true);
@@ -172,9 +174,14 @@ public class SynthDB {
             preparedStatement.setShort(4, (short) (t.getMonth() + 1));
             preparedStatement.setShort(5, t.getYear());
             preparedStatement.setDouble(6, t.getAmount());
-            preparedStatement.setString(7, t.getSourceType());
-            preparedStatement.setString(8, t.getTargetType());
-            preparedStatement.setString(9, t.getHonest());
+            preparedStatement.setString(7, t.getSourceType().name());
+            preparedStatement.setString(8, t.getTargetType().name());
+            preparedStatement.setDouble(9, t.getZScoreHonest());
+            preparedStatement.setDouble(10, t.getZScoreLaunderer());
+            preparedStatement.setBoolean(11, t.getExistLaundererParents());
+            preparedStatement.setBoolean(12, t.getExistLaundererPartners());
+            preparedStatement.setBoolean(13, t.getExistLaundererDummies());
+            preparedStatement.setString(13, t.getHonest());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -204,17 +211,18 @@ public class SynthDB {
     }
 
     /**
-     * Create files for writing
+     * Create files for writing:
+     * Entities and Transactions
      */
     private void createFiles() throws IOException {
         /*Create the entities file*/
         long _time = System.currentTimeMillis();
-        File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(),_time));
+        File filep = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameEntity(), _time));
         FileWriter fwp = new FileWriter(filep.getAbsoluteFile(), true);
         bwp = new BufferedWriter(fwp);
         bwp.write(HEADER_ENTITY_FILE);
         /*Create the transaction file*/
-        File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(),_time));
+        File filet = new File("." + File.separator + "dbfiles" + File.separator + String.format(Config.instance().getFileNameTransaction(), _time));
         FileWriter fwt = new FileWriter(filet.getAbsoluteFile(), true);
         bwt = new BufferedWriter(fwt);
         bwt.write(HEADER_TRANSACTION_FILE);
@@ -223,18 +231,18 @@ public class SynthDB {
     /**
      * Write Transaction to file
      *
-     * @param t Transaction
+     * @param t Transaction to write on csv file
      */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getAmount(), t.getSourceType(), t.getTargetType(), t.getHonest()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getSourceType().name(), t.getTargetType().name(), t.getZScoreHonest(), t.getZScoreLaunderer(), t.getExistLaundererParents(), t.getExistLaundererPartners(), t.getExistLaundererDummies(), t.getHonest()));
         }
     }
 
     /**
      * Write Entity to file
      *
-     * @param n Node rapresents the Entity
+     * @param n Node rapresents the Entity to write
      */
     private void writeEntityFile(MyNode n) throws IOException {
         if (bwp != null) {
@@ -243,7 +251,7 @@ public class SynthDB {
     }
 
     /**
-     * Insert Entity in DB table
+     * Insert Entity in data base table
      *
      * @param n Node rapresents the Entity
      */
@@ -284,7 +292,7 @@ public class SynthDB {
     }
 
     /**
-     * Close DataBase Connection
+     * Close data base Connection
      */
     private void closeDB() throws SQLException {
         if (dbConnection != null) {
@@ -293,7 +301,7 @@ public class SynthDB {
     }
 
     /**
-     * Close the Synthetic write
+     * Close the synthetic file writer
      */
     public void close() {
         switch (mode) {
@@ -329,7 +337,7 @@ public class SynthDB {
     }
 
     /**
-     * Initialize the DataBase Connection
+     * Initialize the data base Connection
      */
     private Connection initDBConnection() {
         try {

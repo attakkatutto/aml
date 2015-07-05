@@ -13,8 +13,13 @@ import javax.swing.SwingUtilities;
  */
 public class MyOutputStream extends OutputStream {
 
+    //JTextArea to write
     private final JTextArea textArea;
 
+    /**
+     * Create new instance of MyOutputStream 
+     * @param textArea to write the stream of data
+     */
     public MyOutputStream(JTextArea textArea) {
         this.textArea = textArea;
     }

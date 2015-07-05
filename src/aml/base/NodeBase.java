@@ -23,20 +23,31 @@ import org.graphstream.graph.implementations.AdjacencyListNode;
 public abstract class NodeBase extends AdjacencyListNode implements INode, Comparable {
 
     protected NodeType type;
-    protected boolean honest;
+    protected boolean honest = true;
 
-    //Random List of busness partners 
-    protected ArrayList<String> partners;
-    //Random List of parents
-    protected ArrayList<String> parents;
-    //Random List of dummies
-    protected ArrayList<String> dummies;
+    //Random List of busness partners,parents,dummies 
+    protected ArrayList<String> partners, parents, dummies;
 
+    //Scores of current node
+    protected double suspectScore, fraudScore, deficitScore;
+
+    //Random generator
     protected Random random = new Random();
+
+    //Costs and revenues of current node
     protected Map<Short, double[]> revenues, costs;
-    //, fraudScore, suspectedScore, deficitScore
+
+    //Counterer of the launderers of this node
+    protected int countLaundererParents, countLaundererPartners, countLaundererDummies;
 
     // *** Constructor ***
+    /**
+     * Create new instance of NodeBase of the network
+     *
+     * @param graph rapresent the current network
+     * @param id identifier of the node
+     * @param type type of node NodeType enumeration
+     */
     public NodeBase(AbstractGraph graph, String id, NodeType type) {
         super(graph, id);
         this.type = type;
@@ -46,6 +57,10 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         initMaps();
     }
 
+    /**
+     * Initialize the Maps that contains revenues and costs one item represents
+     * one year with its 12 months
+     */
     private void initMaps() {
         this.revenues = new HashMap<>();
         this.costs = new HashMap<>();
@@ -55,20 +70,31 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         }
     }
 
+    /**
+     * Collection of the partners of the node
+     *
+     * @return ArrayList of partners
+     */
     public ArrayList<String> getPartners() {
         return partners;
     }
 
-    public void setPartners(ArrayList<String> partners) {
-        this.partners = partners;
-    }
-
+    /**
+     * Collection of the parents of the node
+     *
+     * @return ArrayList of parents
+     */
     public ArrayList<String> getParents() {
         return parents;
     }
 
-    public void setParents(ArrayList<String> parents) {
-        this.parents = parents;
+    /**
+     * Collection of the dummies of the node
+     *
+     * @return ArrayList of dummies
+     */
+    public ArrayList<String> getDummies() {
+        return dummies;
     }
 
     @Override
@@ -76,10 +102,20 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         super.setIndex(index);
     }
 
+    /**
+     * Type of node
+     *
+     * @return NodeType enum of node
+     */
     public NodeType getType() {
         return type;
     }
 
+    /**
+     * Set the type of the node
+     *
+     * @param type NodeType to set
+     */
     public void setType(NodeType type) {
         this.type = type;
     }
@@ -87,8 +123,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     /**
      * Get revenues of the EntityBase
      *
-     * @param month
-     * @param year
+     * @param month of the revenue
+     * @param year of the revenue
      * @return revenues
      */
     @Override
@@ -101,8 +137,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Set revenue of the EntityBase and increment total revenues
      *
      * @param revenue of the EntityBase
-     * @param month
-     * @param year
+     * @param month of the revenue
+     * @param year of the revenue
      */
     @Override
     public void setRevenues(double revenue, short month, short year) {
@@ -114,8 +150,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Set cost of the EntityBase and increment total costs
      *
      * @param cost of the EntityBase
-     * @param month
-     * @param year
+     * @param month of the cost
+     * @param year of the cost
      */
     @Override
     public void setCosts(double cost, short month, short year) {
@@ -126,8 +162,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     /**
      * Get costs of the EntityBase
      *
-     * @param month
-     * @param year
+     * @param month of the cost
+     * @param year of the cost
      * @return costs
      */
     @Override
@@ -149,7 +185,15 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         return honest;
     }
 
+    /**
+     * Set if the node is honest or not
+     *
+     * @param honest boolean true/false
+     */
     public void setHonest(boolean honest) {
+        if (Config.instance().isGuiEnabled() && !honest) {
+            addAttribute("ui.style", "fill-color: red;");
+        }
         this.honest = honest;
     }
 
@@ -164,10 +208,58 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     }
 
     /**
-     * Set color node in the network
+     * Suspect score of the node
+     *
+     * @return double suspect score
      */
-    @Override
-    public abstract void setColor();
+    public double getSuspectScore() {
+        return suspectScore;
+    }
+
+    /**
+     * Set the suspect score of this node
+     *
+     * @param suspectScore double score to set
+     */
+    public void setSuspectScore(double suspectScore) {
+        this.suspectScore = suspectScore;
+    }
+
+    /**
+     * Fraud score of the node
+     *
+     * @return double fraud score
+     */
+    public double getFraudScore() {
+        return fraudScore;
+    }
+
+    /**
+     * Set the fraud score of this node
+     *
+     * @param fraudScore double score to set
+     */
+    public void setFraudScore(double fraudScore) {
+        this.fraudScore = fraudScore;
+    }
+
+    /**
+     * Deficit score of the node
+     *
+     * @return double deficit score
+     */
+    public double getDeficitScore() {
+        return deficitScore;
+    }
+
+    /**
+     * Set the deficit score of this node
+     *
+     * @param deficitScore double score to set
+     */
+    public void setDeficitScore(double deficitScore) {
+        this.deficitScore = deficitScore;
+    }
 
     /**
      * Initialize the parents of the current node PERSON
@@ -180,6 +272,51 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      */
     @Override
     public abstract void initPartners();
+
+    /**
+     * Counter of launderer parents
+     * @return int counter
+     */
+    public int getCountLaundererParents() {
+        return countLaundererParents;
+    }
+
+    /**
+     * Counter of launderer partners
+     * @return int counter
+     */
+    public int getCountLaundererPartners() {
+        return countLaundererPartners;
+    }
+
+    /**
+     * Counter of launderer dummies
+     * @return int counter
+     */
+    public int getCountLaundererDummies() {
+        return countLaundererDummies;
+    }
+
+    /**
+     * Increment the launderer parents counter
+     */
+    public void addCountLaundererParents() {
+        countLaundererParents++;
+    }
+
+    /**
+     * Increment the launderer partners counter
+     */
+    public void addCountLaundererPartners() {
+        countLaundererPartners++;
+    }
+
+    /**
+     * Increment the launderer dummies counter
+     */
+    public void addCountLaundererDummies() {
+        countLaundererDummies++;
+    }
 
     /**
      * Initialize the dummies of the current node PERSON

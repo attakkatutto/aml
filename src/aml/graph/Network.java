@@ -8,11 +8,8 @@ package aml.graph;
 import aml.global.Enums.*;
 import aml.global.Config;
 import aml.global.Enums;
-import aml.main.MyPlatformManager;
-import aml.main.MyOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,10 +17,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
 import org.graphstream.graph.EdgeFactory;
 import org.graphstream.graph.Graph;
@@ -39,6 +32,7 @@ import org.graphstream.graph.implementations.AbstractGraph;
  */
 public final class Network extends SingleGraph {
 
+    //Random number generator
     private final Random random;
 
     //**** Constructor
@@ -55,17 +49,20 @@ public final class Network extends SingleGraph {
         if (Config.instance().isGuiEnabled()) {
             System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
             initStyle();
-            guiInit();
         }
         initFactories();
     }
 
+    /**
+     * Create new instance of Network
+     * @param id string network identifier
+     */
     public Network(String id) {
         this(id, true, false);
     }
 
     /**
-     * Initialize the factories of EntityBase and TransactionBase
+     * Initialize the factories of MyNode and MyEdge
      */
     private void initFactories() {
         setNodeFactory(new NodeFactory() {
@@ -101,6 +98,11 @@ public final class Network extends SingleGraph {
 
     }
 
+    /**
+     * Read the stylesheet from the css file in the resources
+     *
+     * @return @throws IOException
+     */
     public String readStylesheet() throws IOException {
         File file = new File("." + File.separator + "res" + File.separator + "MyStyle.css");
         StringBuilder fileContents = new StringBuilder((int) file.length());
@@ -116,6 +118,10 @@ public final class Network extends SingleGraph {
         }
     }
 
+    /**
+     * Initialize style of the graph if the render configuration option is
+     * enabled
+     */
     private void initStyle() {
         String ss;
         try {
@@ -129,12 +135,26 @@ public final class Network extends SingleGraph {
         addAttribute("ui.quality");
         addAttribute("ui.antialias");
     }
-    
+
+    /**
+     * Start to build the network:
+     * <ul>
+     * <li>Generate the Scale Free Network</li>
+     * <li>Initialize relations between nodes</li>
+     * <li>Set the launderers and the honests of the network</li>
+     * </ul>
+     */
+    public void build() {
+        generateBarabasiNetwork();
+        initRelations();
+        setLaunderersAndHonests();
+    }
+
     /**
      * Generate random Barabasi Network for the prototype
      */
-    public void generateBarabasiNetwork() {
-        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerStep(),false);
+    private void generateBarabasiNetwork() {
+        BarabasiAlbertGenerator b = new BarabasiAlbertGenerator(Config.instance().getMaxEdgesPerStep(), false);
         b.setDirectedEdges(true, true);
         b.addSink(this);
         b.begin();
@@ -155,50 +175,97 @@ public final class Network extends SingleGraph {
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
-                Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         b.end();
     }
 
     /**
-     * Set the number of honests and launderers agents in the network
+     * Calculate scores of each node in the network
      */
-    public void setLaunderersAndHonests() {
-        int numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;
-        List<MyNode> nodes = new ArrayList(getNodeSet());
-        Collections.sort(nodes);
-        for (int index = 0; index < nodes.size(); index++) {
-            MyNode n = nodes.get(index);
-            n.setHonest(index >= numberLaunderer);
-            if (index >= numberLaunderer && Config.instance().isGuiEnabled()) {
-                n.addAttribute("ui.style", "fill-color: rgb(0,255,0);");
-            }
+    public void calculateScores() {
+    }
+
+    /**
+     * Initialize relations between nodes
+     */
+    private void initRelations() {
+        for (Node n : getEachNode()) {
+            MyNode mn = (MyNode) n;
+            mn.initParents();
+            mn.initPartners();
+            mn.initDummies();
         }
     }
-    
-    /*
-     * if GUI is enabled then graph and system.output are rendered
-     * in a frame
+
+    /**
+     * Set the number of honests and launderers agents in the network
      */
-    private void guiInit() {
+    private void setLaunderersAndHonests() {
+        int _numberLaunderer = (Config.instance().getNumberOfNode() * Config.instance().getLaundererPercentage()) / 100;
+        int _countLaunderer = 0;
+        int _index1 = 0;
+        List<MyNode> _nodes = new ArrayList(getNodeSet());
+        Collections.sort(_nodes);
 
-        display(true);
+        /*
+         * while the current number of launderer is less then the max number
+         * of launderer of the network 
+         * get the _index1 node of the sorted collection
+         */
+        while (_countLaunderer < _numberLaunderer) {
+            MyNode _n1 = _nodes.get(_index1);
+            _n1.setHonest(false);
+            _countLaunderer++;
+            int _index2 = 0;
+            int _index3 = 0;
+            int _index4 = 0;
+            /*
+             * get the _index2 parent of the current node _n1 and set if it's launderer or not:
+             * selecting a random number and verifing if it's less then the parent probability
+             */
+            while (_index2 < _n1.getParents().size() && _countLaunderer < _numberLaunderer) {
+                double currprob = random.nextDouble();
+                if (currprob <= Config.instance().getParentProbability()) {
+                    MyNode _n2 = ((MyNode) getNode(_n1.getParents().get(_index2)));
+                    _n2.setHonest(false);
+                    _n1.addCountLaundererParents();
+                    _countLaunderer++;
+                }
+                _index2++;
+            }
+            /*
+             * get the _index3 partner of the current node _n1 and set if it's launderer or not:
+             * selecting a random number and verifing if it's less then the partner probability
+             */
+            while (_index3 < _n1.getPartners().size() && _countLaunderer < _numberLaunderer) {
+                double currprob = random.nextDouble();
+                if (currprob <= Config.instance().getPartnerProbability()) {
+                    MyNode _n3 = ((MyNode) getNode(_n1.getPartners().get(_index3)));
+                    _n3.setHonest(false);
+                    _n1.addCountLaundererPartners();
+                    _countLaunderer++;
+                }
+                _index3++;
+            }
 
-        JFrame myFrame = new JFrame("SystemMessages");
-        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setSize(700, 400);
-
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        PrintStream printStream = new PrintStream(new MyOutputStream(textArea));
-        System.setOut(printStream);
-        System.setErr(printStream);
-        myFrame.getContentPane().add(scroll);
-        myFrame.setVisible(true);
+            /*
+             * get the _index4 dummy of the current node _n1 and set if it's launderer or not:
+             * selecting a random number and verifing if it's less then the dummy probability
+             */
+            while (_index4 < _n1.getDummies().size() && _countLaunderer < _numberLaunderer) {
+                double currprob = random.nextDouble();
+                if (currprob <= Config.instance().getDummyProbability()) {
+                    MyNode _n4 = ((MyNode) getNode(_n1.getDummies().get(_index4)));
+                    _n4.setHonest(false);
+                    _n1.addCountLaundererDummies();
+                    _countLaunderer++;
+                }
+                _index4++;
+            }
+            _index1++;
+        }
     }
+
 }

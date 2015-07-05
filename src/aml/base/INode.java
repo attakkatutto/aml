@@ -12,8 +12,6 @@ package aml.base;
  */
 public interface INode {
 
-    void setColor();
-
     void initPartners();
 
     void initParents();

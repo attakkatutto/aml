@@ -22,6 +22,10 @@ import java.util.List;
 public class MyPlatformListener
         implements PlatformController.Listener {
 
+    /**
+     * Create new instance of MyPlatformListener
+     * @param subject 
+     */
     public MyPlatformListener(MyPlatformManager subject) {
         this.subject = subject;
     }
@@ -29,7 +33,6 @@ public class MyPlatformListener
     MyPlatformManager subject; /* Instance of MyPlatformManager to be notified when all agents are dead */
 
     List<String> agents = Collections.synchronizedList(new ArrayList<String>()); /* Synchronized collection of agents alive*/
-
 
     @Override
     public void deadAgent(PlatformEvent anEvent) {

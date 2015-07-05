@@ -36,6 +36,11 @@ public class Sender extends SimpleBehaviour {
     boolean finished = false; /*Have you finish?*/
 
 
+    /**
+     * Create new instance of Sender agent behaviour
+     * @param agent MyAgent behaviuor owner
+     * @param n MyNode related to agent
+     */
     public Sender(MyAgent agent, MyNode n) {
         super(agent);
         this.n = n;
@@ -158,24 +163,25 @@ public class Sender extends SimpleBehaviour {
      */
     private ACLMessage createSendMessage(MyNode n) {
         //this agent send messages
-        MyNode v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
+        MyNode _v = n.getLeavingEdge(random.nextInt(n.getOutDegree())).getTargetNode();
         short _month = (short) random.nextInt(MONTHS);
         short _year = (short) (random.nextInt(Config.instance().getYearsNumber()) + START_YEAR);
         double _amount = getRandomAmount(n.getType());
         n.setCosts(_amount, _month, _year);
-        String _fraud = (n.isHonest()) ? "YES" : "NO";
-        Transaction t = new Transaction(n.getId() + "_" + v.getId() + "_" + System.currentTimeMillis(),
-                n.getId(), v.getId(), _amount, _month, _year, _fraud);
-        t.setSourceType(n.getType().name());
-        t.setTargetType(v.getType().name());
+        String _honest = (n.isHonest()) ? "YES" : "NO";
+        Transaction _t = new Transaction(n.getId() + "_" + _v.getId() + "_" + System.currentTimeMillis(),
+                n.getId(), _v.getId(), n.getType(), _v.getType(), _amount, _month, _year, _honest);
+        _t.setExistLaundererParents(n.getCountLaundererParents()>0);
+        _t.setExistLaundererPartners(n.getCountLaundererPartners()>0);
+        _t.setExistLaundererDummies(n.getCountLaundererDummies()>0);
         System.out.println(" - "
                 + n.getId()
                 + " send to "
-                + v.getId());
+                + _v.getId());
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         try {
-            msg.addReceiver(new AID(v.getId(), AID.ISLOCALNAME));
-            msg.setContentObject(t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));            
+            msg.addReceiver(new AID(_v.getId(), AID.ISLOCALNAME));
+            msg.setContentObject(_t);//Content(" message from " + base.getLocalName() + " to " + base.getNeighbour(i));            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);

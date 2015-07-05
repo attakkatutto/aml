@@ -6,7 +6,6 @@
 package aml.agent;
 
 import aml.entity.Transaction;
-import aml.base.AgentBase;
 import aml.global.Enums.*;
 import aml.graph.MyNode;
 import jade.core.behaviours.SimpleBehaviour;
@@ -22,11 +21,19 @@ import java.util.logging.Logger;
  */
 public class Receiver extends SimpleBehaviour {
 
+    /*Node related to this agent*/
     MyNode n;
+    /*Random number generator */
     Random random = new Random();
+    /*Have you finish?*/
     boolean finished = false;
 
-    public Receiver(AgentBase agent, MyNode n) {
+    /**
+     * Create new instance of Receiver agent behaviour
+     * @param agent MyAgent behaviour owner
+     * @param n MyNode related to agent
+     */
+    public Receiver(MyAgent agent, MyNode n) {
         super(agent);
         this.n = n;
     }
@@ -49,6 +56,11 @@ public class Receiver extends SimpleBehaviour {
         }
     }
     
+    /**
+     * Method that handles a transaction received from other agent
+     * as REQUEST message
+     * @param msg ACLMessage Transaction received from other agent
+     */
     public void handleTransactionReceived(ACLMessage msg) {
         try {
             MyAgent base = (MyAgent) myAgent;
@@ -65,6 +77,11 @@ public class Receiver extends SimpleBehaviour {
         }
     }
     
+    /**
+     * Method that handles a finish messaeg from another agent
+     * as PROPAGATE message
+     * @param msg ACLMessage "FINISH" received from other agent
+     */
     public void handleFinished(ACLMessage msg) {
         MyAgent base = (MyAgent) myAgent;
         base.addEND();

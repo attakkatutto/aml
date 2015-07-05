@@ -7,18 +7,18 @@ and open the template in the editor.
 
 
 <config>
-    /*NETWORK CONFIG*/    
-    <numberOfNode>100</numberOfNode>
-    <maxEdgesPerStep>20</maxEdgesPerStep>
+    <!--/*NETWORK CONFIG*/-->
+    <numberOfNode>500</numberOfNode>
+    <maxEdgesPerStep>3</maxEdgesPerStep>
     <numberPartners>5</numberPartners>
     <numberParents>4</numberParents>
     <numberDummies>3</numberDummies>
     <laundererPercentage>5</laundererPercentage>
-    /*0:FIXED 1:VARIABLE/
+    <!--/*0:FIXED 1:VARIABLE/-->
     <fraudPotential>0</fraudPotential>
-    /*ENABLE GUI true/false*/
-    <guiEnabled>false</guiEnabled>
-    /*NUMBER OF MESSAGES TO OTHER NODES*/
+    <!--/*ENABLE GUI true/false*/-->
+    <guiEnabled>true</guiEnabled>
+    <!--/*NUMBER OF MESSAGES TO OTHER NODES*/-->
     <employeeMessageMean>100</employeeMessageMean>
     <employeeMessageStdDev>0</employeeMessageStdDev>
     <freelanceMessageMean>100</freelanceMessageMean>
@@ -27,7 +27,7 @@ and open the template in the editor.
     <smallCompanyMessageStdDev>0</smallCompanyMessageStdDev>
     <bigCompanyMessageMean>100</bigCompanyMessageMean>
     <bigCompanyMessageStdDev>0</bigCompanyMessageStdDev>
-    /*HONEST*/    
+    <!--/*HONEST*/-->    
     <employeeMeanHonest>500</employeeMeanHonest>
     <employeeStdDevHonest>50</employeeStdDevHonest>
     <freelanceMeanHonest>900</freelanceMeanHonest>
@@ -36,7 +36,7 @@ and open the template in the editor.
     <smallCompanyStdDevHonest>250</smallCompanyStdDevHonest>
     <bigCompanyMeanHonest>4100</bigCompanyMeanHonest>
     <bigCompanyStdDevHonest>300</bigCompanyStdDevHonest>
-    /*LAUNDERER*/
+    <!--/*LAUNDERER*/-->
     <employeeMeanLaunderer>900</employeeMeanLaunderer>
     <employeeStdDevLaunderer>20</employeeStdDevLaunderer>
     <freelanceMeanLaunderer>1500</freelanceMeanLaunderer>
@@ -45,14 +45,21 @@ and open the template in the editor.
     <smallCompanyStdDevLaunderer>180</smallCompanyStdDevLaunderer>
     <bigCompanyMeanLaunderer>5000</bigCompanyMeanLaunderer>
     <bigCompanyStdDevLaunderer>230</bigCompanyStdDevLaunderer>
-    /*YEARS NUMBER*/ 
+    <!--/*FRAUD PROBABILITY*/-->
+    <partnerProbability>0.5</partnerProbability>
+    <parentProbability>0.8</parentProbability>
+    <dummyProbability>1</dummyProbability>
+    <!--/*PERIOD*/--> 
+    <!--/*NUMBER YEARS*/--> 
     <yearsNumber>5</yearsNumber>
-    /*WRITE DATA 1=FILE 2=DB 3=ALL*/ 
+    <!--/*WINDOW SIZE (IN MONTHS) FOR THE SCORES*/--> 
+    <windowSize>6</windowSize>
+    <!--/*WRITE DATA 1=FILE 2=DB 3=ALL*/--> 
     <persistenceMode>1</persistenceMode>
-    /*FILE*/
+    <!--/*FILE*/-->
     <fileNameTransaction>SYNTHETIC_%s.csv</fileNameTransaction>
     <fileNameEntity>ENTITIES_%s.csv</fileNameEntity>
-    /*DATABASE*/
+    <!--/*DATABASE*/-->
     <dataBaseUsername>sa</dataBaseUsername>
     <dataBasePassword>password</dataBasePassword>
     <dataBaseConnection>jdbc:derby://localhost:1527/synthetic</dataBaseConnection>

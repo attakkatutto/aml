@@ -7,42 +7,45 @@ package aml.global;
 
 import javax.xml.bind.annotation.XmlEnumValue;
 
-
-public class Enums{
 /**
  * Enumerations
- *  
+ *
  * @author ddefalco
  */
-public enum NodeType {
-    EMPLOYEE,
-    FREELANCE,
-    SMALLCOMPANY,
-    BIGCOMPANY
-};
+public class Enums {
 
-public enum PersistenceMode{
-    @XmlEnumValue("1")
-    FILE,
-    @XmlEnumValue("2")
-    DATABASE,
-    @XmlEnumValue("3")
-    ALL
-};
+    /**
+     * Node types
+     */
+    public enum NodeType {
 
-public enum MyAgentState {
-    START,
-    SEND_FINISH,
-    RECEIVE_FINISH
-};
+        EMPLOYEE,
+        FREELANCE,
+        SMALLCOMPANY,
+        BIGCOMPANY
+    };
 
-//public enum WindowType {
-//    @XmlEnumValue("1")
-//    THREEMONTHS,
-//    @XmlEnumValue("2")
-//    FOURMONTHS,   
-//    @XmlEnumValue("3")
-//    SIXMONTHS
-//};
+    /**
+     * Persistence mode of the writer
+     */
+    public enum PersistenceMode {
+
+        @XmlEnumValue("1")
+        FILE,
+        @XmlEnumValue("2")
+        DATABASE,
+        @XmlEnumValue("3")
+        ALL
+    };
+
+    /**
+     * State of the agent
+     */
+    public enum MyAgentState {
+
+        START,
+        SEND_FINISH,
+        RECEIVE_FINISH
+    };
 
 }
