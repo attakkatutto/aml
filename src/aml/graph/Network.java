@@ -55,6 +55,7 @@ public final class Network extends SingleGraph {
 
     /**
      * Create new instance of Network
+     *
      * @param id string network identifier
      */
     public Network(String id) {
@@ -185,6 +186,9 @@ public final class Network extends SingleGraph {
      * Calculate scores of each node in the network
      */
     public void calculateScores() {
+        for (Node n : getNodeSet()) {
+            MyNode _mn = (MyNode) n;
+        }
     }
 
     /**
