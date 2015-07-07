@@ -6,7 +6,7 @@
 package aml.global;
 
 //import aml.global.Enums.WindowType;
-import aml.global.Enums.PersistenceMode;
+import aml.global.Enums.*;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +41,8 @@ public class Config {
             smallCompanyMessageMean, smallCompanyMessageStdDev,
             bigCompanyMessageMean, bigCompanyMessageStdDev;
     private int laundererPercentage;
-    private int yearsNumber,windowSize;
+    private int yearsNumber;
+    private WindowSize windowSize;
     private double partnerProbability, dummyProbability, parentProbability;
     private boolean guiEnabled;
     private String fileNameTransaction, fileNameEntity,
@@ -427,11 +428,11 @@ public class Config {
     }
 
     @XmlElement
-    public int getWindowSize() {
+    public WindowSize getWindowSize() {
         return windowSize;
     }
 
-    public void setWindowSize(int windowSize) {
+    public void setWindowSize(WindowSize windowSize) {
         this.windowSize = windowSize;
     }    
     

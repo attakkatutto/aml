@@ -19,6 +19,8 @@ public final class MyNode extends NodeBase {
 
     /**/
     protected double fraudPotential;
+    protected double[] inAmount;
+    protected double[] outAmount;
 
     /**
      * Node of the network
@@ -54,6 +56,12 @@ public final class MyNode extends NodeBase {
         }
     }
 
+    /**
+     * The fraud potential of the current node.
+     * If it's launderer, after a fixed number of fraud transactions, 
+     * it begin to send honest transactions.
+     * @return double fraud potential vaue
+     */
     public double getFraudPotential() {
         return (isHonest()) ? 0 : fraudPotential;
     }

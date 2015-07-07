@@ -29,7 +29,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     protected ArrayList<String> partners, parents, dummies;
 
     //Scores of current node
-    protected double suspectScore, fraudScore, deficitScore;
+    protected double[] suspectScore, fraudScore, deficitScore;
 
     //Random generator
     protected Random random = new Random();
@@ -212,8 +212,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @return double suspect score
      */
-    public double getSuspectScore() {
-        return suspectScore;
+    public double getSuspectScore(int time) {
+        return suspectScore[time];
     }
 
     /**
@@ -221,8 +221,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @param suspectScore double score to set
      */
-    public void setSuspectScore(double suspectScore) {
-        this.suspectScore = suspectScore;
+    public void setSuspectScore(double suspectScore, int time) {
+        this.suspectScore[time] += suspectScore;
     }
 
     /**
@@ -230,8 +230,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @return double fraud score
      */
-    public double getFraudScore() {
-        return fraudScore;
+    public double getFraudScore(int time) {
+        return fraudScore[time];
     }
 
     /**
@@ -239,8 +239,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @param fraudScore double score to set
      */
-    public void setFraudScore(double fraudScore) {
-        this.fraudScore = fraudScore;
+    public void setFraudScore(double fraudScore, int time) {
+        this.fraudScore[time] = fraudScore;
     }
 
     /**
@@ -248,8 +248,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @return double deficit score
      */
-    public double getDeficitScore() {
-        return deficitScore;
+    public double getDeficitScore(int time) {
+        return deficitScore[time];
     }
 
     /**
@@ -257,8 +257,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      *
      * @param deficitScore double score to set
      */
-    public void setDeficitScore(double deficitScore) {
-        this.deficitScore = deficitScore;
+    public void setDeficitScore(double deficitScore, int time) {
+        this.deficitScore[time] = deficitScore;
     }
 
     /**
@@ -275,6 +275,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
 
     /**
      * Counter of launderer parents
+     *
      * @return int counter
      */
     public int getCountLaundererParents() {
@@ -283,6 +284,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
 
     /**
      * Counter of launderer partners
+     *
      * @return int counter
      */
     public int getCountLaundererPartners() {
@@ -291,6 +293,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
 
     /**
      * Counter of launderer dummies
+     *
      * @return int counter
      */
     public int getCountLaundererDummies() {

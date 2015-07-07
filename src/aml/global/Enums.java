@@ -23,7 +23,7 @@ public class Enums {
         FREELANCE,
         SMALLCOMPANY,
         BIGCOMPANY
-    };
+    }
 
     /**
      * Persistence mode of the writer
@@ -36,7 +36,7 @@ public class Enums {
         DATABASE,
         @XmlEnumValue("3")
         ALL
-    };
+    }
 
     /**
      * State of the agent
@@ -46,6 +46,28 @@ public class Enums {
         START,
         SEND_FINISH,
         RECEIVE_FINISH
-    };
+    }
 
+    /**
+     * Temporal window for the scores
+     */
+    public enum WindowSize {
+
+        @XmlEnumValue("2")
+        BIMESTER(2),
+        @XmlEnumValue("3")
+        QUARTER(3),
+        @XmlEnumValue("4")
+        TRIMESTER(4),
+        @XmlEnumValue("6")
+        HALF(6),
+        @XmlEnumValue("12")
+        YEAR(12);
+        
+        private int value;
+
+        private WindowSize(int value) {
+            this.value = value;
+        }
+    }
 }

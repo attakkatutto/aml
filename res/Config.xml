@@ -53,6 +53,7 @@ and open the template in the editor.
     <!--/*NUMBER YEARS*/--> 
     <yearsNumber>5</yearsNumber>
     <!--/*WINDOW SIZE (IN MONTHS) FOR THE SCORES*/--> 
+    <!--/*2=BIMESTER 3=QUARTER 4=TRIMESTER 6=HALF 12=YEAR*/--> 
     <windowSize>6</windowSize>
     <!--/*WRITE DATA 1=FILE 2=DB 3=ALL*/--> 
     <persistenceMode>1</persistenceMode>
