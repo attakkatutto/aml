@@ -17,11 +17,6 @@ import org.graphstream.graph.implementations.*;
  */
 public final class MyNode extends NodeBase {
 
-    /**/
-    protected double fraudPotential;
-    protected double[] inAmount;
-    protected double[] outAmount;
-
     /**
      * Node of the network
      *
@@ -31,7 +26,7 @@ public final class MyNode extends NodeBase {
      */
     public MyNode(AbstractGraph graph, String id, NodeType type) {
         super(graph, id, type);
-        this.fraudPotential = (Config.instance().getFraudPotential() == 0) ? 1 : Math.random();
+        this.fraudPotential = (Config.instance().getFraudPotential() == 0) ? 1 : Math.random();        
     }
 
     @Override

@@ -66,6 +66,8 @@ public class Enums {
         
         private int value;
 
+        public int getValue(){return value;}
+        
         private WindowSize(int value) {
             this.value = value;
         }

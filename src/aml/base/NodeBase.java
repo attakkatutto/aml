@@ -6,7 +6,7 @@
 package aml.base;
 
 import aml.global.Config;
-import static aml.global.Constant.START_YEAR;
+import static aml.global.Constant.*;
 import aml.global.Enums.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +24,10 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
 
     protected NodeType type;
     protected boolean honest = true;
+
+    protected double fraudPotential;
+    protected double[] inAmount;
+    protected double[] outAmount;
 
     //Random List of busness partners,parents,dummies 
     protected ArrayList<String> partners, parents, dummies;
@@ -144,6 +148,9 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     public void setRevenues(double revenue, short month, short year) {
         double[] _tmp = revenues.get(year);
         _tmp[month] += revenue;
+        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
+        inAmount[_index] += revenue;
+        outAmount[_index] -= revenue;
     }
 
     /**
@@ -157,6 +164,9 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     public void setCosts(double cost, short month, short year) {
         double[] _tmp = costs.get(year);
         _tmp[month] += cost;
+        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
+        inAmount[_index] -= cost;
+        outAmount[_index] += cost;
     }
 
     /**
@@ -210,6 +220,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     /**
      * Suspect score of the node
      *
+     * @param time int window time position
      * @return double suspect score
      */
     public double getSuspectScore(int time) {
@@ -220,6 +231,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Set the suspect score of this node
      *
      * @param suspectScore double score to set
+     * @param time int window time position
      */
     public void setSuspectScore(double suspectScore, int time) {
         this.suspectScore[time] += suspectScore;
@@ -228,6 +240,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     /**
      * Fraud score of the node
      *
+     * @param time int window time position
      * @return double fraud score
      */
     public double getFraudScore(int time) {
@@ -238,6 +251,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Set the fraud score of this node
      *
      * @param fraudScore double score to set
+     * @param time int window time position
      */
     public void setFraudScore(double fraudScore, int time) {
         this.fraudScore[time] = fraudScore;
@@ -246,6 +260,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     /**
      * Deficit score of the node
      *
+     * @param time int window time position
      * @return double deficit score
      */
     public double getDeficitScore(int time) {
@@ -256,6 +271,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
      * Set the deficit score of this node
      *
      * @param deficitScore double score to set
+     * @param time int window time position
      */
     public void setDeficitScore(double deficitScore, int time) {
         this.deficitScore[time] = deficitScore;
