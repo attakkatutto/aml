@@ -5,6 +5,7 @@
  */
 package aml.base;
 
+import aml.entity.Transaction;
 import aml.global.Config;
 import static aml.global.Constant.*;
 import aml.global.Enums.*;
@@ -26,8 +27,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     protected boolean honest = true;
 
     protected double fraudPotential;
-    protected double[] inAmount;
-    protected double[] outAmount;
 
     //Random List of busness partners,parents,dummies 
     protected ArrayList<String> partners, parents, dummies;
@@ -35,6 +34,10 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     //Scores of current node
     protected double[] suspectScore, fraudScore, deficitScore;
 
+    //Transactions with other nodes with a relation 
+    //parent/partner/dummy
+    protected ArrayList<Transaction> relationshipTransactions;
+    
     //Random generator
     protected Random random = new Random();
 
@@ -58,6 +61,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
+        this.relationshipTransactions = new ArrayList<>();
         initMaps();
     }
 
@@ -147,10 +151,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     @Override
     public void setRevenues(double revenue, short month, short year) {
         double[] _tmp = revenues.get(year);
-        _tmp[month] += revenue;
-        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
-        inAmount[_index] += revenue;
-        outAmount[_index] -= revenue;
+        _tmp[month] += revenue;        
     }
 
     /**
@@ -163,10 +164,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     @Override
     public void setCosts(double cost, short month, short year) {
         double[] _tmp = costs.get(year);
-        _tmp[month] += cost;
-        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
-        inAmount[_index] -= cost;
-        outAmount[_index] += cost;
+        _tmp[month] += cost;       
     }
 
     /**
