@@ -17,16 +17,16 @@ and open the template in the editor.
     <!--/*0:FIXED 1:VARIABLE/-->
     <fraudPotential>0</fraudPotential>
     <!--/*ENABLE GUI true/false*/-->
-    <guiEnabled>true</guiEnabled>
+    <guiEnabled>false</guiEnabled>
     <!--/*NUMBER OF MESSAGES TO OTHER NODES*/-->
     <employeeMessageMean>100</employeeMessageMean>
-    <employeeMessageStdDev>0</employeeMessageStdDev>
-    <freelanceMessageMean>100</freelanceMessageMean>
-    <freelanceMessageStdDev>0</freelanceMessageStdDev>
-    <smallCompanyMessageMean>100</smallCompanyMessageMean>
-    <smallCompanyMessageStdDev>0</smallCompanyMessageStdDev>
-    <bigCompanyMessageMean>100</bigCompanyMessageMean>
-    <bigCompanyMessageStdDev>0</bigCompanyMessageStdDev>
+    <employeeMessageStdDev>4</employeeMessageStdDev>
+    <freelanceMessageMean>300</freelanceMessageMean>
+    <freelanceMessageStdDev>10</freelanceMessageStdDev>
+    <smallCompanyMessageMean>1000</smallCompanyMessageMean>
+    <smallCompanyMessageStdDev>50</smallCompanyMessageStdDev>
+    <bigCompanyMessageMean>2000</bigCompanyMessageMean>
+    <bigCompanyMessageStdDev>120</bigCompanyMessageStdDev>
     <!--/*HONEST*/-->    
     <employeeMeanHonest>500</employeeMeanHonest>
     <employeeStdDevHonest>50</employeeStdDevHonest>
