@@ -26,8 +26,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     protected boolean honest = true;
 
     protected double fraudPotential;
-    protected double[] inAmount;
-    protected double[] outAmount;
 
     //Random List of busness partners,parents,dummies 
     protected ArrayList<String> partners, parents, dummies;
@@ -149,8 +147,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         double[] _tmp = revenues.get(year);
         _tmp[month] += revenue;
         int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
-        inAmount[_index] += revenue;
-        outAmount[_index] -= revenue;
     }
 
     /**
@@ -165,8 +161,6 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         double[] _tmp = costs.get(year);
         _tmp[month] += cost;
         int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
-        inAmount[_index] -= cost;
-        outAmount[_index] += cost;
     }
 
     /**
