@@ -145,8 +145,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     @Override
     public void setRevenues(double revenue, short month, short year) {
         double[] _tmp = revenues.get(year);
-        _tmp[month] += revenue;
-        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
+        _tmp[month] += revenue;        
     }
 
     /**
@@ -159,8 +158,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     @Override
     public void setCosts(double cost, short month, short year) {
         double[] _tmp = costs.get(year);
-        _tmp[month] += cost;
-        int _index = (((year - START_YEAR) * MONTHS) + month) % Config.instance().getWindowSize().getValue();
+        _tmp[month] += cost;        
     }
 
     /**
