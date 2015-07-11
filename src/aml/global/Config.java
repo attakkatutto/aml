@@ -27,7 +27,7 @@ public class Config {
     private static Config _instance;
     private int fraudPotential;
     private int numberOfNode, maxEdgesPerStep;
-    private int numberParents, numberPartners, numberDummies;
+    private int maxNumberParents, maxNumberPartners, maxNumberDummies;
     private double employeeMeanHonest, employeeStdDevHonest,
             freelanceMeanHonest, freelanceStdDevHonest,
             bigCompanyMeanHonest, bigCompanyStdDevHonest,
@@ -84,16 +84,7 @@ public class Config {
         }
     }
 
-    /* Properties listed in configuration file */
-    @XmlElement
-    public int getMaxNumberDummies() {
-        return numberDummies;
-    }
-
-    public void setMaxNumberDummies(int num) {
-        numberDummies = num;
-    }
-
+    /* Properties listed in configuration file */    
     @XmlElement
     public int getNumberOfNode() {
         return numberOfNode;
@@ -113,30 +104,30 @@ public class Config {
     }
 
     @XmlElement
-    public int getNumberPartners() {
-        return numberPartners;
+    public int getMaxNumberPartners() {
+        return maxNumberPartners;
     }
 
-    public void setNumberPartners(int num) {
-        numberPartners = num;
-    }
-
-    @XmlElement
-    public int getNumberParents() {
-        return numberParents;
-    }
-
-    public void setNumberParents(int num) {
-        numberParents = num;
+    public void setMaxNumberPartners(int num) {
+        maxNumberPartners = num;
     }
 
     @XmlElement
-    public int getNumberDummies() {
-        return numberDummies;
+    public int getMaxNumberParents() {
+        return maxNumberParents;
     }
 
-    public void setNumberDummies(int numberDummies) {
-        this.numberDummies = numberDummies;
+    public void setMaxNumberParents(int num) {
+        maxNumberParents = num;
+    }
+
+    @XmlElement
+    public int getMaxNumberDummies() {
+        return maxNumberDummies;
+    }
+
+    public void setMaxNumberDummies(int numberDummies) {
+        this.maxNumberDummies = numberDummies;
     }
     
     @XmlElement

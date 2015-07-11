@@ -10,9 +10,9 @@ and open the template in the editor.
     <!--/*NETWORK CONFIG*/-->
     <numberOfNode>500</numberOfNode>
     <maxEdgesPerStep>3</maxEdgesPerStep>
-    <numberPartners>5</numberPartners>
-    <numberParents>4</numberParents>
-    <numberDummies>3</numberDummies>
+    <maxNumberPartners>5</maxNumberPartners>
+    <maxNumberParents>4</maxNumberParents>
+    <maxNumberDummies>3</maxNumberDummies>
     <laundererPercentage>5</laundererPercentage>
     <!--/*0:FIXED 1:VARIABLE/-->
     <fraudPotential>0</fraudPotential>
