@@ -32,7 +32,8 @@ public final class MyNode extends NodeBase {
     @Override
     public void initPartners() {
         int _count = 0;
-        while (_count < Config.instance().getNumberPartners()) {
+        int _maxNumber = random.nextInt(Config.instance().getNumberPartners());
+        while (_count < _maxNumber) {
             String _id = String.valueOf(random.nextInt(graph.getNodeCount()));
             partners.add(_id);
             _count++;
@@ -42,7 +43,8 @@ public final class MyNode extends NodeBase {
     @Override
     public void initParents() {
         int _count = 0;
-        while (_count < Config.instance().getNumberParents()) {
+        int _maxNumber = random.nextInt(Config.instance().getNumberParents());
+        while (_count < _maxNumber) {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
             if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
                 parents.add(v.getId());
@@ -64,7 +66,8 @@ public final class MyNode extends NodeBase {
     @Override
     public void initDummies() {
         int _count = 0;
-        while (_count < Config.instance().getMaxNumberDummies()) {
+        int _maxNumber = random.nextInt(Config.instance().getNumberDummies());
+        while (_count < _maxNumber) {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
             dummies.add(v.getId());
             _count++;
