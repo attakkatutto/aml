@@ -33,8 +33,8 @@ public class SynthDB {
     private final String DB_USER;
     private final String DB_PASSWORD;
 
-    private final String HEADER_TRANSACTION_FILE = " ID, ID_SOURCE, ID_TARGET, MONTH, YEAR, SOURCE_TYPE, TARGET_TYPE, ZSCORE_H, ZSCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST \n";
-    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
+    private final String HEADER_TRANSACTION_FILE = " ID, MONTH, YEAR, ZSCORE_H, ZSCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST \n";
+    private final String ROW_TRANSACTION_FILE = " %s, %s, %s, %s, %s, %s, %s, %s, %s \n";
 
     private final String HEADER_ENTITY_FILE = " ID, TYPE, HONEST, FRAUD \n";
     private final String ROW_ENTITY_FILE = " %s, %s, %s, %s \n";
@@ -163,25 +163,21 @@ public class SynthDB {
     public void insertTransactionIntoTable(Transaction t) throws SQLException {
         PreparedStatement preparedStatement = null;
         String insertTableSQL = "INSERT INTO TRANSACTIONS"
-                + "(ID, ID_SOURCE, ID_TARGET, MONTH, YEAR_, SOURCE_TYPE, TARGET_TYPE, ZSCORE_H, Z_SCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST) VALUES"
+                + "(ID, MONTH, YEAR_, ZSCORE_H, Z_SCORE_F, LAUNDERER_PARENTS, LAUNDERER_PARTNERS, LAUNDERER_DUMMIES, HONEST) VALUES"
                 + "(?,?,?,?,?,?,?,?)";
         try {
             dbConnection.setAutoCommit(true);
             preparedStatement = dbConnection.prepareStatement(insertTableSQL);
-            preparedStatement.setString(1, t.getId());
-            preparedStatement.setString(2, t.getIdSource());
-            preparedStatement.setString(3, t.getIdTarget());
-            preparedStatement.setShort(4, (short) (t.getMonth() + 1));
-            preparedStatement.setShort(5, t.getYear());
-            preparedStatement.setDouble(6, t.getAmount());
-            preparedStatement.setString(7, t.getSourceType().name());
-            preparedStatement.setString(8, t.getTargetType().name());
-            preparedStatement.setDouble(9, t.getZScoreHonest());
-            preparedStatement.setDouble(10, t.getZScoreLaunderer());
-            preparedStatement.setShort(11, (short)(t.getExistLaundererParents()?1:0));
-            preparedStatement.setShort(12, (short)(t.getExistLaundererPartners()?1:0));
-            preparedStatement.setShort(13, (short)(t.getExistLaundererDummies()?1:0));
-            preparedStatement.setString(13, t.getHonest());
+            preparedStatement.setString(1, t.getId());            
+            preparedStatement.setShort(2, (short) (t.getMonth() + 1));
+            preparedStatement.setShort(3, t.getYear());
+            preparedStatement.setDouble(4, t.getAmount());            
+            preparedStatement.setDouble(5, t.getZScoreHonest());
+            preparedStatement.setDouble(6, t.getZScoreLaunderer());
+            preparedStatement.setShort(7, (short)(t.getExistLaundererParents()?1:0));
+            preparedStatement.setShort(8, (short)(t.getExistLaundererPartners()?1:0));
+            preparedStatement.setShort(9, (short)(t.getExistLaundererDummies()?1:0));
+            preparedStatement.setString(10, t.getHonest());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -235,7 +231,7 @@ public class SynthDB {
      */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getSourceType().name(), t.getTargetType().name(), t.getZScoreHonest(), t.getZScoreLaunderer(), (t.getExistLaundererParents()?1:0), (t.getExistLaundererPartners()?1:0), (t.getExistLaundererDummies()?1:0), t.getHonest()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), (t.getMonth() + 1), t.getYear(), t.getZScoreHonest(), t.getZScoreLaunderer(), (t.getExistLaundererParents()?1:0), (t.getExistLaundererPartners()?1:0), (t.getExistLaundererDummies()?1:0), t.getHonest()));
         }
     }
 
