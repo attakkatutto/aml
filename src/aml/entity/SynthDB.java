@@ -178,9 +178,9 @@ public class SynthDB {
             preparedStatement.setString(8, t.getTargetType().name());
             preparedStatement.setDouble(9, t.getZScoreHonest());
             preparedStatement.setDouble(10, t.getZScoreLaunderer());
-            preparedStatement.setBoolean(11, t.getExistLaundererParents());
-            preparedStatement.setBoolean(12, t.getExistLaundererPartners());
-            preparedStatement.setBoolean(13, t.getExistLaundererDummies());
+            preparedStatement.setShort(11, (short)(t.getExistLaundererParents()?1:0));
+            preparedStatement.setShort(12, (short)(t.getExistLaundererPartners()?1:0));
+            preparedStatement.setShort(13, (short)(t.getExistLaundererDummies()?1:0));
             preparedStatement.setString(13, t.getHonest());
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
@@ -235,7 +235,7 @@ public class SynthDB {
      */
     private void writeTransactionFile(Transaction t) throws IOException {
         if (bwt != null) {
-            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getSourceType().name(), t.getTargetType().name(), t.getZScoreHonest(), t.getZScoreLaunderer(), t.getExistLaundererParents(), t.getExistLaundererPartners(), t.getExistLaundererDummies(), t.getHonest()));
+            bwt.write(String.format(ROW_TRANSACTION_FILE, t.getId(), t.getIdSource(), t.getIdTarget(), (t.getMonth() + 1), t.getYear(), t.getSourceType().name(), t.getTargetType().name(), t.getZScoreHonest(), t.getZScoreLaunderer(), (t.getExistLaundererParents()?1:0), (t.getExistLaundererPartners()?1:0), (t.getExistLaundererDummies()?1:0), t.getHonest()));
         }
     }
 
