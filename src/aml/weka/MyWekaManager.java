@@ -24,22 +24,20 @@ import weka.core.converters.CSVLoader;
 public final class MyWekaManager {
 
     private Instances instances;
-    private File dataset;
     private int runs;
     private int folds;
 
     public MyWekaManager(File dataset) {
         try {
-            this.dataset = dataset;
             this.runs = Config.instance().getNumberWekaRuns();
             this.folds = 10;
-            loadInstances();
+            loadInstances(dataset);
         } catch (Exception ex) {
             Logger.getLogger(MyWekaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void loadInstances() throws Exception {
+    public void loadInstances(File dataset) throws Exception {
         CSVLoader loader = new CSVLoader();
         loader.setSource(dataset);
         instances = loader.getDataSet();
@@ -69,7 +67,7 @@ public final class MyWekaManager {
         return _fMeasure / (runs * folds);
     }
 
-    private void test() throws Exception {
+    public void test() throws Exception {
         double dt = crossValidation(new J48(), null);
         double svml = crossValidation(new SMO(), null);        
         double knn = crossValidation(new IBk(), new String[]{"-K", "3"});
