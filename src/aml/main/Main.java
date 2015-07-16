@@ -23,21 +23,21 @@ public class Main {
 
     /**
      * Entry point of the AML Synthetic data generator
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         Network graph = new Network("AML Synthetic DB");
-        if (Config.instance().isGuiEnabled()) {           
+        if (Config.instance().isGuiEnabled()) {
             enableGUI(graph);
         }
         graph.build();
         MyPlatformManager f = new MyPlatformManager(graph);
         f.exec();
-    }  
-    
-     /**
-     * if GUI is enabled then graph and system.output are rendered
-     * in two frame
+    }
+
+    /**
+     * if GUI is enabled then graph and system.output are rendered in two frame
      */
     private static void enableGUI(Network graph) {
 
@@ -60,4 +60,3 @@ public class Main {
         myFrame.setVisible(true);
     }
 }
-
