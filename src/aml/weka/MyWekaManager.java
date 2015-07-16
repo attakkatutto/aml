@@ -34,7 +34,6 @@ public final class MyWekaManager {
     private final String HEADER_RESULT_FILE = " PARAMETRO, VALORE, F-MEASURE_DT, F-MEASURE_SVM, F-MEASURE_KNN \n";
     private final String ROW_RESULT_FILE = " %s, %s, %s, %s, %s \n";
 
-
     public MyWekaManager(File dataset) {
         try {
             this.runs = Config.instance().getNumberWekaRuns();
@@ -77,25 +76,25 @@ public final class MyWekaManager {
     }
 
     private void createFile() throws IOException {
-        /*Create the results file*/       
+        /*Create the results file*/
         File filer = new File("." + File.separator + "dbfiles" + File.separator + "WEKA_RESULTS.CSV");
         FileWriter fwr = new FileWriter(filer.getAbsoluteFile(), true);
         bwr = new BufferedWriter(fwr);
-        bwr.write(HEADER_RESULT_FILE);        
+        bwr.write(HEADER_RESULT_FILE);
     }
-    
-    public void test() {
+
+    public void test(String paramName, double paramValue) {
         try {
-            double dt = crossValidation(new J48(), null);
-            double svml = crossValidation(new SMO(), null);
-            double knn = crossValidation(new IBk(), new String[]{"-K", "3"});
-            writeResult(new Result());
+            double _dt = crossValidation(new J48(), null);
+            double _svm = crossValidation(new SMO(), null);
+            double _knn = crossValidation(new IBk(), new String[]{"-K", "3"});
+            writeResult(new Result(paramName, paramValue, _dt, _svm, _knn));
         } catch (Exception ex) {
             Logger.getLogger(MyWekaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void writeResult(Result r) throws IOException{
+    public void writeResult(Result r) throws IOException {
         if (bwr != null) {
             bwr.write(String.format(ROW_RESULT_FILE, r.getParamName(), r.getParamValue(), r.getDecisiontree(), r.getSvm(), r.getKnn()));
         }
