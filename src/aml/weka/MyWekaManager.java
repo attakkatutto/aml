@@ -5,8 +5,12 @@
  */
 package aml.weka;
 
+import aml.entity.Result;
 import aml.global.Config;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import weka.classifiers.AbstractClassifier;
@@ -26,12 +30,17 @@ public final class MyWekaManager {
     private Instances instances;
     private int runs;
     private int folds;
+    private BufferedWriter bwr;
+    private final String HEADER_RESULT_FILE = " PARAMETRO, VALORE, F-MEASURE_DT, F-MEASURE_SVM, F-MEASURE_KNN \n";
+    private final String ROW_RESULT_FILE = " %s, %s, %s, %s, %s \n";
+
 
     public MyWekaManager(File dataset) {
         try {
             this.runs = Config.instance().getNumberWekaRuns();
             this.folds = 10;
             loadInstances(dataset);
+            createFile();
         } catch (Exception ex) {
             Logger.getLogger(MyWekaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,10 +76,28 @@ public final class MyWekaManager {
         return _fMeasure / (runs * folds);
     }
 
-    public void test() throws Exception {
-        double dt = crossValidation(new J48(), null);
-        double svml = crossValidation(new SMO(), null);        
-        double knn = crossValidation(new IBk(), new String[]{"-K", "3"});
+    private void createFile() throws IOException {
+        /*Create the results file*/       
+        File filer = new File("." + File.separator + "dbfiles" + File.separator + "WEKA_RESULTS.CSV");
+        FileWriter fwr = new FileWriter(filer.getAbsoluteFile(), true);
+        bwr = new BufferedWriter(fwr);
+        bwr.write(HEADER_RESULT_FILE);        
+    }
+    
+    public void test() {
+        try {
+            double dt = crossValidation(new J48(), null);
+            double svml = crossValidation(new SMO(), null);
+            double knn = crossValidation(new IBk(), new String[]{"-K", "3"});
+            writeResult(new Result());
+        } catch (Exception ex) {
+            Logger.getLogger(MyWekaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    public void writeResult(Result r) throws IOException{
+        if (bwr != null) {
+            bwr.write(String.format(ROW_RESULT_FILE, r.getParamName(), r.getParamValue(), r.getDecisiontree(), r.getSvm(), r.getKnn()));
+        }
+    }
 }
