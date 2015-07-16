@@ -70,7 +70,7 @@ public final class Network extends SingleGraph {
             @Override
             public MyNode newInstance(String id1, Graph graph) {
                 MyNode base;
-                switch (random.nextInt(3)) {
+                switch (random.nextInt(4)) {
                     case 0:
                         base = new MyNode((AbstractGraph) graph, id1, NodeType.EMPLOYEE);
                         return base;

@@ -27,7 +27,7 @@ public class Config {
     private static Config _instance;
     private int fraudPotential;
     private int numberOfNode, maxEdgesPerStep;
-    private int numberParents, numberPartners, numberDummies;
+    private int maxNumberParents, maxNumberPartners, maxNumberDummies;
     private double employeeMeanHonest, employeeStdDevHonest,
             freelanceMeanHonest, freelanceStdDevHonest,
             bigCompanyMeanHonest, bigCompanyStdDevHonest,
@@ -42,12 +42,13 @@ public class Config {
             bigCompanyMessageMean, bigCompanyMessageStdDev;
     private int laundererPercentage;
     private int yearsNumber;
+    private int numberWekaRuns;
     private WindowSize windowSize;
     private double partnerProbability, dummyProbability, parentProbability;
     private boolean guiEnabled;
     private String fileNameTransaction, fileNameEntity,
             dataBaseUsername, dataBasePassword,
-            dataBaseConnection, dataBaseDriver;    
+            dataBaseConnection, dataBaseDriver;
     private PersistenceMode persistenceMode;
 
     /**
@@ -86,15 +87,6 @@ public class Config {
 
     /* Properties listed in configuration file */
     @XmlElement
-    public int getMaxNumberDummies() {
-        return numberDummies;
-    }
-
-    public void setMaxNumberDummies(int num) {
-        numberDummies = num;
-    }
-
-    @XmlElement
     public int getNumberOfNode() {
         return numberOfNode;
     }
@@ -113,32 +105,32 @@ public class Config {
     }
 
     @XmlElement
-    public int getNumberPartners() {
-        return numberPartners;
+    public int getMaxNumberPartners() {
+        return maxNumberPartners;
     }
 
-    public void setNumberPartners(int num) {
-        numberPartners = num;
-    }
-
-    @XmlElement
-    public int getNumberParents() {
-        return numberParents;
-    }
-
-    public void setNumberParents(int num) {
-        numberParents = num;
+    public void setMaxNumberPartners(int num) {
+        maxNumberPartners = num;
     }
 
     @XmlElement
-    public int getNumberDummies() {
-        return numberDummies;
+    public int getMaxNumberParents() {
+        return maxNumberParents;
     }
 
-    public void setNumberDummies(int numberDummies) {
-        this.numberDummies = numberDummies;
+    public void setMaxNumberParents(int num) {
+        maxNumberParents = num;
     }
-    
+
+    @XmlElement
+    public int getMaxNumberDummies() {
+        return maxNumberDummies;
+    }
+
+    public void setMaxNumberDummies(int numberDummies) {
+        this.maxNumberDummies = numberDummies;
+    }
+
     @XmlElement
     public int getLaundererPercentage() {
         return laundererPercentage;
@@ -408,7 +400,7 @@ public class Config {
     public void setParentProbability(double parentProbability) {
         this.parentProbability = parentProbability;
     }
-        
+
     @XmlElement
     public PersistenceMode getPersistenceMode() {
         return this.persistenceMode;
@@ -416,6 +408,15 @@ public class Config {
 
     public void setPersistenceMode(PersistenceMode mode) {
         this.persistenceMode = mode;
+    }
+
+    @XmlElement
+    public int getNumberWekaRuns() {
+        return numberWekaRuns;
+    }
+
+    public void setNumberWekaRuns(int numberWekaRuns) {
+        this.numberWekaRuns = numberWekaRuns;
     }
 
     @XmlElement
@@ -434,8 +435,8 @@ public class Config {
 
     public void setWindowSize(WindowSize windowSize) {
         this.windowSize = windowSize;
-    }    
-    
+    }
+
     @XmlElement
     public String getFileNameTransaction() {
         return fileNameTransaction;
