@@ -117,5 +117,8 @@ public class MyPlatformManager {
             System.out.println(ex.getMessage());
             Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{
+            System.exit(0);
+        }
     }    
 }
