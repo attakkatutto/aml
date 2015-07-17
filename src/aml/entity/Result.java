@@ -23,12 +23,6 @@ public class Result {
         this.knn = 0;
     }
 
-    public Result(double dt, double svm, double knn) {
-        this.dt = dt;
-        this.svm = svm;
-        this.knn = knn;
-    }
-
     public Result(String paramName, double paramValue, double dt, double svm, double knn) {
         this.paramName = paramName;
         this.paramValue = paramValue;
