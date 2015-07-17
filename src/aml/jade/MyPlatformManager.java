@@ -41,6 +41,7 @@ public class MyPlatformManager {
 
     /**
      * Create new instance of MyPlatformManager
+     *
      * @param graph instance of Network to manage
      */
     public MyPlatformManager(Graph graph) {
@@ -57,9 +58,21 @@ public class MyPlatformManager {
     }
 
     /**
+     * Custom listener of the platform for handle agents life
+     */
+    private void initHandler() {
+        try {
+            mainContainer.addPlatformListener(new MyPlatformListener(this));
+        } catch (ControllerException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
      * Execute the JADE containers and starts all agents of the network
      */
-    public void exec() {       
+    public void exec() {
         /*
          * List of the agents of the JADE container
          */
@@ -68,7 +81,7 @@ public class MyPlatformManager {
          * Create an agent for each node of the network and start it       
          */
         for (Node n : graph.getEachNode()) {
-            MyAgent a = new MyAgent((MyNode) n,writer);
+            MyAgent a = new MyAgent((MyNode) n, writer);
             try {
                 mainContainer.acceptNewAgent(a.getId(), a).start();
                 agents.add(a);
@@ -94,35 +107,15 @@ public class MyPlatformManager {
         try {
             mainContainer.getPlatformController().kill();
             this.writer.close();
-            exit();
+            System.out.println(" - Exit..... ");
+            this.end = System.currentTimeMillis();
+            System.out.println(" - time elapsed (msec): " + (end - start));
+            if (Config.instance().isGuiEnabled()) {
+                JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (ControllerException ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    /**
-     * Custom listener of the platform for handle agents life
-     */
-    private void initHandler() {
-        try {
-            mainContainer.addPlatformListener(new MyPlatformListener(this));
-        } catch (ControllerException ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Exit from prototype
-     */
-    private void exit() {
-        System.out.println(" - Exit..... ");
-        this.end = System.currentTimeMillis();
-        System.out.println(" - time elapsed (msec): " + (end - start));
-        if (Config.instance().isGuiEnabled()) {
-            JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
-        }
-        System.exit(1);
     }    
 }
