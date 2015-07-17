@@ -19,16 +19,16 @@ import javax.swing.ScrollPaneConstants;
  * @author ddefalco
  */
 public class MyApplication {
-    private int counter = 0;
+    protected int counter = 0;
     private double step = 0.1;
     
-    public MyApplication(int index){       
+    public MyApplication(){       
         Network graph = new Network("AML Synthetic DB");
         if (Config.instance().isGuiEnabled()) {
             enableGUI(graph);
         }
         graph.build();
-        double p1 = Config.instance().getParentProbability() + (step * index);
+        double p1 = Config.instance().getParentProbability() + (step * counter);
         Config.instance().setParentProbability(p1);
         MyPlatformManager f = new MyPlatformManager(graph);
         f.exec();
