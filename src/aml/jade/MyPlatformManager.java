@@ -68,7 +68,7 @@ public class MyPlatformManager {
             Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Execute the JADE containers and starts all agents of the network
      */
@@ -104,21 +104,15 @@ public class MyPlatformManager {
      * Stop the execution of the JADE platform
      */
     public void halt() {
-        try {
-            mainContainer.getPlatformController().kill();
-            this.writer.close();
-            System.out.println(" - Exit..... ");
-            this.end = System.currentTimeMillis();
-            System.out.println(" - time elapsed (msec): " + (end - start));
-            if (Config.instance().isGuiEnabled()) {
-                JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (ControllerException ex) {
-            System.out.println(ex.getMessage());
-            Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        Runtime.instance().shutDown();
+        this.writer.close();
+        System.out.println(" - Exit..... ");
+        this.end = System.currentTimeMillis();
+        System.out.println(" - time elapsed (msec): " + (end - start));
+        if (Config.instance().isGuiEnabled()) {
+            JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
-        finally{
-            System.exit(0);
-        }
-    }    
+        System.exit(0);
+    }
 }
