@@ -48,11 +48,14 @@ public class MyPlatformManager {
         this.graph = graph;
         this.writer = new SynthDB();
         this.start = System.currentTimeMillis();
+        Runtime rt = Runtime.instance();
+        rt.setCloseVM(true);
         // Get a hold on JADE runtime
         // Create a default profile
         Profile p = new ProfileImpl();
         // Create a new main container (i.e. on this host, port 1099)      
-        mainContainer = Runtime.instance().createMainContainer(p);
+        rt.createMainContainer(p);
+        mainContainer = rt.createAgentContainer(p);
         //initialize the platform handler
         initHandler();
     }
@@ -106,7 +109,6 @@ public class MyPlatformManager {
     public void halt() {
 
         try {
-            //Runtime.instance().shutDown();
             mainContainer.getPlatformController().kill();
         } catch (ControllerException ex) {
             Logger.getLogger(MyPlatformManager.class.getName()).log(Level.SEVERE, null, ex);
