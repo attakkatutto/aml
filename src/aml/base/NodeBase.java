@@ -34,8 +34,8 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
     //Scores of current node
     protected double[] suspectScore, fraudScore, deficitScore;
 
-    //Transactions traded with other nodes of the net
-    protected ArrayList<Transaction> tradedTransactions;
+    //Transactions received from other nodes of the net
+    protected ArrayList<Transaction> receivedTransactions;
     
     //Random generator
     protected Random random = new Random();
@@ -60,7 +60,7 @@ public abstract class NodeBase extends AdjacencyListNode implements INode, Compa
         this.partners = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.dummies = new ArrayList<>();
-        this.tradedTransactions = new ArrayList<>();
+        this.receivedTransactions = new ArrayList<>();
         initMaps();
     }
 
