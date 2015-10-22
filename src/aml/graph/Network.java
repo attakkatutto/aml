@@ -185,16 +185,7 @@ public final class Network extends SingleGraph {
             }
         }
         b.end();
-    }
-
-    /**
-     * Calculate scores of each node in the network
-     */
-    public void calculateScores() {
-        for (Node n : getNodeSet()) {
-            MyNode _mn = (MyNode) n;
-        }
-    }
+    }   
 
     /**
      * Initialize relations between nodes
