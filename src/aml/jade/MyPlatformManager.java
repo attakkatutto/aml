@@ -120,6 +120,22 @@ public class MyPlatformManager {
         if (Config.instance().isGuiEnabled()) {
             JOptionPane.showMessageDialog(null, "Simulation finished!", "AML Ranking", JOptionPane.INFORMATION_MESSAGE);
         }
+        //TODO Compute the network scores
         System.exit(0);
     }
+    
+//    /**
+//     * Compute the score of each node in the network
+//     * using defined formalism
+//     */
+//    private void computeScores(){
+//        //for each node v in the graph
+//            //for each node x in the graph
+//                //if x in partner(v)
+//                    //inc deficitScore(v)
+//                //else 
+//                    //for each node v2 in partner(x)
+//                        //if v2 in dummies(v) || v2 in parents(v)
+//                            //inc deficitScore(v)
+//    }
 }
