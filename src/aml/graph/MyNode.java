@@ -48,8 +48,8 @@ public final class MyNode extends NodeBase {
             MyNode v = graph.getNode(random.nextInt(graph.getNodeCount()));
             if (type == NodeType.EMPLOYEE || type == NodeType.FREELANCE) {
                 parents.add(v.getId());
+                _count++;
             }
-            _count++;
         }
     }
 
